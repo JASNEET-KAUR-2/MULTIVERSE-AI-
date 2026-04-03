@@ -23,6 +23,11 @@ import { loadLocalDashboardFallback } from "../utils/localDashboardFallback.js";
 
 const metricValue = (value, max) => Math.max(8, Math.min(100, Math.round((value / max) * 100)));
 
+const formatTraitLabel = (label) =>
+  label
+    .replace(/([a-z])([A-Z])/g, "$1 $2")
+    .replace(/^./, (char) => char.toUpperCase());
+
 const fadeUp = {
   hidden: { opacity: 0, y: 18 },
   visible: (index = 0) => ({
@@ -111,6 +116,7 @@ const DashboardPage = () => {
 
   const behavior = dashboard.behaviorProfile || {};
   const analysis = dashboard.analysis || {};
+  const quizAssessment = dashboard.quizAssessment || dashboard.user?.quizAssessment || {};
   const probabilities = dashboard.prediction?.probabilities || {};
   const strengths = analysis.strengths || [];
   const weaknesses = analysis.weaknesses || [];
@@ -127,6 +133,10 @@ const DashboardPage = () => {
     prediction: dashboard.stats?.prediction,
     quests: dashboard.quests || []
   });
+  const topTraits = Object.entries(quizAssessment.traits || {})
+    .filter(([, value]) => Number.isFinite(value))
+    .sort(([, a], [, b]) => b - a)
+    .slice(0, 4);
 
   const quickActions = [
     { label: "View Futures", to: "/futures", icon: BranchIcon, tint: "text-cyan-700", bg: "bg-cyan-100" },
@@ -291,6 +301,59 @@ const DashboardPage = () => {
       <motion.section custom={3} variants={fadeUp} className="space-y-6">
         <div className="grid gap-6 xl:grid-cols-[0.92fr_1.08fr]">
           <div className="space-y-6">
+            {quizAssessment.archetype || quizAssessment.summary ? (
+              <div className="muse-card muse-card-mint p-5">
+                <div className="mb-5 flex items-center justify-between">
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Quiz Identity Read</p>
+                    <h2 className="mt-2 text-2xl font-semibold">Archetype Summary</h2>
+                  </div>
+                  {quizAssessment.archetype ? (
+                    <div className="soft-chip px-3 py-1 text-xs text-emerald-700">
+                      {quizAssessment.archetype}
+                    </div>
+                  ) : null}
+                </div>
+
+                {quizAssessment.summary ? (
+                  <p className="text-sm leading-7 text-slate-700">{quizAssessment.summary}</p>
+                ) : null}
+
+                {topTraits.length ? (
+                  <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                    {topTraits.map(([trait, value]) => (
+                      <div key={trait} className="muse-mini-card p-4">
+                        <div className="mb-2 flex items-center justify-between">
+                          <span className="text-sm font-medium text-slate-900">{formatTraitLabel(trait)}</span>
+                          <span className="text-sm text-emerald-700">{value}%</span>
+                        </div>
+                        <div className="h-2 overflow-hidden rounded-full bg-white/8">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: `${value}%` }}
+                            transition={{ duration: 0.7, ease: "easeOut" }}
+                            className="h-full rounded-full bg-gradient-to-r from-emerald-300 via-cyan-300 to-pink-300"
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : null}
+
+                {quizAssessment.patterns ? (
+                  <div className="mt-4 muse-mini-card p-4">
+                    <p className="text-sm leading-7 text-slate-700">
+                      <span className="font-medium text-cyan-700">Decision style:</span> {quizAssessment.patterns.decisionStyle || "Balanced"}.
+                      {" "}
+                      <span className="font-medium text-cyan-700">Work style:</span> {quizAssessment.patterns.workingStyle || "Hybrid"}.
+                      {" "}
+                      <span className="font-medium text-cyan-700">Risk profile:</span> {quizAssessment.patterns.riskProfile || "Moderate"}.
+                    </p>
+                  </div>
+                ) : null}
+              </div>
+            ) : null}
+
             <div className="muse-card p-5">
               <div className="mb-5 flex items-center justify-between">
                 <div>

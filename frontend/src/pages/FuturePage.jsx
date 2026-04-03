@@ -17,7 +17,7 @@ import {
 import UserAvatar from "../components/UserAvatar.jsx";
 import FutureSnapshotShare from "../components/FutureSnapshotShare.jsx";
 
-const timelines = ["1 Year", "5 Years", "10 Years", "20 Years"];
+const timelines = ["3 Months", "6 Months", "1 Year", "2 Years"];
 
 const getTimelineFallback = (dashboard, selectedTimeline) => {
   const name = dashboard?.user?.name || "You";
@@ -29,12 +29,12 @@ const getTimelineFallback = (dashboard, selectedTimeline) => {
   const negativeRisk = Math.round((dashboard?.prediction?.probabilities?.Negative || 0) * 100);
 
   const fallbackByTimeline = {
-    "1 Year": {
+    "3 Months": {
       bestTitle: prediction === "High" ? "The Rising Version" : "The Rebuilding Version",
       riskTitle: "The Distracted Version",
-      bestStory: `Within the next year, ${name} starts to feel more in control. ${studyHours} hours of focused work and ${sleepHours} hours of sleep begin to turn ${goal} into visible progress, and ${habit} becomes something people notice rather than something ${name.toLowerCase()} only intends to do.`,
-      riskStory: `Within the next year, ${name} still wants change but keeps losing momentum to delay, inconsistency, and scattered effort. The result is frustration because the gap between potential and execution stays obvious.`,
-      futureMessage: `1 year from now: the biggest win is not perfection, it is finally trusting your own routine.`,
+      bestStory: `Within the next three months, ${name} starts to feel more in control. ${studyHours} hours of focused work and ${sleepHours} hours of sleep begin turning ${goal} into visible progress, and ${habit} starts to feel like something real instead of something ${name.toLowerCase()} only intends to do.`,
+      riskStory: `Within the next three months, ${name} still wants change but keeps losing momentum to delay, inconsistency, and scattered effort. The result is frustration because the gap between potential and execution stays obvious fast.`,
+      futureMessage: `3 months from now: the biggest win is not perfection, it is finally trusting your own routine.`,
       bestCareerOutcome: "Momentum building",
       riskCareerOutcome: "Momentum delayed",
       bestLifestyleIndicators: [
@@ -50,14 +50,14 @@ const getTimelineFallback = (dashboard, selectedTimeline) => {
         { label: "Risk Load", value: `${negativeRisk}%` }
       ]
     },
-    "5 Years": {
+    "6 Months": {
       bestTitle: dashboard?.analysis?.personalityType || "The Achiever",
       riskTitle: "The Stagnant",
-      bestStory: dashboard?.simulation?.futureStory || `In five years, ${name} has turned disciplined routines into real compounding progress around ${goal}.`,
-      riskStory: dashboard?.simulation?.alternateStory || `In five years, ${name} is still paying the price for habits that never stabilized.`,
+      bestStory: dashboard?.simulation?.futureStory || `In six months, ${name} has turned disciplined routines into visible compounding progress around ${goal}.`,
+      riskStory: dashboard?.simulation?.alternateStory || `In six months, ${name} is already paying the price for habits that never stabilized.`,
       futureMessage:
         dashboard?.simulation?.futureMessage || "My future self says I should stay focused and protect my best timeline.",
-      bestCareerOutcome: prediction === "High" ? "Leadership track" : "Stable career growth",
+      bestCareerOutcome: prediction === "High" ? "Strong upward track" : "Stable career growth",
       riskCareerOutcome: "Stalled progress",
       bestLifestyleIndicators: [
         { label: "Career", value: prediction },
@@ -72,12 +72,12 @@ const getTimelineFallback = (dashboard, selectedTimeline) => {
         { label: "Risk Load", value: `${negativeRisk}%` }
       ]
     },
-    "10 Years": {
+    "1 Year": {
       bestTitle: prediction === "High" ? "The Trusted Expert" : "The Grounded Builder",
       riskTitle: "The Plateaued Self",
-      bestStory: `Ten years from now, ${name} is defined less by talent and more by repeatable standards. ${goal} has matured into real credibility, and ${habit} has become part of ${name.toLowerCase()}'s identity rather than a phase.`,
-      riskStory: `Ten years from now, the cost of inconsistency becomes harder to hide. ${name} is capable, but the lack of durable systems leaves life feeling like repeated restarts instead of long-term expansion.`,
-      futureMessage: `10 years from now: the systems you repeat quietly today will decide your identity more than any one big opportunity.`,
+      bestStory: `One year from now, ${name} is defined less by talent and more by repeatable standards. ${goal} has matured into real credibility, and ${habit} has become part of ${name.toLowerCase()}'s identity rather than a phase.`,
+      riskStory: `One year from now, the cost of inconsistency becomes harder to hide. ${name} is capable, but the lack of durable systems leaves life feeling like repeated restarts instead of real expansion.`,
+      futureMessage: `1 year from now: the systems you repeat quietly today will decide your identity more than any one big opportunity.`,
       bestCareerOutcome: "Trusted expert path",
       riskCareerOutcome: "Plateaued trajectory",
       bestLifestyleIndicators: [
@@ -93,14 +93,14 @@ const getTimelineFallback = (dashboard, selectedTimeline) => {
         { label: "Risk Load", value: `${Math.min(99, negativeRisk + 8)}%` }
       ]
     },
-    "20 Years": {
+    "2 Years": {
       bestTitle: prediction === "High" ? "The Legacy Builder" : "The Long Game Self",
       riskTitle: "The Unlived Potential",
-      bestStory: `Twenty years from now, ${name} can clearly see how small disciplined choices shaped an entire life. ${goal} is no longer just ambition; it becomes legacy. The strongest difference is that ${name.toLowerCase()} built a life with intention instead of spending decades reacting.`,
-      riskStory: `Twenty years from now, the painful part is not failure but unrealized potential. Without stable habits, ${name} looks back at how often comfort interrupted growth, and the future feels smaller than it could have been.`,
-      futureMessage: `20 years from now: your future is not built in one dramatic leap, it is built by what you repeat when nobody is watching.`,
-      bestCareerOutcome: "Legacy-level impact",
-      riskCareerOutcome: "Legacy weakened by drift",
+      bestStory: `Two years from now, ${name} can clearly see how small disciplined choices reshaped the larger direction of life. ${goal} is no longer just ambition; it becomes part of identity. The strongest difference is that ${name.toLowerCase()} built with intention instead of staying reactive.`,
+      riskStory: `Two years from now, the painful part is not failure but unrealized potential. Without stable habits, ${name} keeps seeing how often comfort interrupted growth, and the future feels smaller than it should.`,
+      futureMessage: `2 years from now: your future is not built in one dramatic leap, it is built by what you repeat when nobody is watching.`,
+      bestCareerOutcome: "Long-game impact",
+      riskCareerOutcome: "Long-game weakened by drift",
       bestLifestyleIndicators: [
         { label: "Career", value: "Long-term influence" },
         { label: "Health Score", value: `${Math.max(48, sleepHours * 10)}/100` },
@@ -116,7 +116,7 @@ const getTimelineFallback = (dashboard, selectedTimeline) => {
     }
   };
 
-  return fallbackByTimeline[selectedTimeline] || fallbackByTimeline["5 Years"];
+  return fallbackByTimeline[selectedTimeline] || fallbackByTimeline["6 Months"];
 };
 
 const FuturePage = () => {
@@ -124,7 +124,7 @@ const FuturePage = () => {
   const [dashboard, setDashboard] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [selectedTimeline, setSelectedTimeline] = useState("5 Years");
+  const [selectedTimeline, setSelectedTimeline] = useState("6 Months");
 
   useEffect(() => {
     api

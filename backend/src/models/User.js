@@ -86,6 +86,55 @@ const behaviorProfileSchema = new mongoose.Schema(
   { _id: false }
 );
 
+const quizTraitSchema = new mongoose.Schema(
+  {
+    patience: Number,
+    riskTaking: Number,
+    creativity: Number,
+    discipline: Number,
+    leadership: Number,
+    adaptability: Number,
+    curiosity: Number,
+    emotionalResilience: Number
+  },
+  { _id: false }
+);
+
+const quizPatternsSchema = new mongoose.Schema(
+  {
+    decisionStyle: String,
+    workingStyle: String,
+    riskProfile: String,
+    thinkingPattern: String
+  },
+  { _id: false }
+);
+
+const quizScenarioAnswerSchema = new mongoose.Schema(
+  {
+    questionId: Number,
+    category: String,
+    answer: String
+  },
+  { _id: false }
+);
+
+const quizAssessmentSchema = new mongoose.Schema(
+  {
+    archetype: String,
+    summary: String,
+    xpGained: Number,
+    traits: quizTraitSchema,
+    patterns: quizPatternsSchema,
+    scenarioAnswers: [quizScenarioAnswerSchema],
+    completedAt: {
+      type: Date,
+      default: Date.now
+    }
+  },
+  { _id: false }
+);
+
 const simulationSchema = new mongoose.Schema(
   {
     futureStory: String,
@@ -220,8 +269,8 @@ const longTermGoalSchema = new mongoose.Schema(
     detail: String,
     horizon: {
       type: String,
-      enum: ["3 Months", "1 Year", "5 Years"],
-      default: "1 Year"
+      enum: ["3 Months", "6 Months", "1 Year", "2 Years"],
+      default: "6 Months"
     },
     progress: {
       type: Number,
@@ -319,6 +368,7 @@ const userSchema = new mongoose.Schema(
     scannerStreak: { type: Number, default: 0 },
     lastScannerScanAt: Date,
     behaviorProfile: behaviorProfileSchema,
+    quizAssessment: quizAssessmentSchema,
     analysis: analysisSchema,
     mlPrediction: predictionSchema,
     simulation: simulationSchema,

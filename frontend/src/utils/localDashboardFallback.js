@@ -83,7 +83,7 @@ const buildInsightCards = (behaviorProfile, prediction) => {
   ];
 };
 
-export const buildLocalDashboardFallback = ({ user, answers }) => {
+export const buildLocalDashboardFallback = ({ user, answers, quizAssessment = null }) => {
   const behaviorProfile = {
     studyHours: Number(answers.studyHours || 0),
     sleepHours: Number(answers.sleepHours || 0),
@@ -171,6 +171,7 @@ export const buildLocalDashboardFallback = ({ user, answers }) => {
     user: {
       ...(user || {}),
       behaviorProfile,
+      quizAssessment,
       mlPrediction: prediction,
       analysis
     },
@@ -183,6 +184,7 @@ export const buildLocalDashboardFallback = ({ user, answers }) => {
     },
     prediction,
     behaviorProfile,
+    quizAssessment,
     analysis,
     simulation: {
       futureStory: `If you keep turning ${firstGoal} into weekly action, this version of you becomes more deliberate, calmer, and more trusted over time.`,

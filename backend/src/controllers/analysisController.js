@@ -35,6 +35,155 @@ const validateBehaviorProfile = (behaviorProfile) => {
   }
 };
 
+const PRODUCTIVITY_POSITIVE_SIGNALS = [
+  "finished",
+  "completed",
+  "deep work",
+  "focused",
+  "focus",
+  "planned",
+  "reviewed",
+  "priority",
+  "priorities",
+  "shipped",
+  "exercise",
+  "study",
+  "wrote",
+  "built",
+  "organized",
+  "scheduled",
+  "wrapped up",
+  "progress",
+  "sprint",
+  "coding"
+];
+
+const PRODUCTIVITY_NEGATIVE_SIGNALS = [
+  "procrastinating",
+  "procrastinated",
+  "scrolling",
+  "social media",
+  "avoiding",
+  "missed deadlines",
+  "scattered",
+  "distracted",
+  "burned out",
+  "burnout",
+  "tired",
+  "doomscrolling",
+  "overthinking",
+  "delayed",
+  "late",
+  "stuck",
+  "chaotic",
+  "couldn't focus",
+  "unfocused"
+];
+
+const buildProductivityPrediction = (rawText = "") => {
+  const input = String(rawText || "").trim();
+  const text = input.toLowerCase();
+
+  let score = 50;
+  const matchedPositive = [];
+  const matchedNegative = [];
+
+  PRODUCTIVITY_POSITIVE_SIGNALS.forEach((signal) => {
+    if (text.includes(signal)) {
+      score += 7;
+      matchedPositive.push(signal);
+    }
+  });
+
+  PRODUCTIVITY_NEGATIVE_SIGNALS.forEach((signal) => {
+    if (text.includes(signal)) {
+      score -= 8;
+      matchedNegative.push(signal);
+    }
+  });
+
+  if (input.length > 120) {
+    score += 4;
+  } else if (input.length < 30) {
+    score -= 4;
+  }
+
+  const normalizedScore = Math.max(2, Math.min(98, score));
+  const positive = normalizedScore >= 50;
+  const confidence = positive ? normalizedScore / 100 : (100 - normalizedScore) / 100;
+
+  return {
+    input,
+    predicted_label: positive ? "POSITIVE" : "NEGATIVE",
+    confidence: Number(confidence.toFixed(4)),
+    source: "app-backend-heuristic",
+    signal_breakdown: {
+      matchedPositive,
+      matchedNegative,
+      score: normalizedScore
+    },
+    numeric_metrics_placeholder: {
+      status: "ready_for_extension",
+      message: positive
+        ? "This activity reads as productive momentum. You can later extend this with task-count and focus-time metrics."
+        : "This activity reads as low productivity momentum. You can later extend this with task-count and focus-time metrics."
+    }
+  };
+};
+
+const normalizeQuizAssessment = (payload = {}) => {
+  if (!payload || typeof payload !== "object") {
+    return null;
+  }
+
+  const scenarioAnswers = Array.isArray(payload.scenarioAnswers)
+    ? payload.scenarioAnswers
+        .map((item) => ({
+          questionId: Number(item?.questionId),
+          category: typeof item?.category === "string" ? item.category.trim() : "",
+          answer: typeof item?.answer === "string" ? item.answer.trim() : ""
+        }))
+        .filter((item) => Number.isFinite(item.questionId) && item.category && item.answer)
+    : [];
+
+  const traits = payload.traits && typeof payload.traits === "object"
+    ? {
+        patience: Number(payload.traits.patience || 0),
+        riskTaking: Number(payload.traits.riskTaking || 0),
+        creativity: Number(payload.traits.creativity || 0),
+        discipline: Number(payload.traits.discipline || 0),
+        leadership: Number(payload.traits.leadership || 0),
+        adaptability: Number(payload.traits.adaptability || 0),
+        curiosity: Number(payload.traits.curiosity || 0),
+        emotionalResilience: Number(payload.traits.emotionalResilience || 0)
+      }
+    : null;
+
+  const hasTraits = traits && Object.values(traits).some((value) => Number.isFinite(value) && value > 0);
+  const patterns = payload.patterns && typeof payload.patterns === "object"
+    ? {
+        decisionStyle: typeof payload.patterns.decisionStyle === "string" ? payload.patterns.decisionStyle : "",
+        workingStyle: typeof payload.patterns.workingStyle === "string" ? payload.patterns.workingStyle : "",
+        riskProfile: typeof payload.patterns.riskProfile === "string" ? payload.patterns.riskProfile : "",
+        thinkingPattern: typeof payload.patterns.thinkingPattern === "string" ? payload.patterns.thinkingPattern : ""
+      }
+    : null;
+
+  if (!scenarioAnswers.length && !hasTraits && !payload.archetype && !payload.summary) {
+    return null;
+  }
+
+  return {
+    archetype: typeof payload.archetype === "string" ? payload.archetype.trim() : "",
+    summary: typeof payload.summary === "string" ? payload.summary.trim() : "",
+    xpGained: Number(payload.xpGained || 0),
+    traits: hasTraits ? traits : undefined,
+    patterns,
+    scenarioAnswers,
+    completedAt: new Date()
+  };
+};
+
 const getOutcomeScore = (label, probabilities = {}) => {
   const high = Number(probabilities.High || 0);
   const average = Number(probabilities.Average || 0);
@@ -109,6 +258,7 @@ const getContributionBreakdown = (current = {}, next = {}) => {
 export const analyzeUser = async (req, res, next) => {
   try {
     const behaviorProfile = normalizeBehavior(req.body);
+    const quizAssessment = normalizeQuizAssessment(req.body.quizAssessment);
     validateBehaviorProfile(behaviorProfile);
 
     const mlResponse = await predictFutureOutcome({
@@ -141,6 +291,9 @@ export const analyzeUser = async (req, res, next) => {
     });
 
     user.behaviorProfile = behaviorProfile;
+    if (quizAssessment) {
+      user.quizAssessment = quizAssessment;
+    }
     user.mlPrediction = {
       label: mlResponse.prediction,
       probabilities: mlResponse.probabilities,
@@ -179,7 +332,8 @@ export const analyzeUser = async (req, res, next) => {
     res.json({
       prediction: user.mlPrediction,
       analysis: user.analysis,
-      simulation: user.simulation
+      simulation: user.simulation,
+      quizAssessment: user.quizAssessment
     });
   } catch (error) {
     next(error);
@@ -289,6 +443,22 @@ export const analyzeFutureState = async (req, res, next) => {
       scannerHistory: user.scannerHistory,
       totalXp: user.xp
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const detectProductivity = async (req, res, next) => {
+  try {
+    const text = typeof req.body?.text === "string" ? req.body.text.trim() : "";
+
+    if (text.length < 3) {
+      const error = new Error("Please describe the activity in a little more detail.");
+      error.status = 400;
+      throw error;
+    }
+
+    res.json(buildProductivityPrediction(text));
   } catch (error) {
     next(error);
   }

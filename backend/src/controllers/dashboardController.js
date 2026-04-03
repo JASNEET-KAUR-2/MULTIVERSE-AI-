@@ -21,6 +21,7 @@ export const getDashboard = async (req, res, next) => {
       },
       prediction: user.mlPrediction,
       behaviorProfile: user.behaviorProfile,
+      quizAssessment: user.quizAssessment,
       analysis: user.analysis,
       simulation: user.simulation,
       scannerHistory: user.scannerHistory || [],

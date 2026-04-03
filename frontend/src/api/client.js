@@ -71,6 +71,7 @@ export const api = {
   // Analysis & Insights
   analyzeUser: (token, payload) => request("/analysis/analyze-user", { method: "POST", token, body: payload }),
   futureSelfScan: (token, payload) => request("/analysis/future-self-scan", { method: "POST", token, body: payload }),
+  productivityDetector: (token, payload) => request("/analysis/productivity-detector", { method: "POST", token, body: payload }),
   simulateFuture: (token, payload) => request("/analysis/simulate-future", { method: "POST", token, body: payload }),
 
   // Dashboard

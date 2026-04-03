@@ -1,131 +1,134 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../api/client";
 import { useAuth } from "../context/AuthContext.jsx";
-import { ArrowLeftIcon, ArrowRightIcon, BrainIcon, SparklesIcon } from "../components/V0Icons.jsx";
-import { buildLocalDashboardFallback, clearLocalDashboardFallback, saveLocalDashboardFallback } from "../utils/localDashboardFallback.js";
+import { ArrowLeftIcon, ArrowRightIcon, SparklesIcon } from "../components/V0Icons.jsx";
+import {
+  buildLocalDashboardFallback,
+  clearLocalDashboardFallback,
+  saveLocalDashboardFallback
+} from "../utils/localDashboardFallback.js";
+import { analyzeScenarioResponses, generateDynamicScenarios } from "../utils/dynamicQuizModel.js";
 
-const buildQuestions = (user) => {
-  const firstGoal = user?.goals?.[0] || "the future you want";
-  const firstHabit = user?.habits?.[0] || "your current routine";
-  const name = user?.name || "you";
+const MIN_ANSWER_LENGTH = 30;
 
-  return [
-    {
-      key: "studyHours",
-      eyebrow: "Deep Work Pattern",
-      prompt: `When ${name} is serious about ${firstGoal}, how much focused work usually happens in a normal day?`,
-      options: [
-        { id: "study-1", label: "I mostly react to the day and struggle to start.", description: "Less than 2 real focused hours.", value: 1.5 },
-        { id: "study-2", label: "I get one decent work block in.", description: "Around 2-4 focused hours.", value: 3 },
-        { id: "study-3", label: "I usually make meaningful progress.", description: "Around 4-6 focused hours.", value: 5 },
-        { id: "study-4", label: "I protect my priorities well.", description: "Around 6-8 focused hours.", value: 7 },
-        { id: "study-5", label: "I operate like I am building something serious.", description: "More than 8 focused hours.", value: 9 }
-      ]
-    },
-    {
-      key: "sleepHours",
-      eyebrow: "Recovery Rhythm",
-      prompt: `How does sleep support or sabotage your progress toward ${firstGoal}?`,
-      options: [
-        { id: "sleep-1", label: "I am running on fumes most nights.", description: "Less than 5 hours.", value: 4.5 },
-        { id: "sleep-2", label: "I survive, but not optimally.", description: "About 5-6 hours.", value: 5.5 },
-        { id: "sleep-3", label: "It is decent but inconsistent.", description: "About 6-7 hours.", value: 6.5 },
-        { id: "sleep-4", label: "I usually feel recovered enough to perform.", description: "About 7-8 hours.", value: 7.5 },
-        { id: "sleep-5", label: "Recovery is one of my strengths.", description: "More than 8 hours.", value: 8.5 }
-      ]
-    },
-    {
-      key: "exercise",
-      eyebrow: "Energy Signal",
-      prompt: `Compared with ${firstHabit}, how much intentional movement is actually part of your week?`,
-      options: [
-        { id: "exercise-1", label: "Almost none", description: "Movement is not really part of my routine.", value: false },
-        { id: "exercise-2", label: "A light restart", description: "1-2 sessions or walks a week.", value: true },
-        { id: "exercise-3", label: "Fairly active", description: "3-4 times a week.", value: true },
-        { id: "exercise-4", label: "Locked into my identity", description: "5+ times a week.", value: true }
-      ]
-    },
-    {
-      key: "screenTime",
-      eyebrow: "Distraction Load",
-      prompt: `Outside of important work, how much passive screen time steals energy from ${firstGoal}?`,
-      options: [
-        { id: "screen-1", label: "Very little", description: "Less than 2 hours.", value: 2 },
-        { id: "screen-2", label: "Manageable drift", description: "Around 2-4 hours.", value: 4 },
-        { id: "screen-3", label: "It is becoming a habit", description: "Around 4-6 hours.", value: 6 },
-        { id: "screen-4", label: "It regularly eats my momentum", description: "Around 6-8 hours.", value: 8 },
-        { id: "screen-5", label: "It dominates too much of my day", description: "More than 8 hours.", value: 10 }
-      ]
-    },
-    {
-      key: "consistency",
-      eyebrow: "Execution Identity",
-      prompt: `If someone watched you for 30 days, how consistent would your routine for ${firstGoal} actually look?`,
-      options: [
-        { id: "consistency-1", label: "Chaotic", description: "I break my own plans often.", value: 2 },
-        { id: "consistency-2", label: "Unstable", description: "I follow through sometimes, but not reliably.", value: 4 },
-        { id: "consistency-3", label: "Improving", description: "I have some structure, but it still slips.", value: 6 },
-        { id: "consistency-4", label: "Strong", description: "I usually do what I said I would do.", value: 8 },
-        { id: "consistency-5", label: "Relentless", description: "My routine is part of who I am.", value: 10 }
-      ]
-    },
-    {
-      key: "procrastination",
-      eyebrow: "Resistance Pattern",
-      prompt: `When the work really matters, how much does procrastination still control the pace?`,
-      options: [
-        { id: "procrastination-1", label: "Rarely", description: "I usually start without much resistance.", value: 2 },
-        { id: "procrastination-2", label: "Sometimes", description: "I hesitate, but I recover fairly fast.", value: 4 },
-        { id: "procrastination-3", label: "Often", description: "Delay is still a regular pattern.", value: 6 },
-        { id: "procrastination-4", label: "Usually", description: "Starting is one of my biggest bottlenecks.", value: 8 },
-        { id: "procrastination-5", label: "Almost always", description: "Resistance shapes the whole day.", value: 10 }
-      ]
-    },
-    {
-      key: "goalClarity",
-      eyebrow: "Future Vision",
-      prompt: `How clearly can you picture the next version of yourself you are actually trying to become?`,
-      options: [
-        { id: "goal-1", label: "Foggy", description: "I know I want change, but not what it looks like.", value: 2 },
-        { id: "goal-2", label: "Loose", description: "I have ideas, but nothing sharp enough to guide action.", value: 4 },
-        { id: "goal-3", label: "Decent", description: "I can describe it, but not always execute toward it.", value: 6 },
-        { id: "goal-4", label: "Clear", description: "I know what I am aiming for and why it matters.", value: 8 },
-        { id: "goal-5", label: "Crystal clear", description: "My next chapter is vivid and measurable.", value: 10 }
-      ]
-    }
-  ];
+const calculateLevel = (totalXp) => Math.min(10, Math.floor(totalXp / 400) + 1);
+
+const getPrimaryValue = (value, fallback) => {
+  if (Array.isArray(value)) {
+    return value[0] || fallback;
+  }
+
+  return value || fallback;
 };
 
 const QuizPage = () => {
   const navigate = useNavigate();
   const { token, user } = useAuth();
-  const [index, setIndex] = useState(0);
-  const [answers, setAnswers] = useState({});
-  const [selectedOptions, setSelectedOptions] = useState({});
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [responses, setResponses] = useState({});
+  const [draft, setDraft] = useState("");
+  const [xp, setXp] = useState(0);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
 
-  const questions = useMemo(() => buildQuestions(user), [user]);
-  const currentQuestion = questions[index];
-  const selected = selectedOptions[currentQuestion.key];
-  const completion = Math.round(((index + 1) / questions.length) * 100);
+  const scenarios = useMemo(() => generateDynamicScenarios(user), [user]);
+  const currentScenario = scenarios[currentIndex];
+  const completion = scenarios.length ? Math.round(((currentIndex + 1) / scenarios.length) * 100) : 0;
+  const level = calculateLevel(xp);
+  const firstGoal = getPrimaryValue(user?.goals, "your next chapter");
+  const firstHabit = getPrimaryValue(user?.habits, "your current routine");
 
-  const handleNext = async () => {
-    if (index < questions.length - 1) {
-      setIndex((current) => current + 1);
+  useEffect(() => {
+    if (!currentScenario) {
       return;
     }
 
-    setSubmitting(true);
+    setDraft(responses[currentScenario.id]?.answer || "");
+    setError("");
+  }, [currentScenario, responses]);
+
+  const persistCurrentDraft = () => {
+    if (!currentScenario) {
+      return null;
+    }
+
+    const trimmed = draft.trim();
+    return {
+      questionId: currentScenario.id,
+      category: currentScenario.category,
+      answer: trimmed
+    };
+  };
+
+  const handleBack = () => {
+    if (currentIndex === 0 || submitting) {
+      return;
+    }
+
+    const savedResponse = persistCurrentDraft();
+    if (savedResponse?.answer) {
+      setResponses((current) => ({ ...current, [currentScenario.id]: savedResponse }));
+    }
+
+    setCurrentIndex((value) => value - 1);
+  };
+
+  const handleNext = async () => {
+    const trimmed = draft.trim();
+    if (trimmed.length < MIN_ANSWER_LENGTH) {
+      setError(`Please write at least ${MIN_ANSWER_LENGTH} characters so the analysis has enough depth.`);
+      return;
+    }
+
+    const savedResponse = {
+      questionId: currentScenario.id,
+      category: currentScenario.category,
+      answer: trimmed
+    };
+
+    const answerXp = 40 + Math.min(50, Math.floor(trimmed.length / 15));
+    setResponses((current) => ({ ...current, [currentScenario.id]: savedResponse }));
+    setXp((current) => current + answerXp);
     setError("");
 
+    if (currentIndex < scenarios.length - 1) {
+      setCurrentIndex((value) => value + 1);
+      return;
+    }
+
+    const orderedResponses = scenarios.map((scenario) =>
+      scenario.id === currentScenario.id ? savedResponse : responses[scenario.id]
+    );
+
+    const analysis = analyzeScenarioResponses({
+      answers: orderedResponses.filter(Boolean),
+      user
+    });
+    const payload = {
+      ...analysis.behaviorProfile,
+      quizAssessment: {
+        archetype: analysis.archetype,
+        summary: analysis.summary,
+        xpGained: analysis.xpGained,
+        traits: analysis.traits,
+        patterns: analysis.patterns,
+        scenarioAnswers: orderedResponses.filter(Boolean)
+      }
+    };
+
+    setSubmitting(true);
+
     try {
-      await api.analyzeUser(token, answers);
+      await api.analyzeUser(token, payload);
       clearLocalDashboardFallback();
       navigate("/dashboard", { replace: true });
-    } catch (submitError) {
-      const fallbackDashboard = buildLocalDashboardFallback({ user, answers });
+    } catch {
+      const fallbackDashboard = buildLocalDashboardFallback({
+        user,
+        answers: analysis.behaviorProfile,
+        quizAssessment: payload.quizAssessment
+      });
       saveLocalDashboardFallback(fallbackDashboard);
       navigate("/dashboard", { replace: true });
     } finally {
@@ -133,23 +136,36 @@ const QuizPage = () => {
     }
   };
 
+  if (!currentScenario) {
+    return null;
+  }
+
   return (
     <main className="relative flex min-h-screen flex-col overflow-hidden bg-parallel-grid text-slate-900">
       <div className="pointer-events-none fixed inset-0">
-        <div className="absolute left-1/4 top-1/4 h-96 w-96 rounded-full bg-cyan-200/22 blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 h-96 w-96 rounded-full bg-emerald-200/22 blur-3xl" />
+        <div className="absolute left-[12%] top-[18%] h-80 w-80 rounded-full bg-emerald-200/30 blur-3xl" />
+        <div className="absolute bottom-[10%] right-[12%] h-80 w-80 rounded-full bg-pink-200/24 blur-3xl" />
       </div>
 
-      <header className="glass-light border-b border-cyan-200/30">
+      <header className="glass-light border-b border-emerald-200/40">
         <div className="container mx-auto flex items-center justify-between px-4 py-4">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <div className="soft-button flex h-10 w-10 items-center justify-center rounded-lg">
               <SparklesIcon className="h-5 w-5 text-slate-950" />
             </div>
-            <span className="text-xl font-bold gradient-brand-text">Soul Scan</span>
+            <div>
+              <p className="text-xs uppercase tracking-[0.28em] text-emerald-700">FutureSync</p>
+              <p className="text-sm font-semibold text-slate-900">Behavioral Scenario Scan</p>
+            </div>
           </div>
-          <div className="text-sm text-slate-600">
-            Question {index + 1} of {questions.length}
+
+          <div className="flex items-center gap-3 text-sm text-slate-600">
+            <span className="rounded-full border border-emerald-200/70 bg-white/60 px-3 py-1">
+              XP {xp}
+            </span>
+            <span className="rounded-full border border-emerald-200/70 bg-white/60 px-3 py-1">
+              Lv. {level}
+            </span>
           </div>
         </div>
       </header>
@@ -158,67 +174,75 @@ const QuizPage = () => {
         <div className="gradient-brand h-1 transition-all duration-500" style={{ width: `${completion}%` }} />
       </div>
 
-      <div className="flex flex-1 items-center justify-center p-4">
-        <div className="w-full max-w-3xl">
-          <div className="pastel-shell mb-5 rounded-[1.6rem] p-4">
-            <p className="text-xs uppercase tracking-[0.25em] text-cyan-700">Personalized Read</p>
-            <p className="mt-2 text-sm leading-7 text-slate-700">
-              This scan is calibrated around {user?.goals?.[0] || "your next chapter"} and the habits you shared, so the questions are trying to understand your real pattern, not just a generic productivity score.
-            </p>
+      <div className="relative z-10 flex flex-1 items-center justify-center px-4 py-8">
+        <div className="w-full max-w-4xl">
+          <div className="mb-5 grid gap-4 lg:grid-cols-[1.3fr_0.7fr]">
+            <div className="pastel-shell rounded-[1.8rem] p-5">
+              <p className="text-xs uppercase tracking-[0.28em] text-emerald-700">Personalized Setup</p>
+              <h1 className="mt-3 text-2xl font-bold text-slate-950">
+                We are mapping how you respond under pressure, uncertainty, growth, and ambition.
+              </h1>
+              <p className="mt-3 text-sm leading-7 text-slate-700">
+                This version of the quiz is built around <span className="font-semibold text-slate-900">{firstGoal}</span> and
+                the routine you described around <span className="font-semibold text-slate-900">{firstHabit}</span>, so the output
+                feels more like a real behavioral read than a generic productivity form.
+              </p>
+            </div>
+
+            <div className="pastel-shell rounded-[1.8rem] p-5">
+              <p className="text-xs uppercase tracking-[0.28em] text-emerald-700">Progress</p>
+              <p className="mt-3 text-3xl font-bold text-slate-950">
+                {currentIndex + 1}
+                <span className="text-lg font-medium text-slate-500">/{scenarios.length}</span>
+              </p>
+              <p className="mt-2 text-sm leading-7 text-slate-700">
+                Long-form answers unlock a better dashboard prediction and stronger local fallback if the API is down.
+              </p>
+            </div>
           </div>
 
-          <div className="pastel-shell relative overflow-hidden rounded-2xl p-8">
+          <div className="pastel-shell relative overflow-hidden rounded-[2rem] p-6 sm:p-8">
             <div className="gradient-brand absolute left-0 right-0 top-0 h-1" />
 
-            <div className="mb-6 flex items-center gap-4">
-              <div className="flex h-14 w-14 items-center justify-center rounded-xl border border-cyan-200/40 bg-gradient-to-br from-cyan-100 to-emerald-100">
-                <BrainIcon className="h-7 w-7 text-cyan-700" />
-              </div>
+            <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
               <div>
-                <span className="text-sm font-medium text-cyan-700">{currentQuestion.eyebrow}</span>
-                <h2 className="text-xl font-bold text-slate-900">{currentQuestion.prompt}</h2>
+                <p className="text-sm font-semibold uppercase tracking-[0.24em] text-emerald-700">
+                  {currentScenario.category}
+                </p>
+                <h2 className="mt-3 max-w-3xl text-2xl font-bold leading-tight text-slate-950">
+                  {currentScenario.prompt}
+                </h2>
+              </div>
+
+              <div className="rounded-2xl border border-emerald-200/70 bg-white/60 px-4 py-2 text-right">
+                <p className="text-xs uppercase tracking-[0.24em] text-slate-500">Question</p>
+                <p className="mt-1 text-lg font-semibold text-slate-900">
+                  {currentIndex + 1} of {scenarios.length}
+                </p>
               </div>
             </div>
 
-            <div className="space-y-3">
-              {currentQuestion.options.map((option) => {
-                const active = selected === option.id;
-                return (
-                  <button
-                    key={option.id}
-                    type="button"
-                    onClick={() => {
-                      setSelectedOptions((current) => ({ ...current, [currentQuestion.key]: option.id }));
-                      setAnswers((current) => ({ ...current, [currentQuestion.key]: option.value }));
-                    }}
-                    className={`w-full rounded-xl border p-4 text-left transition-all duration-200 ${
-                      active
-                        ? "border-cyan-300/70 bg-white/78 shadow-[0_18px_35px_rgba(125,211,252,0.14)]"
-                        : "border-cyan-100/80 bg-white/56 hover:border-cyan-200/80 hover:bg-white/80"
-                    }`}
-                  >
-                    <div className="flex items-start gap-3">
-                      <div className={`mt-1 flex h-5 w-5 items-center justify-center rounded-full border-2 ${active ? "border-cyan-600" : "border-slate-400"}`}>
-                        {active ? <div className="h-2.5 w-2.5 rounded-full bg-cyan-600" /> : null}
-                      </div>
-                      <div>
-                        <p className={active ? "text-slate-900" : "text-slate-800"}>{option.label}</p>
-                        <p className="mt-1 text-sm text-slate-600">{option.description}</p>
-                      </div>
-                    </div>
-                  </button>
-                );
-              })}
+            <textarea
+              rows={8}
+              value={draft}
+              onChange={(event) => setDraft(event.target.value)}
+              placeholder="Write a detailed response. Explain what you would do, why you would do it, and what tradeoffs you would consider."
+              className="min-h-[220px] w-full rounded-[1.4rem] border border-emerald-100/90 bg-white/72 px-5 py-4 text-base leading-7 text-slate-800 shadow-[0_18px_40px_rgba(148,163,184,0.08)] outline-none transition focus:border-emerald-300 focus:bg-white"
+            />
+
+            <div className="mt-3 flex items-center justify-between gap-4 text-sm text-slate-600">
+              <span>{draft.trim().length} characters</span>
+              <span>Minimum {MIN_ANSWER_LENGTH} recommended for accurate analysis</span>
             </div>
 
-            {error ? <p className="mt-4 text-sm text-rose-300">{error}</p> : null}
+            {error ? <p className="mt-4 text-sm text-rose-500">{error}</p> : null}
           </div>
 
-          <div className="mt-6 flex items-center justify-between">
+          <div className="mt-6 flex items-center justify-between gap-4">
             <button
               type="button"
-              onClick={() => setIndex((current) => Math.max(0, current - 1))}
-              disabled={index === 0 || submitting}
+              onClick={handleBack}
+              disabled={currentIndex === 0 || submitting}
               className="soft-button-secondary inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition disabled:pointer-events-none disabled:opacity-50 hover:bg-white/90"
             >
               <ArrowLeftIcon className="h-4 w-4" />
@@ -226,18 +250,24 @@ const QuizPage = () => {
             </button>
 
             <div className="flex items-center gap-2">
-              {questions.map((_, dotIndex) => (
-                <div key={dotIndex} className={`h-2 w-2 rounded-full ${dotIndex <= index ? "bg-cyan-200" : "bg-white/10"}`} />
-              ))}
+              {scenarios.map((scenario, dotIndex) => {
+                const hasResponse = Boolean(responses[scenario.id]?.answer) || (dotIndex === currentIndex && draft.trim().length >= MIN_ANSWER_LENGTH);
+                return (
+                  <div
+                    key={scenario.id}
+                    className={`h-2.5 rounded-full transition-all ${hasResponse ? "w-6 bg-emerald-300" : dotIndex === currentIndex ? "w-6 bg-pink-200" : "w-2.5 bg-white/20"}`}
+                  />
+                );
+              })}
             </div>
 
             <button
               type="button"
-              disabled={typeof selected === "undefined" || submitting}
               onClick={handleNext}
+              disabled={submitting}
               className="soft-button inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-semibold transition disabled:pointer-events-none disabled:opacity-50"
             >
-              {submitting ? "Analyzing..." : index === questions.length - 1 ? "See My Future" : "Next"}
+              {submitting ? "Analyzing..." : currentIndex === scenarios.length - 1 ? "See My Future" : "Next"}
               <ArrowRightIcon className="h-4 w-4" />
             </button>
           </div>
