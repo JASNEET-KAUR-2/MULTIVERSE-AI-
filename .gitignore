@@ -3,6 +3,7 @@ node_modules
 dist
 coverage
 .DS_Store
+*.log
 backend/uploads
 .logs
 __pycache__
@@ -11,3 +12,5 @@ __pycache__
 **/.venv/
 .mongo-data
 backend/.mongo-data
+services/emotion-service/.deepface-home/
+services/emotion-service/__pycache__/
