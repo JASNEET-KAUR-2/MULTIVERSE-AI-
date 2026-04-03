@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { jsPDF } from "jspdf";
 import Dashboard from "./components/Dashboard";
+import GamificationDashboard from "./components/GamificationDashboard";
 import Quiz from "./components/Quiz";
 import Recommendations from "./components/Recommendations";
 import Roadmap from "./components/Roadmap";
@@ -27,6 +28,8 @@ export default function App() {
   const [roadmap, setRoadmap] = useState(null);
   const [evaluation, setEvaluation] = useState(null);
   const [evaluationAnswers, setEvaluationAnswers] = useState({});
+  const [gamification, setGamification] = useState(null);
+  const [latestReward, setLatestReward] = useState(null);
   const [loadingState, setLoadingState] = useState({
     baseline: false,
     goals: false,
@@ -79,6 +82,21 @@ export default function App() {
   const hydrateProfile = async () => {
     const data = await apiRequest(`/profile/${userId}`);
     setProfile(data.profile || {});
+    setGamification(data.profile?.gamification || null);
+  };
+
+  const applyRewardResponse = (data, successMessage) => {
+    if (data.gamification) {
+      setGamification(data.gamification);
+    }
+    if (data.reward) {
+      setLatestReward(data.reward);
+      const badgeNames = (data.reward.new_badges || []).map((badge) => badge.name).join(", ");
+      const bonus = data.reward.streak_bonus ? ` + ${data.reward.streak_bonus} streak bonus` : "";
+      setToast(`${successMessage} +${data.reward.earned_points}${bonus}${badgeNames ? ` • Unlocked: ${badgeNames}` : ""}`);
+    } else {
+      setToast(successMessage);
+    }
   };
 
   const handleBaselineSubmit = async () => {
@@ -94,7 +112,7 @@ export default function App() {
       });
       setUserId(data.user_id);
       await hydrateProfile();
-      setToast("Baseline assessment completed.");
+      applyRewardResponse(data, "Baseline assessment completed.");
     } catch (error) {
       setToast(error.message);
     } finally {
@@ -105,7 +123,7 @@ export default function App() {
   const handleGoalsSubmit = async () => {
     try {
       setLoading("goals", true);
-      await apiRequest("/assessment/goals", {
+      const data = await apiRequest("/assessment/goals", {
         method: "POST",
         body: JSON.stringify({
           user_id: userId,
@@ -114,7 +132,7 @@ export default function App() {
         })
       });
       await hydrateProfile();
-      setToast("Goals interpreted successfully.");
+      applyRewardResponse(data, "Goals interpreted successfully.");
     } catch (error) {
       setToast(error.message);
     } finally {
@@ -130,7 +148,7 @@ export default function App() {
         body: JSON.stringify({ user_id: userId })
       });
       setGapAnalysis(data);
-      setToast("Skill gap analysis updated.");
+      applyRewardResponse(data, "Skill gap analysis updated.");
     } catch (error) {
       setToast(error.message);
     } finally {
@@ -150,7 +168,7 @@ export default function App() {
       });
       setRecommendations(data.recommendations);
       await hydrateProfile();
-      setToast("Recommendations generated.");
+      applyRewardResponse(data, "Recommendations generated.");
     } catch (error) {
       setToast(error.message);
     } finally {
@@ -171,7 +189,7 @@ export default function App() {
       });
       setEvaluation(data.evaluation);
       await hydrateProfile();
-      setToast("Evaluation scored.");
+      applyRewardResponse(data, "Evaluation scored.");
     } catch (error) {
       setToast(error.message);
     } finally {
@@ -192,11 +210,28 @@ export default function App() {
       });
       setRoadmap(data.roadmap);
       await hydrateProfile();
-      setToast("Roadmap generated.");
+      applyRewardResponse(data, "Roadmap generated.");
     } catch (error) {
       setToast(error.message);
     } finally {
       setLoading("roadmap", false);
+    }
+  };
+
+  const handleGamificationAction = async (points, label) => {
+    try {
+      const data = await apiRequest("/gamification/action", {
+        method: "POST",
+        body: JSON.stringify({
+          user_id: userId,
+          points,
+          label
+        })
+      });
+      await hydrateProfile();
+      applyRewardResponse(data, `${label} recorded.`);
+    } catch (error) {
+      setToast(error.message);
     }
   };
 
@@ -337,6 +372,7 @@ export default function App() {
             <Dashboard profile={profile} gapAnalysis={gapAnalysis} evaluation={evaluation} />
             <Recommendations recommendations={recommendations} loading={loadingState.recommendations} />
             <Roadmap roadmap={roadmap} onDownload={downloadRoadmap} />
+            <GamificationDashboard gamification={gamification} reward={latestReward} onAction={handleGamificationAction} />
           </div>
         </section>
       </div>

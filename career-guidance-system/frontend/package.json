@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "canvas-confetti": "^1.9.3",
     "chart.js": "^4.4.8",
     "framer-motion": "^12.6.2",
     "jspdf": "^2.5.2",
