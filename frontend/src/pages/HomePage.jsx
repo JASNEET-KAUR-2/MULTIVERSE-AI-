@@ -30,6 +30,11 @@ const focusCards = [
     title: "Clear Progress",
     description: "Track what is improving without drowning in extra details.",
     icon: TrendUpIcon
+  },
+  {
+    title: "Career Lab",
+    description: "Use the BUISES career guidance flow with roadmap and gamified rewards.",
+    icon: TargetIcon
   }
 ];
 
@@ -90,6 +95,9 @@ const HomePage = () => {
               <Link className="text-sm text-white/78 transition hover:text-white" to="/feedback">
                 Feedback
               </Link>
+              <Link className="text-sm text-white/78 transition hover:text-white" to="/career">
+                Career Lab
+              </Link>
             </div>
 
             <div className="hidden items-center gap-3 md:flex">
@@ -124,6 +132,9 @@ const HomePage = () => {
               </a>
               <Link className="block px-3 py-2 text-white/85" to="/feedback" onClick={() => setMobileMenuOpen(false)}>
                 Feedback
+              </Link>
+              <Link className="block px-3 py-2 text-white/85" to="/career" onClick={() => setMobileMenuOpen(false)}>
+                Career Lab
               </Link>
               <Link className="block px-3 py-2 text-white/85" to="/login" onClick={() => setMobileMenuOpen(false)}>
                 Login
@@ -176,6 +187,9 @@ const HomePage = () => {
                     Start Future Scan
                     <ArrowRightIcon className="ml-2 h-5 w-5" />
                   </Link>
+                  <Link to="/career" className="report-cta-secondary inline-flex items-center justify-center">
+                    Career Lab
+                  </Link>
                   <Link to="/dashboard" className="report-cta-secondary inline-flex items-center justify-center">
                     <PlayIcon className="mr-2 h-5 w-5" />
                     Open Dashboard
@@ -205,7 +219,7 @@ const HomePage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, delay: 0.45, ease: "easeOut" }}
-              className="relative z-10 mt-10 grid gap-4 md:grid-cols-3"
+              className="relative z-10 mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4"
             >
               {focusCards.map((card) => {
                 const Icon = card.icon;

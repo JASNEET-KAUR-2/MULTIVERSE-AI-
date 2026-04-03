@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useTheme } from "../context/ThemeContext.jsx";
-import { BranchIcon, DashboardIcon, MessageIcon, MoonIcon, SparklesIcon, SunIcon, TargetIcon, TrophyIcon, UserIcon } from "./V0Icons.jsx";
+import { BranchIcon, BriefcaseIcon, DashboardIcon, MessageIcon, MoonIcon, SparklesIcon, SunIcon, TargetIcon, TrophyIcon, UserIcon } from "./V0Icons.jsx";
 import UserAvatar from "./UserAvatar.jsx";
 
 const links = [
@@ -9,6 +9,7 @@ const links = [
   { label: "Scanner", to: "/scanner", icon: SparklesIcon, aliases: [] },
   { label: "Future Paths", to: "/futures", icon: BranchIcon, aliases: ["/app/future"] },
   { label: "Growth", to: "/growth", icon: TrophyIcon, aliases: ["/app/growth"] },
+  { label: "Career Lab", to: "/career", icon: BriefcaseIcon, aliases: ["/app/career"] },
   { label: "Planner", to: "/planner", icon: TargetIcon, aliases: ["/app/planner"] },
   { label: "Message", to: "/message", icon: MessageIcon, aliases: ["/app/message"] },
   { label: "Guilds", to: "/app/guilds", icon: SparklesIcon, aliases: ["/guilds"] },

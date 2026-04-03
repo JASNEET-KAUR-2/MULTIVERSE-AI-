@@ -6,6 +6,7 @@ import { useAuth } from "../context/AuthContext.jsx";
 import {
   AlertIcon,
   BranchIcon,
+  BriefcaseIcon,
   MessageIcon,
   RefreshIcon,
   SparklesIcon,
@@ -117,6 +118,7 @@ const DashboardPage = () => {
   const quickActions = [
     { label: "View Futures", to: "/futures", icon: BranchIcon, tint: "text-cyan-700", bg: "bg-cyan-100" },
     { label: "Daily Quests", to: "/growth", icon: TrophyIcon, tint: "text-amber-700", bg: "bg-amber-100" },
+    { label: "Career Lab", to: "/career", icon: BriefcaseIcon, tint: "text-violet-700", bg: "bg-violet-100" },
     { label: "Future Message", to: "/message", icon: MessageIcon, tint: "text-sky-700", bg: "bg-sky-100" },
     { label: "Retake Quiz", to: "/quiz", icon: RefreshIcon, tint: "text-emerald-700", bg: "bg-emerald-100" }
   ];

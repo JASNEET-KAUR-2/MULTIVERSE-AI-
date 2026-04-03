@@ -6,6 +6,7 @@ import AuthPage from "./pages/AuthPage.jsx";
 import DashboardPage from "./pages/DashboardPage.jsx";
 import FuturePage from "./pages/FuturePage.jsx";
 import FutureScannerPage from "./pages/FutureScannerPage.jsx";
+import CareerGuidancePage from "./pages/CareerGuidancePage.jsx";
 import FeedbackPage from "./pages/FeedbackPage.jsx";
 import GrowthPage from "./pages/GrowthPage.jsx";
 import GuildsPage from "./pages/GuildsPage.jsx";
@@ -49,6 +50,8 @@ const App = () => (
         <Route path="/futures" element={<FuturePage />} />
         <Route path="/app/growth" element={<GrowthPage />} />
         <Route path="/growth" element={<GrowthPage />} />
+        <Route path="/app/career" element={<CareerGuidancePage />} />
+        <Route path="/career" element={<CareerGuidancePage />} />
         <Route path="/app/planner" element={<ProductivityPlannerPage />} />
         <Route path="/planner" element={<ProductivityPlannerPage />} />
         <Route path="/app/tasks" element={<TaskManagementPage />} />
