@@ -9,7 +9,7 @@ const __dirname = path.dirname(__filename);
 
 dotenv.config({ path: path.join(__dirname, ".env") });
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 10000;
 const emotionServiceUrl = process.env.EMOTION_SERVICE_URL || "http://127.0.0.1:8001";
 const emotionAutoStart = String(process.env.EMOTION_AUTO_START || "true").toLowerCase() !== "false";
 const emotionServiceDir = path.resolve(__dirname, "..", "services", "emotion-service");
@@ -18,13 +18,19 @@ let emotionServiceStartPromise = null;
 const emotionStdoutLogPath = path.join(emotionServiceDir, "emotion-service.out.log");
 const emotionStderrLogPath = path.join(emotionServiceDir, "emotion-service.err.log");
 
-const requiredEnvVars = ["MONGODB_URI", "JWT_SECRET", "ML_API_URL", "GROQ_API_KEY"];
+const requiredEnvVars = ["MONGODB_URI", "JWT_SECRET"];
+const optionalEnvVars = ["ML_API_URL", "GROQ_API_KEY"];
 
 const validateEnv = () => {
   const missing = requiredEnvVars.filter((key) => !process.env[key]);
 
   if (missing.length) {
     throw new Error(`Missing required environment variables: ${missing.join(", ")}`);
+  }
+
+  const missingOptional = optionalEnvVars.filter((key) => !process.env[key]);
+  if (missingOptional.length) {
+    console.warn(`Optional environment variables missing: ${missingOptional.join(", ")}. Fallback flows will be used where supported.`);
   }
 };
 
@@ -168,14 +174,29 @@ const startServer = async () => {
   ]);
 
   validateEnv();
-  await connectDatabase();
 
-  app.listen(port, () => {
-    console.log(`Parallel You backend running on port ${port}`);
-    warmEmotionService();
-  });
+  try {
+    await connectDatabase();
+    console.log("MongoDB connected ✅");
+
+    const server = app.listen(port, () => {
+      console.log(`Server running on port ${port} 🚀`);
+      warmEmotionService();
+    });
+
+    server.on("error", (error) => {
+      if (error?.code === "EADDRINUSE") {
+        console.error(`Server port ${port} is already in use ❌`);
+        return;
+      }
+
+      console.error("Server failed to start ❌", error);
+    });
+  } catch (error) {
+    console.error("MongoDB connection error ❌", error);
+  }
 };
+
 startServer().catch((error) => {
   console.error("Failed to start server", error);
-  process.exit(1);
 });
