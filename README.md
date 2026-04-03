@@ -1,6 +1,6 @@
-# Parallel You - Groq + Random Forest Hackathon Stack
+# Parallel You - Groq + Ensemble ML Hackathon Stack
 
-Parallel You is a full-stack AI + ML web app built for fast hackathon delivery. Users enter behavioral signals, get a real Random Forest prediction, then receive Groq-generated future simulations and action plans on top of that model output.
+Parallel You is a full-stack AI + ML web app built for fast hackathon delivery. Users enter behavioral signals, get a real ensemble-model prediction, then receive Groq-generated future simulations and action plans on top of that model output.
 
 ## Stack
 
@@ -8,7 +8,7 @@ Parallel You is a full-stack AI + ML web app built for fast hackathon delivery. 
 - Backend: Node.js + Express
 - Database: MongoDB Atlas free tier + Mongoose
 - Auth: JWT
-- ML API: Python + Flask + Scikit-learn RandomForestClassifier
+- ML API: Python + Flask + Scikit-learn stacking ensemble
 - AI Text: Groq
 
 ## Features
@@ -16,7 +16,7 @@ Parallel You is a full-stack AI + ML web app built for fast hackathon delivery. 
 - JWT signup/login with profile data
 - Behavior scan form with study, sleep, exercise, screen time, consistency, procrastination, and goal clarity
 - Synthetic ML dataset generation with 900 rows
-- Trained RandomForestClassifier saved as `ml-model/model.pkl`
+- Trained stacking ensemble saved as `ml-model/model.pkl`
 - Flask prediction endpoint at `/predict`
 - Node API endpoint at `/api/analysis/analyze-user`
 - Groq-generated strengths, weaknesses, future stories, and future-self message
@@ -119,6 +119,8 @@ GROQ_API_KEY=your-groq-api-key
 GROQ_API_URL=https://api.groq.com/openai/v1
 GROQ_MODEL=openai/gpt-oss-20b
 GROQ_FALLBACK_MODEL=llama-3.1-8b-instant
+EMAIL_USER=your-email@gmail.com
+EMAIL_PASS=your-email-app-password
 ```
 
 ### Frontend
@@ -145,7 +147,7 @@ VITE_API_URL=http://localhost:5000/api
 
 ## Groq Notes
 
-- The Random Forest output is treated as the ground-truth classifier result.
+- The ensemble classifier output is treated as the ground-truth classifier result.
 - Groq is used after prediction to generate:
   - strengths and weaknesses
   - future story

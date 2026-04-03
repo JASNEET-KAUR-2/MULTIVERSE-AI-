@@ -239,6 +239,11 @@ const checkGroq = async () => {
       addResult("FAIL", "Groq generate", `HTTP ${completion.status}`);
     }
   } catch (error) {
+    if (/fetch failed|network|enotfound|eai_again/i.test(String(error.message || ""))) {
+      addResult("WARN", "Groq", `Network check skipped: ${error.message}`);
+      return;
+    }
+
     addResult("FAIL", "Groq", error.message);
   }
 };
@@ -254,6 +259,27 @@ const checkOptionalApp = async (label, url) => {
   } catch (_error) {
     addResult("WARN", label, "Not running yet.");
   }
+};
+
+const checkFrontendApp = async () => {
+  const candidates = ["http://127.0.0.1:5173", "http://127.0.0.1:5174", "http://localhost:5173", "http://localhost:5174"];
+
+  for (const url of candidates) {
+    try {
+      const response = await safeFetchJson(url, {}, 8000);
+      if (response.ok) {
+        addResult("PASS", "Frontend app", `Already running at ${url}.`);
+        return;
+      }
+
+      addResult("WARN", "Frontend app", `Reachable at ${url} but returned HTTP ${response.status}.`);
+      return;
+    } catch (_error) {
+      // Try the next dev port candidate.
+    }
+  }
+
+  addResult("WARN", "Frontend app", "Not running yet.");
 };
 
 const summarize = () => {
@@ -279,7 +305,7 @@ const run = async () => {
   await checkMlApi();
   await checkGroq();
   await checkOptionalApp("Backend app", "http://127.0.0.1:5000/api/health");
-  await checkOptionalApp("Frontend app", "http://127.0.0.1:5173");
+  await checkFrontendApp();
   summarize();
 };
 

@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "dev": "concurrently \"npm run dev:ml\" \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:session": "node scripts/dev-session.mjs",
     "dev:frontend": "npm run dev --workspace frontend",
     "dev:backend": "npm run dev --workspace backend",
     "dev:ml": "python ml-model/app.py",

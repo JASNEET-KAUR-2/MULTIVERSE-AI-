@@ -11,12 +11,17 @@ export const getDashboard = async (req, res, next) => {
       stats: {
         xp: user.xp,
         streak: user.streak,
-        prediction: user.mlPrediction?.label || "Unanalyzed"
+        prediction: user.mlPrediction?.label || "Unanalyzed",
+        scannerStreak: user.scannerStreak || 0,
+        confidence: user.mlPrediction?.confidence || user.analysis?.confidence || 0
       },
       prediction: user.mlPrediction,
       behaviorProfile: user.behaviorProfile,
       analysis: user.analysis,
       simulation: user.simulation,
+      scannerHistory: user.scannerHistory || [],
+      activityLog: user.activityLog || [],
+      simulationHistory: user.simulationHistory || [],
       quests
     });
   } catch (error) {

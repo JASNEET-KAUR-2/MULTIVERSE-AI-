@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 import joblib
@@ -46,7 +47,7 @@ def predict():
         model = bundle["model"]
         prediction = model.predict(features)[0]
         probabilities = model.predict_proba(features)[0]
-        classes = model.classes_
+        classes = model.named_steps["classifier"].classes_
 
         return jsonify(
             {
@@ -55,6 +56,8 @@ def predict():
                     classes[index]: round(float(probability), 4)
                     for index, probability in enumerate(probabilities)
                 },
+                "confidence": round(float(max(probabilities)), 4),
+                "model_name": bundle.get("model_name", "unknown"),
             }
         )
     except FileNotFoundError as error:
@@ -66,4 +69,4 @@ def predict():
 
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=8000, debug=True)
+    app.run(host="0.0.0.0", port=int(os.getenv("PORT", "8000")), debug=True)

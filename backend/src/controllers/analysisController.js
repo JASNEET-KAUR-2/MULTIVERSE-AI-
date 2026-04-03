@@ -1,7 +1,9 @@
 import Quest from "../models/Quest.js";
 import User from "../models/User.js";
-import { generateSimulationNarrative } from "../services/groqService.js";
+import { appendActivityLog } from "../services/gamificationService.js";
+import { generateFutureStateScan, generateSimulationNarrative, generateWhatIfStory } from "../services/groqService.js";
 import { predictFutureOutcome } from "../services/mlService.js";
+import { buildPersonalizedRecommendations } from "../services/personalizationService.js";
 
 const normalizeBehavior = (payload) => ({
   studyHours: Number(payload.studyHours),
@@ -13,9 +15,101 @@ const normalizeBehavior = (payload) => ({
   goalClarity: Number(payload.goalClarity)
 });
 
+const validateBehaviorProfile = (behaviorProfile) => {
+  const ranges = [
+    ["studyHours", behaviorProfile.studyHours, 0, 12],
+    ["sleepHours", behaviorProfile.sleepHours, 0, 12],
+    ["screenTime", behaviorProfile.screenTime, 0, 18],
+    ["consistency", behaviorProfile.consistency, 1, 10],
+    ["procrastination", behaviorProfile.procrastination, 1, 10],
+    ["goalClarity", behaviorProfile.goalClarity, 1, 10]
+  ];
+
+  for (const [field, value, min, max] of ranges) {
+    if (!Number.isFinite(value) || value < min || value > max) {
+      const error = new Error(`${field} must be between ${min} and ${max}.`);
+      error.status = 400;
+      throw error;
+    }
+  }
+};
+
+const getOutcomeScore = (label, probabilities = {}) => {
+  const high = Number(probabilities.High || 0);
+  const average = Number(probabilities.Average || 0);
+  const negative = Number(probabilities.Negative || 0);
+  const base = label === "High" ? 100 : label === "Average" ? 62 : 28;
+  return Math.max(0, Math.min(100, Math.round(base + high * 12 + average * 4 - negative * 10)));
+};
+
+const getContributionBreakdown = (current = {}, next = {}) => {
+  const changes = [
+    {
+      key: "studyHours",
+      label: "Study Hours",
+      delta: Number(next.studyHours || 0) - Number(current.studyHours || 0),
+      weight: 8,
+      explanation: "More deep work time usually lifts trajectory quality."
+    },
+    {
+      key: "sleepHours",
+      label: "Sleep Hours",
+      delta: Number(next.sleepHours || 0) - Number(current.sleepHours || 0),
+      weight: 6,
+      explanation: "Recovery quality affects focus consistency and burnout risk."
+    },
+    {
+      key: "exercise",
+      label: "Exercise",
+      delta: (next.exercise ? 1 : 0) - (current.exercise ? 1 : 0),
+      weight: 7,
+      explanation: "Movement improves resilience, energy, and execution stability."
+    },
+    {
+      key: "consistency",
+      label: "Consistency",
+      delta: Number(next.consistency || 0) - Number(current.consistency || 0),
+      weight: 9,
+      explanation: "Consistency is one of the strongest compounding signals."
+    },
+    {
+      key: "procrastination",
+      label: "Procrastination",
+      delta: Number(current.procrastination || 0) - Number(next.procrastination || 0),
+      weight: 9,
+      explanation: "Lower procrastination reduces drag and makes momentum more durable."
+    },
+    {
+      key: "goalClarity",
+      label: "Goal Clarity",
+      delta: Number(next.goalClarity || 0) - Number(current.goalClarity || 0),
+      weight: 8,
+      explanation: "Clear goals make daily actions map to better long-term outcomes."
+    }
+  ].map((item) => ({
+    ...item,
+    score: Math.abs(item.delta) * item.weight
+  }));
+
+  const topContributor = [...changes].sort((a, b) => b.score - a.score)[0];
+  return {
+    changes,
+    topContributor: topContributor?.score
+      ? {
+          key: topContributor.key,
+          label: topContributor.label,
+          delta: topContributor.delta,
+          explanation: topContributor.explanation
+        }
+      : null
+  };
+};
+
 export const analyzeUser = async (req, res, next) => {
   try {
     const behaviorProfile = normalizeBehavior(req.body);
+    validateBehaviorProfile(behaviorProfile);
+
     const mlResponse = await predictFutureOutcome({
       study_hours: behaviorProfile.studyHours,
       sleep_hours: behaviorProfile.sleepHours,
@@ -35,25 +129,45 @@ export const analyzeUser = async (req, res, next) => {
       prediction: mlResponse.prediction,
       probabilities: mlResponse.probabilities
     });
+    const personalized = buildPersonalizedRecommendations({
+      behaviorProfile,
+      prediction: mlResponse.prediction,
+      probabilities: mlResponse.probabilities,
+      goals: user.goals,
+      habits: user.habits
+    });
 
     user.behaviorProfile = behaviorProfile;
     user.mlPrediction = {
       label: mlResponse.prediction,
-      probabilities: mlResponse.probabilities
+      probabilities: mlResponse.probabilities,
+      confidence: mlResponse.confidence,
+      modelName: mlResponse.model_name
     };
     user.analysis = {
-      strengths: simulation.strengths,
-      weaknesses: simulation.weaknesses,
-      personalityType: simulation.modelUsed
-        ? `${simulation.personalityType} · via ${simulation.modelUsed}`
-        : simulation.personalityType,
-      summary: simulation.summary,
-      dailyTasks: simulation.dailyTasks
+      strengths: personalized.strengths.length ? personalized.strengths : simulation.strengths,
+      weaknesses: personalized.weaknesses.length ? personalized.weaknesses : simulation.weaknesses,
+      focusAreas: personalized.focusAreas,
+      recommendations: personalized.recommendations,
+      personalityType: simulation.personalityType,
+      modelUsed: simulation.modelUsed,
+      summary: `${simulation.summary} ${personalized.summary}`,
+      confidence: personalized.confidence,
+      momentumScore: personalized.momentumScore,
+      riskScore: personalized.riskScore,
+      nextBestAction: personalized.nextBestAction,
+      narrativeTone: personalized.narrativeTone,
+      habitAnchors: personalized.habitAnchors,
+      coachProfile: personalized.coachProfile,
+      insightCards: personalized.insightCards,
+      driverSignals: personalized.driverSignals,
+      dailyTasks: personalized.personalizedTasks.length ? personalized.personalizedTasks : simulation.dailyTasks
     };
     user.simulation = {
       futureStory: simulation.futureStory,
       alternateStory: simulation.alternateStory,
-      futureMessage: simulation.futureMessage
+      futureMessage: simulation.futureMessage,
+      timelineVariants: simulation.timelineVariants
     };
     await user.save();
 
@@ -63,6 +177,195 @@ export const analyzeUser = async (req, res, next) => {
       prediction: user.mlPrediction,
       analysis: user.analysis,
       simulation: user.simulation
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const validateScannerPayload = ({ mood, energy, engagement, stress }) => {
+  const validMoods = ["happy", "focused", "tired", "stressed"];
+  if (!validMoods.includes(mood)) {
+    const error = new Error("mood must be one of happy, focused, tired, or stressed.");
+    error.status = 400;
+    throw error;
+  }
+
+  for (const [field, value] of [
+    ["energy", energy],
+    ["engagement", engagement],
+    ["stress", stress]
+  ]) {
+    if (!Number.isFinite(Number(value)) || Number(value) < 1 || Number(value) > 10) {
+      const error = new Error(`${field} must be between 1 and 10.`);
+      error.status = 400;
+      throw error;
+    }
+  }
+};
+
+export const analyzeFutureState = async (req, res, next) => {
+  try {
+    const scannerState = {
+      mood: String(req.body.mood || "").toLowerCase(),
+      energy: Number(req.body.energy),
+      engagement: Number(req.body.engagement),
+      stress: Number(req.body.stress),
+      cameraEnabled: Boolean(req.body.cameraEnabled),
+      capturedAt: req.body.capturedAt || null,
+      thumbnail: typeof req.body.thumbnail === "string" ? req.body.thumbnail : ""
+    };
+
+    validateScannerPayload(scannerState);
+
+    const user = await User.findById(req.user._id).select("-password");
+    const currentPrediction = user.mlPrediction?.label || "Unanalyzed";
+    const stateScore =
+      scannerState.engagement * 1.4 +
+      scannerState.energy * 1.1 -
+      scannerState.stress * 1.2 +
+      (scannerState.mood === "focused" ? 2 : 0) +
+      (scannerState.mood === "happy" ? 1 : 0) -
+      (scannerState.mood === "tired" ? 2 : 0) -
+      (scannerState.mood === "stressed" ? 3 : 0);
+
+    const riskLevel = stateScore >= 13 ? "Low" : stateScore >= 8 ? "Moderate" : "High";
+
+    const scan = await generateFutureStateScan({
+      name: user.name,
+      goals: user.goals,
+      habits: user.habits,
+      currentPrediction,
+      scannerState: {
+        ...scannerState,
+        derivedRiskLevel: riskLevel
+      }
+    });
+
+    const today = new Date().toDateString();
+    const lastScan = user.lastScannerScanAt ? new Date(user.lastScannerScanAt).toDateString() : null;
+    const alreadyScannedToday = lastScan === today;
+    const xpAwarded = alreadyScannedToday ? 0 : 15;
+
+    if (!alreadyScannedToday) {
+      user.xp += xpAwarded;
+      user.scannerStreak = lastScan === new Date(Date.now() - 86400000).toDateString() ? user.scannerStreak + 1 : 1;
+      user.lastScannerScanAt = new Date();
+    }
+
+    user.scannerHistory.unshift({
+      mood: scannerState.mood,
+      energy: scannerState.energy,
+      engagement: scannerState.engagement,
+      stress: scannerState.stress,
+      riskLevel,
+      statusLabel: scan.statusLabel,
+      summary: scan.summary,
+      futureWarning: scan.futureWarning,
+      bestMoveNow: scan.bestMoveNow,
+      suggestions: scan.suggestions,
+      thumbnail: scannerState.thumbnail,
+      cameraEnabled: scannerState.cameraEnabled
+    });
+    user.scannerHistory = user.scannerHistory.slice(0, 8);
+    appendActivityLog(user, {
+      type: "scanner",
+      label: scan.statusLabel,
+      xpAwarded,
+      detail: scan.bestMoveNow,
+      createdAt: new Date()
+    });
+    await user.save();
+
+    res.json({
+      riskLevel,
+      scannerState,
+      scan,
+      xpAwarded,
+      scannerStreak: user.scannerStreak,
+      scannerHistory: user.scannerHistory,
+      totalXp: user.xp
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const simulateFuture = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user._id).select("-password");
+    const behaviorProfile = normalizeBehavior({
+      ...user.behaviorProfile,
+      ...req.body,
+      screenTime: req.body.screenTime ?? user.behaviorProfile?.screenTime ?? 4
+    });
+    validateBehaviorProfile(behaviorProfile);
+
+    const mlResponse = await predictFutureOutcome({
+      study_hours: behaviorProfile.studyHours,
+      sleep_hours: behaviorProfile.sleepHours,
+      exercise: behaviorProfile.exercise ? 1 : 0,
+      screen_time: behaviorProfile.screenTime,
+      consistency: behaviorProfile.consistency,
+      procrastination: behaviorProfile.procrastination,
+      goal_clarity: behaviorProfile.goalClarity
+    });
+
+    const story = await generateWhatIfStory({
+      name: user.name,
+      goals: user.goals,
+      habits: user.habits,
+      behaviorProfile,
+      prediction: mlResponse.prediction,
+      probabilities: mlResponse.probabilities
+    });
+
+    const currentPrediction = user.mlPrediction || {};
+    const currentScore = getOutcomeScore(currentPrediction.label, currentPrediction.probabilities);
+    const simulatedScore = getOutcomeScore(mlResponse.prediction, mlResponse.probabilities);
+    const delta = simulatedScore - currentScore;
+    const contribution = getContributionBreakdown(user.behaviorProfile || {}, behaviorProfile);
+
+    user.simulationHistory = user.simulationHistory || [];
+    user.simulationHistory.unshift({
+      presetMode: typeof req.body.presetMode === "string" ? req.body.presetMode : "",
+      behaviorProfile,
+      prediction: mlResponse.prediction,
+      score: simulatedScore,
+      story: story.story,
+      improvementDelta: delta,
+      topContributor: contribution.topContributor
+    });
+    user.simulationHistory = user.simulationHistory.slice(0, 12);
+    appendActivityLog(user, {
+      type: "simulation",
+      label: req.body.presetMode ? `${req.body.presetMode} simulation` : "What If simulation",
+      xpAwarded: 0,
+      detail: `Simulated ${mlResponse.prediction} future with ${delta >= 0 ? `+${delta}` : delta}% change.`,
+      createdAt: new Date()
+    });
+    await user.save();
+
+    res.json({
+      current: {
+        prediction: currentPrediction.label || "Pending",
+        story: user.simulation?.futureStory || user.analysis?.summary || "Complete your scan to unlock your current future story.",
+        score: currentScore
+      },
+      simulated: {
+        prediction: mlResponse.prediction,
+        probabilities: mlResponse.probabilities,
+        confidence: mlResponse.confidence,
+        story: story.story,
+        score: simulatedScore,
+        modelUsed: story.modelUsed || mlResponse.model_name
+      },
+      improvement: {
+        delta,
+        label: delta > 0 ? `+${delta}% Better Outcome` : delta < 0 ? `${delta}% Harder Outcome` : "No change in outcome"
+      },
+      topContributor: contribution.topContributor,
+      history: user.simulationHistory
     });
   } catch (error) {
     next(error);

@@ -1,0 +1,729 @@
+
+> parallel-you-frontend@1.0.0 dev
+> vite
+
+[2m10:32:18 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m Re-optimizing dependencies because vite config has changed
+
+  [32m[1mVITE[22m v6.4.1[39m  [2mready in [0m[1m804[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m5173[22m/[39m
+[2m  [32m➜[39m  [1mNetwork[22m[2m: use [22m[1m--host[22m[2m to expose[22m
+[2m[32m  ➜[39m[22m[2m  press [22m[1mh + enter[22m[2m to show help[22m
+[2m11:23:19 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/context/AuthContext.jsx, /src/styles/index.css, /src/pages/AuthPage.jsx, /src/pages/FuturePage.jsx, /src/pages/FutureScannerPage.jsx, /src/pages/MessagePage.jsx, /src/pages/GuildsPage.jsx, /src/pages/GrowthPage.jsx, /src/pages/DashboardPage.jsx, /src/pages/QuizPage.jsx, /src/pages/ProfilePage.jsx, /src/components/WhatIfSimulator.jsx[22m
+[2m11:23:19 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/styles/index.css[22m
+[2m11:23:19 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/V0DashboardNav.jsx, /src/styles/index.css[22m
+[2m11:23:19 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/data/navLinks.js[22m
+[2m11:23:19 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/layouts/DashboardLayout.jsx, /src/styles/index.css[22m
+[2m11:23:19 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/HomePage.jsx, /src/styles/index.css[22m
+[2m11:25:51 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [33mhmr invalidate [39m[2m/src/context/AuthContext.jsx[22m Could not Fast Refresh ("useAuth" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m11:25:51 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/context/AuthContext.jsx[22m
+[2m11:44:23 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/main.jsx[22m
+[2m11:44:23 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/index.css, /src/pages/AuthPage.jsx, /src/pages/FeedbackPage.jsx, /src/pages/FuturePage.jsx, /src/pages/FutureScannerPage.jsx, /src/pages/MessagePage.jsx, /src/pages/GuildsPage.jsx, /src/pages/GrowthPage.jsx, /src/pages/DashboardPage.jsx, /src/pages/QuizPage.jsx, /src/pages/ProfilePage.jsx, /src/pages/HomePage.jsx, /src/components/V0DashboardNav.jsx, /src/components/WhatIfSimulator.jsx, /src/pages/ProductivityPlannerPage.jsx, /src/components/AppFooter.jsx[22m
+[2m11:44:23 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/HomePage.jsx, /src/styles/index.css[22m
+[2m11:44:23 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/main.jsx[22m
+[2m11:44:23 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/V0DashboardNav.jsx, /src/styles/index.css[22m
+[2m11:44:43 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/AppFooter.jsx, /src/styles/index.css[22m
+[2m11:44:43 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/NotificationCenter.jsx, /src/styles/index.css[22m
+[2m11:45:31 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/ProductivityPlannerPage.jsx, /src/styles/index.css[22m
+[2m11:45:45 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/ProductivityPlannerPage.jsx, /src/styles/index.css[22m
+[2m11:46:10 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/ProductivityPlannerPage.jsx, /src/styles/index.css[22m
+[2m11:47:28 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/index.css[22m
+[2m11:56:08 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/context/AuthContext.jsx, /src/styles/index.css, /src/pages/AuthPage.jsx, /src/pages/FuturePage.jsx, /src/pages/FutureScannerPage.jsx, /src/pages/MessagePage.jsx, /src/pages/GuildsPage.jsx, /src/pages/GrowthPage.jsx, /src/pages/DashboardPage.jsx, /src/pages/QuizPage.jsx, /src/pages/ProfilePage.jsx, /src/components/WhatIfSimulator.jsx, /src/pages/ProductivityPlannerPage.jsx[22m
+[2m11:56:08 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/context/AuthContext.jsx, /src/styles/index.css, /src/pages/AuthPage.jsx, /src/pages/FuturePage.jsx, /src/pages/FutureScannerPage.jsx, /src/pages/MessagePage.jsx, /src/pages/GuildsPage.jsx, /src/pages/GrowthPage.jsx, /src/pages/DashboardPage.jsx, /src/pages/QuizPage.jsx, /src/pages/ProfilePage.jsx, /src/components/WhatIfSimulator.jsx, /src/pages/ProductivityPlannerPage.jsx[22m
+[2m11:56:09 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [33mhmr invalidate [39m[2m/src/context/AuthContext.jsx[22m Could not Fast Refresh ("useAuth" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m11:56:09 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/context/AuthContext.jsx[22m
+[2m11:56:46 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/NotificationCenter.jsx, /src/styles/index.css[22m
+[2m11:58:05 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/context/AuthContext.jsx, /src/styles/index.css, /src/pages/AuthPage.jsx, /src/pages/FuturePage.jsx, /src/pages/FutureScannerPage.jsx, /src/pages/MessagePage.jsx, /src/pages/GuildsPage.jsx, /src/pages/GrowthPage.jsx, /src/pages/DashboardPage.jsx, /src/pages/QuizPage.jsx, /src/pages/ProfilePage.jsx, /src/components/WhatIfSimulator.jsx, /src/pages/ProductivityPlannerPage.jsx, /src/components/NotificationCenter.jsx[22m
+[2m11:58:07 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/NotificationCenter.jsx, /src/styles/index.css[22m
+[2m11:58:07 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/context/AuthContext.jsx, /src/styles/index.css, /src/pages/AuthPage.jsx, /src/pages/FuturePage.jsx, /src/pages/FutureScannerPage.jsx, /src/pages/MessagePage.jsx, /src/pages/GuildsPage.jsx, /src/pages/GrowthPage.jsx, /src/pages/DashboardPage.jsx, /src/pages/QuizPage.jsx, /src/pages/ProfilePage.jsx, /src/components/WhatIfSimulator.jsx, /src/pages/ProductivityPlannerPage.jsx, /src/components/NotificationCenter.jsx[22m
+[2m11:58:07 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/NotificationCenter.jsx, /src/styles/index.css[22m
+[2m11:59:23 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/styles/index.css[22m
+[2m11:59:32 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/styles/index.css[22m
+[2m11:59:53 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/AppFooter.jsx, /src/styles/index.css[22m
+[2m12:00:16 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/styles/index.css[22m
+[2m12:00:16 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/AppFooter.jsx, /src/styles/index.css[22m
+[2m12:06:21 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [33mhmr invalidate [39m[2m/src/context/AuthContext.jsx[22m Could not Fast Refresh ("useAuth" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m12:06:21 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/context/AuthContext.jsx[22m
+[2m12:06:22 am[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: C:\Users\pushk\OneDrive\Desktop\hackanovate\frontend\src\components\AppFooter.jsx: Unterminated JSX contents. (95:11)
+
+[0m [90m 93 |[39m         [33m<[39m[33m/[39m[33mdiv[39m[33m>[39m
+ [90m 94 |[39m       [33m<[39m[33m/[39m[33mdiv[39m[33m>[39m
+[31m[1m>[22m[39m[90m 95 |[39m   [33m<[39m[33m/[39m[33mfooter[39m[33m>[39m
+ [90m    |[39m            [31m[1m^[22m[39m
+ [90m 96 |[39m )[33m;[39m
+ [90m 97 |[39m
+ [90m 98 |[39m [36mexport[39m [36mdefault[39m [33mAppFooter[39m[33m;[39m[0m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/Users/pushk/OneDrive/Desktop/hackanovate/frontend/src/components/AppFooter.jsx[39m:95:11
+[33m  93 |          </div>
+  94 |        </div>
+  95 |    </footer>
+     |             ^
+  96 |  );
+  97 |  [39m
+[2m12:06:22 am[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: C:\Users\pushk\OneDrive\Desktop\hackanovate\frontend\src\components\AppFooter.jsx: Unterminated JSX contents. (95:11)
+
+[0m [90m 93 |[39m         [33m<[39m[33m/[39m[33mdiv[39m[33m>[39m
+ [90m 94 |[39m       [33m<[39m[33m/[39m[33mdiv[39m[33m>[39m
+[31m[1m>[22m[39m[90m 95 |[39m   [33m<[39m[33m/[39m[33mfooter[39m[33m>[39m
+ [90m    |[39m            [31m[1m^[22m[39m
+ [90m 96 |[39m )[33m;[39m
+ [90m 97 |[39m
+ [90m 98 |[39m [36mexport[39m [36mdefault[39m [33mAppFooter[39m[33m;[39m[0m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/Users/pushk/OneDrive/Desktop/hackanovate/frontend/src/components/AppFooter.jsx[39m:95:11
+[33m  93 |          </div>
+  94 |        </div>
+  95 |    </footer>
+     |             ^
+  96 |  );
+  97 |  [39m
+[2m12:06:23 am[22m [31m[1m[vite][22m[39m [31mInternal server error: C:\Users\pushk\OneDrive\Desktop\hackanovate\frontend\src\components\AppFooter.jsx: Unterminated JSX contents. (95:11)
+
+[0m [90m 93 |[31m         [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+ [90m 94 |[31m       [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+[31m[1m>[22m[31m[90m 95 |[31m   [33m<[31m[33m/[31m[33mfooter[31m[33m>[31m
+ [90m    |[31m            [31m[1m^[22m[31m
+ [90m 96 |[31m )[33m;[31m
+ [90m 97 |[31m
+ [90m 98 |[31m [36mexport[31m [36mdefault[31m [33mAppFooter[31m[33m;[31m[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/Users/pushk/OneDrive/Desktop/hackanovate/frontend/src/components/AppFooter.jsx[39m:95:11
+[33m  93 |          </div>
+  94 |        </div>
+  95 |    </footer>
+     |             ^
+  96 |  );
+  97 |  [39m
+      at constructor (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:365:19)
+      at JSXParserMixin.raise (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:6599:19)
+      at JSXParserMixin.jsxReadToken (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4448:20)
+      at JSXParserMixin.getTokenFromCode (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4774:12)
+      at JSXParserMixin.nextToken (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:5782:10)
+      at JSXParserMixin.next (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:5692:10)
+      at JSXParserMixin.eat (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:5696:12)
+      at JSXParserMixin.expect (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:6898:15)
+      at JSXParserMixin.jsxParseClosingElementAt (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4680:10)
+      at JSXParserMixin.jsxParseElementAt (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4695:37)
+      at JSXParserMixin.jsxParseElementAt (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4698:32)
+      at JSXParserMixin.jsxParseElement (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4749:17)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4759:19)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11081:23)
+      at JSXParserMixin.parseUpdate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10831:21)
+      at C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:39
+      at JSXParserMixin.allowInAnd (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12426:12)
+      at JSXParserMixin.parseMaybeAssignAllowIn (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:17)
+      at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12493:17)
+      at JSXParserMixin.parseParenAndDistinguishExpression (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11675:28)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11331:23)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4764:20)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11081:23)
+      at JSXParserMixin.parseUpdate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10831:21)
+      at JSXParserMixin.parseFunctionBody (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12093:24)
+      at JSXParserMixin.parseArrowExpression (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12075:10)
+      at JSXParserMixin.parseParenAndDistinguishExpression (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11687:12)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11331:23)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4764:20)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11081:23)
+      at JSXParserMixin.parseUpdate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10831:21)
+      at C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:39
+      at JSXParserMixin.allowInAnd (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12421:16)
+      at JSXParserMixin.parseMaybeAssignAllowIn (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:17)
+      at JSXParserMixin.parseVar (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:13384:91)
+[2m12:06:23 am[22m [31m[1m[vite][22m[39m [31mInternal server error: C:\Users\pushk\OneDrive\Desktop\hackanovate\frontend\src\components\AppFooter.jsx: Unterminated JSX contents. (95:11)
+
+[0m [90m 93 |[31m         [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+ [90m 94 |[31m       [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+[31m[1m>[22m[31m[90m 95 |[31m   [33m<[31m[33m/[31m[33mfooter[31m[33m>[31m
+ [90m    |[31m            [31m[1m^[22m[31m
+ [90m 96 |[31m )[33m;[31m
+ [90m 97 |[31m
+ [90m 98 |[31m [36mexport[31m [36mdefault[31m [33mAppFooter[31m[33m;[31m[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/Users/pushk/OneDrive/Desktop/hackanovate/frontend/src/components/AppFooter.jsx[39m:95:11
+[33m  93 |          </div>
+  94 |        </div>
+  95 |    </footer>
+     |             ^
+  96 |  );
+  97 |  [39m
+      at constructor (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:365:19)
+      at JSXParserMixin.raise (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:6599:19)
+      at JSXParserMixin.jsxReadToken (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4448:20)
+      at JSXParserMixin.getTokenFromCode (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4774:12)
+      at JSXParserMixin.nextToken (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:5782:10)
+      at JSXParserMixin.next (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:5692:10)
+      at JSXParserMixin.eat (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:5696:12)
+      at JSXParserMixin.expect (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:6898:15)
+      at JSXParserMixin.jsxParseClosingElementAt (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4680:10)
+      at JSXParserMixin.jsxParseElementAt (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4695:37)
+      at JSXParserMixin.jsxParseElementAt (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4698:32)
+      at JSXParserMixin.jsxParseElement (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4749:17)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4759:19)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11081:23)
+      at JSXParserMixin.parseUpdate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10831:21)
+      at C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:39
+      at JSXParserMixin.allowInAnd (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12426:12)
+      at JSXParserMixin.parseMaybeAssignAllowIn (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:17)
+      at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12493:17)
+      at JSXParserMixin.parseParenAndDistinguishExpression (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11675:28)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11331:23)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4764:20)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11081:23)
+      at JSXParserMixin.parseUpdate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10831:21)
+      at JSXParserMixin.parseFunctionBody (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12093:24)
+      at JSXParserMixin.parseArrowExpression (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12075:10)
+      at JSXParserMixin.parseParenAndDistinguishExpression (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11687:12)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11331:23)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4764:20)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11081:23)
+      at JSXParserMixin.parseUpdate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10831:21)
+      at C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:39
+      at JSXParserMixin.allowInAnd (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12421:16)
+      at JSXParserMixin.parseMaybeAssignAllowIn (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:17)
+      at JSXParserMixin.parseVar (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:13384:91)
+[2m12:06:23 am[22m [31m[1m[vite][22m[39m [31mInternal server error: C:\Users\pushk\OneDrive\Desktop\hackanovate\frontend\src\components\AppFooter.jsx: Unterminated JSX contents. (95:11)
+
+[0m [90m 93 |[31m         [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+ [90m 94 |[31m       [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+[31m[1m>[22m[31m[90m 95 |[31m   [33m<[31m[33m/[31m[33mfooter[31m[33m>[31m
+ [90m    |[31m            [31m[1m^[22m[31m
+ [90m 96 |[31m )[33m;[31m
+ [90m 97 |[31m
+ [90m 98 |[31m [36mexport[31m [36mdefault[31m [33mAppFooter[31m[33m;[31m[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/Users/pushk/OneDrive/Desktop/hackanovate/frontend/src/components/AppFooter.jsx[39m:95:11
+[33m  93 |          </div>
+  94 |        </div>
+  95 |    </footer>
+     |             ^
+  96 |  );
+  97 |  [39m
+      at constructor (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:365:19)
+      at JSXParserMixin.raise (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:6599:19)
+      at JSXParserMixin.jsxReadToken (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4448:20)
+      at JSXParserMixin.getTokenFromCode (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4774:12)
+      at JSXParserMixin.nextToken (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:5782:10)
+      at JSXParserMixin.next (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:5692:10)
+      at JSXParserMixin.eat (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:5696:12)
+      at JSXParserMixin.expect (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:6898:15)
+      at JSXParserMixin.jsxParseClosingElementAt (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4680:10)
+      at JSXParserMixin.jsxParseElementAt (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4695:37)
+      at JSXParserMixin.jsxParseElementAt (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4698:32)
+      at JSXParserMixin.jsxParseElement (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4749:17)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4759:19)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11081:23)
+      at JSXParserMixin.parseUpdate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10831:21)
+      at C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:39
+      at JSXParserMixin.allowInAnd (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12426:12)
+      at JSXParserMixin.parseMaybeAssignAllowIn (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:17)
+      at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12493:17)
+      at JSXParserMixin.parseParenAndDistinguishExpression (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11675:28)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11331:23)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4764:20)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11081:23)
+      at JSXParserMixin.parseUpdate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10831:21)
+      at JSXParserMixin.parseFunctionBody (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12093:24)
+      at JSXParserMixin.parseArrowExpression (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12075:10)
+      at JSXParserMixin.parseParenAndDistinguishExpression (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11687:12)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11331:23)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4764:20)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11081:23)
+      at JSXParserMixin.parseUpdate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10831:21)
+      at C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:39
+      at JSXParserMixin.allowInAnd (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12421:16)
+      at JSXParserMixin.parseMaybeAssignAllowIn (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:17)
+      at JSXParserMixin.parseVar (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:13384:91)
+[2m12:06:24 am[22m [31m[1m[vite][22m[39m [31mInternal server error: C:\Users\pushk\OneDrive\Desktop\hackanovate\frontend\src\components\AppFooter.jsx: Unterminated JSX contents. (95:11)
+
+[0m [90m 93 |[31m         [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+ [90m 94 |[31m       [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+[31m[1m>[22m[31m[90m 95 |[31m   [33m<[31m[33m/[31m[33mfooter[31m[33m>[31m
+ [90m    |[31m            [31m[1m^[22m[31m
+ [90m 96 |[31m )[33m;[31m
+ [90m 97 |[31m
+ [90m 98 |[31m [36mexport[31m [36mdefault[31m [33mAppFooter[31m[33m;[31m[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/Users/pushk/OneDrive/Desktop/hackanovate/frontend/src/components/AppFooter.jsx[39m:95:11
+[33m  93 |          </div>
+  94 |        </div>
+  95 |    </footer>
+     |             ^
+  96 |  );
+  97 |  [39m
+      at constructor (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:365:19)
+      at JSXParserMixin.raise (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:6599:19)
+      at JSXParserMixin.jsxReadToken (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4448:20)
+      at JSXParserMixin.getTokenFromCode (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4774:12)
+      at JSXParserMixin.nextToken (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:5782:10)
+      at JSXParserMixin.next (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:5692:10)
+      at JSXParserMixin.eat (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:5696:12)
+      at JSXParserMixin.expect (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:6898:15)
+      at JSXParserMixin.jsxParseClosingElementAt (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4680:10)
+      at JSXParserMixin.jsxParseElementAt (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4695:37)
+      at JSXParserMixin.jsxParseElementAt (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4698:32)
+      at JSXParserMixin.jsxParseElement (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4749:17)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4759:19)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11081:23)
+      at JSXParserMixin.parseUpdate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10831:21)
+      at C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:39
+      at JSXParserMixin.allowInAnd (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12426:12)
+      at JSXParserMixin.parseMaybeAssignAllowIn (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:17)
+      at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12493:17)
+      at JSXParserMixin.parseParenAndDistinguishExpression (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11675:28)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11331:23)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4764:20)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11081:23)
+      at JSXParserMixin.parseUpdate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10831:21)
+      at JSXParserMixin.parseFunctionBody (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12093:24)
+      at JSXParserMixin.parseArrowExpression (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12075:10)
+      at JSXParserMixin.parseParenAndDistinguishExpression (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11687:12)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11331:23)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4764:20)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11081:23)
+      at JSXParserMixin.parseUpdate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10831:21)
+      at C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:39
+      at JSXParserMixin.allowInAnd (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12421:16)
+      at JSXParserMixin.parseMaybeAssignAllowIn (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:17)
+      at JSXParserMixin.parseVar (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:13384:91)
+[2m12:06:28 am[22m [31m[1m[vite][22m[39m [31mInternal server error: C:\Users\pushk\OneDrive\Desktop\hackanovate\frontend\src\components\AppFooter.jsx: Unterminated JSX contents. (95:11)
+
+[0m [90m 93 |[31m         [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+ [90m 94 |[31m       [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+[31m[1m>[22m[31m[90m 95 |[31m   [33m<[31m[33m/[31m[33mfooter[31m[33m>[31m
+ [90m    |[31m            [31m[1m^[22m[31m
+ [90m 96 |[31m )[33m;[31m
+ [90m 97 |[31m
+ [90m 98 |[31m [36mexport[31m [36mdefault[31m [33mAppFooter[31m[33m;[31m[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/Users/pushk/OneDrive/Desktop/hackanovate/frontend/src/components/AppFooter.jsx[39m:95:11
+[33m  93 |          </div>
+  94 |        </div>
+  95 |    </footer>
+     |             ^
+  96 |  );
+  97 |  [39m
+      at constructor (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:365:19)
+      at JSXParserMixin.raise (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:6599:19)
+      at JSXParserMixin.jsxReadToken (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4448:20)
+      at JSXParserMixin.getTokenFromCode (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4774:12)
+      at JSXParserMixin.nextToken (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:5782:10)
+      at JSXParserMixin.next (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:5692:10)
+      at JSXParserMixin.eat (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:5696:12)
+      at JSXParserMixin.expect (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:6898:15)
+      at JSXParserMixin.jsxParseClosingElementAt (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4680:10)
+      at JSXParserMixin.jsxParseElementAt (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4695:37)
+      at JSXParserMixin.jsxParseElementAt (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4698:32)
+      at JSXParserMixin.jsxParseElement (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4749:17)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4759:19)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11081:23)
+      at JSXParserMixin.parseUpdate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10831:21)
+      at C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:39
+      at JSXParserMixin.allowInAnd (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12426:12)
+      at JSXParserMixin.parseMaybeAssignAllowIn (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:17)
+      at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12493:17)
+      at JSXParserMixin.parseParenAndDistinguishExpression (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11675:28)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11331:23)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4764:20)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11081:23)
+      at JSXParserMixin.parseUpdate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10831:21)
+      at JSXParserMixin.parseFunctionBody (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12093:24)
+      at JSXParserMixin.parseArrowExpression (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12075:10)
+      at JSXParserMixin.parseParenAndDistinguishExpression (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11687:12)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11331:23)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4764:20)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11081:23)
+      at JSXParserMixin.parseUpdate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10831:21)
+      at C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:39
+      at JSXParserMixin.allowInAnd (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12421:16)
+      at JSXParserMixin.parseMaybeAssignAllowIn (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:17)
+      at JSXParserMixin.parseVar (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:13384:91)
+[2m12:06:52 am[22m [31m[1m[vite][22m[39m [31mInternal server error: C:\Users\pushk\OneDrive\Desktop\hackanovate\frontend\src\components\AppFooter.jsx: Unterminated JSX contents. (95:11)
+
+[0m [90m 93 |[31m         [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+ [90m 94 |[31m       [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+[31m[1m>[22m[31m[90m 95 |[31m   [33m<[31m[33m/[31m[33mfooter[31m[33m>[31m
+ [90m    |[31m            [31m[1m^[22m[31m
+ [90m 96 |[31m )[33m;[31m
+ [90m 97 |[31m
+ [90m 98 |[31m [36mexport[31m [36mdefault[31m [33mAppFooter[31m[33m;[31m[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/Users/pushk/OneDrive/Desktop/hackanovate/frontend/src/components/AppFooter.jsx[39m:95:11
+[33m  93 |          </div>
+  94 |        </div>
+  95 |    </footer>
+     |             ^
+  96 |  );
+  97 |  [39m
+      at constructor (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:365:19)
+      at JSXParserMixin.raise (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:6599:19)
+      at JSXParserMixin.jsxReadToken (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4448:20)
+      at JSXParserMixin.getTokenFromCode (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4774:12)
+      at JSXParserMixin.nextToken (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:5782:10)
+      at JSXParserMixin.next (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:5692:10)
+      at JSXParserMixin.eat (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:5696:12)
+      at JSXParserMixin.expect (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:6898:15)
+      at JSXParserMixin.jsxParseClosingElementAt (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4680:10)
+      at JSXParserMixin.jsxParseElementAt (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4695:37)
+      at JSXParserMixin.jsxParseElementAt (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4698:32)
+      at JSXParserMixin.jsxParseElement (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4749:17)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4759:19)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11081:23)
+      at JSXParserMixin.parseUpdate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10831:21)
+      at C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:39
+      at JSXParserMixin.allowInAnd (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12426:12)
+      at JSXParserMixin.parseMaybeAssignAllowIn (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:17)
+      at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12493:17)
+      at JSXParserMixin.parseParenAndDistinguishExpression (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11675:28)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11331:23)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4764:20)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11081:23)
+      at JSXParserMixin.parseUpdate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10831:21)
+      at JSXParserMixin.parseFunctionBody (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12093:24)
+      at JSXParserMixin.parseArrowExpression (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12075:10)
+      at JSXParserMixin.parseParenAndDistinguishExpression (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11687:12)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11331:23)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4764:20)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11081:23)
+      at JSXParserMixin.parseUpdate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10831:21)
+      at C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:39
+      at JSXParserMixin.allowInAnd (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12421:16)
+      at JSXParserMixin.parseMaybeAssignAllowIn (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:17)
+      at JSXParserMixin.parseVar (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:13384:91)
+[2m12:06:53 am[22m [31m[1m[vite][22m[39m [31mInternal server error: C:\Users\pushk\OneDrive\Desktop\hackanovate\frontend\src\components\AppFooter.jsx: Unterminated JSX contents. (95:11)
+
+[0m [90m 93 |[31m         [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+ [90m 94 |[31m       [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+[31m[1m>[22m[31m[90m 95 |[31m   [33m<[31m[33m/[31m[33mfooter[31m[33m>[31m
+ [90m    |[31m            [31m[1m^[22m[31m
+ [90m 96 |[31m )[33m;[31m
+ [90m 97 |[31m
+ [90m 98 |[31m [36mexport[31m [36mdefault[31m [33mAppFooter[31m[33m;[31m[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/Users/pushk/OneDrive/Desktop/hackanovate/frontend/src/components/AppFooter.jsx[39m:95:11
+[33m  93 |          </div>
+  94 |        </div>
+  95 |    </footer>
+     |             ^
+  96 |  );
+  97 |  [39m
+      at constructor (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:365:19)
+      at JSXParserMixin.raise (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:6599:19)
+      at JSXParserMixin.jsxReadToken (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4448:20)
+      at JSXParserMixin.getTokenFromCode (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4774:12)
+      at JSXParserMixin.nextToken (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:5782:10)
+      at JSXParserMixin.next (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:5692:10)
+      at JSXParserMixin.eat (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:5696:12)
+      at JSXParserMixin.expect (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:6898:15)
+      at JSXParserMixin.jsxParseClosingElementAt (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4680:10)
+      at JSXParserMixin.jsxParseElementAt (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4695:37)
+      at JSXParserMixin.jsxParseElementAt (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4698:32)
+      at JSXParserMixin.jsxParseElement (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4749:17)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4759:19)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11081:23)
+      at JSXParserMixin.parseUpdate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10831:21)
+      at C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:39
+      at JSXParserMixin.allowInAnd (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12426:12)
+      at JSXParserMixin.parseMaybeAssignAllowIn (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:17)
+      at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12493:17)
+      at JSXParserMixin.parseParenAndDistinguishExpression (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11675:28)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11331:23)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4764:20)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11081:23)
+      at JSXParserMixin.parseUpdate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10831:21)
+      at JSXParserMixin.parseFunctionBody (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12093:24)
+      at JSXParserMixin.parseArrowExpression (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12075:10)
+      at JSXParserMixin.parseParenAndDistinguishExpression (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11687:12)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11331:23)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4764:20)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11081:23)
+      at JSXParserMixin.parseUpdate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10831:21)
+      at C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:39
+      at JSXParserMixin.allowInAnd (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12421:16)
+      at JSXParserMixin.parseMaybeAssignAllowIn (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:17)
+      at JSXParserMixin.parseVar (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:13384:91)
+[2m12:06:54 am[22m [31m[1m[vite][22m[39m [31mInternal server error: C:\Users\pushk\OneDrive\Desktop\hackanovate\frontend\src\components\AppFooter.jsx: Unterminated JSX contents. (95:11)
+
+[0m [90m 93 |[31m         [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+ [90m 94 |[31m       [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+[31m[1m>[22m[31m[90m 95 |[31m   [33m<[31m[33m/[31m[33mfooter[31m[33m>[31m
+ [90m    |[31m            [31m[1m^[22m[31m
+ [90m 96 |[31m )[33m;[31m
+ [90m 97 |[31m
+ [90m 98 |[31m [36mexport[31m [36mdefault[31m [33mAppFooter[31m[33m;[31m[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/Users/pushk/OneDrive/Desktop/hackanovate/frontend/src/components/AppFooter.jsx[39m:95:11
+[33m  93 |          </div>
+  94 |        </div>
+  95 |    </footer>
+     |             ^
+  96 |  );
+  97 |  [39m
+      at constructor (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:365:19)
+      at JSXParserMixin.raise (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:6599:19)
+      at JSXParserMixin.jsxReadToken (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4448:20)
+      at JSXParserMixin.getTokenFromCode (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4774:12)
+      at JSXParserMixin.nextToken (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:5782:10)
+      at JSXParserMixin.next (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:5692:10)
+      at JSXParserMixin.eat (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:5696:12)
+      at JSXParserMixin.expect (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:6898:15)
+      at JSXParserMixin.jsxParseClosingElementAt (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4680:10)
+      at JSXParserMixin.jsxParseElementAt (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4695:37)
+      at JSXParserMixin.jsxParseElementAt (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4698:32)
+      at JSXParserMixin.jsxParseElement (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4749:17)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4759:19)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11081:23)
+      at JSXParserMixin.parseUpdate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10831:21)
+      at C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:39
+      at JSXParserMixin.allowInAnd (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12426:12)
+      at JSXParserMixin.parseMaybeAssignAllowIn (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:17)
+      at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12493:17)
+      at JSXParserMixin.parseParenAndDistinguishExpression (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11675:28)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11331:23)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4764:20)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11081:23)
+      at JSXParserMixin.parseUpdate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10831:21)
+      at JSXParserMixin.parseFunctionBody (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12093:24)
+      at JSXParserMixin.parseArrowExpression (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12075:10)
+      at JSXParserMixin.parseParenAndDistinguishExpression (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11687:12)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11331:23)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4764:20)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11081:23)
+      at JSXParserMixin.parseUpdate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10831:21)
+      at C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:39
+      at JSXParserMixin.allowInAnd (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12421:16)
+      at JSXParserMixin.parseMaybeAssignAllowIn (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:17)
+      at JSXParserMixin.parseVar (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:13384:91)
+[2m12:07:16 am[22m [31m[1m[vite][22m[39m [31mInternal server error: C:\Users\pushk\OneDrive\Desktop\hackanovate\frontend\src\components\AppFooter.jsx: Unterminated JSX contents. (95:11)
+
+[0m [90m 93 |[31m         [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+ [90m 94 |[31m       [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+[31m[1m>[22m[31m[90m 95 |[31m   [33m<[31m[33m/[31m[33mfooter[31m[33m>[31m
+ [90m    |[31m            [31m[1m^[22m[31m
+ [90m 96 |[31m )[33m;[31m
+ [90m 97 |[31m
+ [90m 98 |[31m [36mexport[31m [36mdefault[31m [33mAppFooter[31m[33m;[31m[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/Users/pushk/OneDrive/Desktop/hackanovate/frontend/src/components/AppFooter.jsx[39m:95:11
+[33m  93 |          </div>
+  94 |        </div>
+  95 |    </footer>
+     |             ^
+  96 |  );
+  97 |  [39m
+      at constructor (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:365:19)
+      at JSXParserMixin.raise (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:6599:19)
+      at JSXParserMixin.jsxReadToken (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4448:20)
+      at JSXParserMixin.getTokenFromCode (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4774:12)
+      at JSXParserMixin.nextToken (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:5782:10)
+      at JSXParserMixin.next (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:5692:10)
+      at JSXParserMixin.eat (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:5696:12)
+      at JSXParserMixin.expect (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:6898:15)
+      at JSXParserMixin.jsxParseClosingElementAt (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4680:10)
+      at JSXParserMixin.jsxParseElementAt (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4695:37)
+      at JSXParserMixin.jsxParseElementAt (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4698:32)
+      at JSXParserMixin.jsxParseElement (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4749:17)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4759:19)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11081:23)
+      at JSXParserMixin.parseUpdate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10831:21)
+      at C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:39
+      at JSXParserMixin.allowInAnd (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12426:12)
+      at JSXParserMixin.parseMaybeAssignAllowIn (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:17)
+      at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12493:17)
+      at JSXParserMixin.parseParenAndDistinguishExpression (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11675:28)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11331:23)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4764:20)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11081:23)
+      at JSXParserMixin.parseUpdate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10831:21)
+      at JSXParserMixin.parseFunctionBody (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12093:24)
+      at JSXParserMixin.parseArrowExpression (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12075:10)
+      at JSXParserMixin.parseParenAndDistinguishExpression (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11687:12)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11331:23)
+      at JSXParserMixin.parseExprAtom (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:4764:20)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11081:23)
+      at JSXParserMixin.parseUpdate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11066:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:11046:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10899:61)
+      at JSXParserMixin.parseExprOps (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10904:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10881:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10831:21)
+      at C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:39
+      at JSXParserMixin.allowInAnd (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:12421:16)
+      at JSXParserMixin.parseMaybeAssignAllowIn (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:10800:17)
+      at JSXParserMixin.parseVar (C:\Users\pushk\OneDrive\Desktop\hackanovate\node_modules\@babel\parser\lib\index.js:13384:91)
+[2m12:09:07 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/AppFooter.jsx, /src/styles/index.css[22m
+[2m12:26:14 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/HomePage.jsx, /src/styles/index.css[22m
+[2m12:27:21 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/HomePage.jsx, /src/styles/index.css[22m
+[2m12:27:27 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/AppFooter.jsx, /src/styles/index.css[22m
+[2m12:27:49 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/AppFooter.jsx, /src/styles/index.css[22m
+[2m12:28:59 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/index.css[22m
+[2m12:33:54 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/HomePage.jsx, /src/styles/index.css[22m
+[2m12:34:02 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/AppFooter.jsx, /src/styles/index.css[22m
+[2m12:34:33 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/V0DashboardNav.jsx, /src/styles/index.css[22m
+[2m12:34:44 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/layouts/DashboardLayout.jsx, /src/styles/index.css[22m
+[2m12:35:17 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/AuthPage.jsx, /src/styles/index.css[22m
+[2m12:35:24 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/FutureSnapshotShare.jsx, /src/styles/index.css[22m
+[2m12:35:32 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/FuturePage.jsx, /src/styles/index.css[22m
+[2m12:36:04 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/HomePage.jsx, /src/styles/index.css[22m
+[2m12:36:14 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/GlassCard.jsx, /src/styles/index.css[22m
+[2m12:36:45 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/index.css[22m
+[2m12:37:20 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/V0DashboardNav.jsx, /src/styles/index.css[22m
+[2m12:46:14 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/AuthPage.jsx, /src/styles/index.css[22m
+[2m12:47:23 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/AuthPage.jsx, /src/styles/index.css[22m
+[2m12:48:24 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/styles/index.css[22m
+[2m11:41:32 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/context/AuthContext.jsx, /src/styles/index.css, /src/pages/FuturePage.jsx, /src/pages/FutureScannerPage.jsx, /src/pages/MessagePage.jsx, /src/pages/GuildsPage.jsx, /src/pages/GrowthPage.jsx, /src/pages/DashboardPage.jsx, /src/pages/QuizPage.jsx, /src/pages/ProfilePage.jsx, /src/components/WhatIfSimulator.jsx, /src/pages/ProductivityPlannerPage.jsx, /src/components/NotificationCenter.jsx, /src/pages/HabitTrackerPage.jsx, /src/pages/JournalPage.jsx, /src/pages/TaskManagementPage.jsx, /src/pages/GoalsPage.jsx, /src/pages/AuthPage.jsx[22m
+[2m11:41:32 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/context/AuthContext.jsx, /src/styles/index.css, /src/pages/FuturePage.jsx, /src/pages/FutureScannerPage.jsx, /src/pages/MessagePage.jsx, /src/pages/GuildsPage.jsx, /src/pages/GrowthPage.jsx, /src/pages/DashboardPage.jsx, /src/pages/QuizPage.jsx, /src/pages/ProfilePage.jsx, /src/components/WhatIfSimulator.jsx, /src/pages/ProductivityPlannerPage.jsx, /src/components/NotificationCenter.jsx, /src/pages/HabitTrackerPage.jsx, /src/pages/JournalPage.jsx, /src/pages/TaskManagementPage.jsx, /src/pages/GoalsPage.jsx, /src/pages/AuthPage.jsx[22m
+[2m11:41:32 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [33mhmr invalidate [39m[2m/src/context/AuthContext.jsx[22m Could not Fast Refresh ("useAuth" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m11:41:32 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/context/AuthContext.jsx[22m
+[2m11:42:05 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/AuthPage.jsx, /src/styles/index.css[22m
+[2m11:43:13 am[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/AuthPage.jsx, /src/styles/index.css[22m
+[2m12:23:53 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/context/AuthContext.jsx, /src/styles/index.css, /src/pages/FuturePage.jsx, /src/pages/FutureScannerPage.jsx, /src/pages/MessagePage.jsx, /src/pages/GuildsPage.jsx, /src/pages/GrowthPage.jsx, /src/pages/DashboardPage.jsx, /src/pages/QuizPage.jsx, /src/pages/ProfilePage.jsx, /src/components/WhatIfSimulator.jsx, /src/pages/ProductivityPlannerPage.jsx, /src/components/NotificationCenter.jsx, /src/pages/HabitTrackerPage.jsx, /src/pages/JournalPage.jsx, /src/pages/TaskManagementPage.jsx, /src/pages/GoalsPage.jsx, /src/pages/AuthPage.jsx[22m
+[2m12:23:53 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [33mhmr invalidate [39m[2m/src/context/AuthContext.jsx[22m Could not Fast Refresh ("useAuth" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m12:23:53 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/context/AuthContext.jsx[22m
+[2m12:24:38 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/AuthPage.jsx, /src/styles/index.css[22m
+[2m12:25:40 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/AuthPage.jsx, /src/styles/index.css[22m
+[2m12:27:11 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/AuthPage.jsx, /src/styles/index.css[22m
+[2m12:28:00 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/AuthPage.jsx, /src/styles/index.css[22m
+[2m12:29:42 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/AuthPage.jsx, /src/styles/index.css[22m
+[2m12:29:42 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/context/AuthContext.jsx, /src/styles/index.css, /src/pages/FuturePage.jsx, /src/pages/FutureScannerPage.jsx, /src/pages/MessagePage.jsx, /src/pages/GuildsPage.jsx, /src/pages/GrowthPage.jsx, /src/pages/DashboardPage.jsx, /src/pages/QuizPage.jsx, /src/pages/ProfilePage.jsx, /src/components/WhatIfSimulator.jsx, /src/pages/ProductivityPlannerPage.jsx, /src/components/NotificationCenter.jsx, /src/pages/HabitTrackerPage.jsx, /src/pages/JournalPage.jsx, /src/pages/TaskManagementPage.jsx, /src/pages/GoalsPage.jsx, /src/pages/AuthPage.jsx[22m
+[2m12:29:52 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/AuthPage.jsx, /src/styles/index.css[22m
+[2m12:30:04 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/AuthPage.jsx, /src/styles/index.css[22m
+[2m12:30:49 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/AuthPage.jsx, /src/styles/index.css[22m
+[2m12:31:01 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/AuthPage.jsx, /src/styles/index.css[22m
+[2m12:33:00 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/AuthPage.jsx, /src/styles/index.css[22m
+[2m12:33:13 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/AuthPage.jsx, /src/styles/index.css[22m
+[2m12:33:23 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/AuthPage.jsx, /src/styles/index.css[22m
+[2m12:33:25 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/AuthPage.jsx, /src/styles/index.css[22m
+[2m12:33:40 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/AuthPage.jsx, /src/styles/index.css[22m
+[2m12:34:05 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/AuthPage.jsx, /src/styles/index.css[22m
+[2m12:34:10 pm[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/AuthPage.jsx, /src/styles/index.css[22m

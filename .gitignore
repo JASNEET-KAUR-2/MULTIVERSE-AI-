@@ -7,3 +7,5 @@ backend/uploads
 .logs
 __pycache__
 *.pyc
+.mongo-data
+backend/.mongo-data

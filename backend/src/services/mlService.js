@@ -1,6 +1,12 @@
-const mlApiUrl = process.env.ML_API_URL || "http://127.0.0.1:8000";
+const mlApiUrl = process.env.ML_API_URL;
 
 export const predictFutureOutcome = async (features) => {
+  if (!mlApiUrl) {
+    const error = new Error("ML_API_URL is missing.");
+    error.status = 500;
+    throw error;
+  }
+
   const response = await fetch(`${mlApiUrl}/predict`, {
     method: "POST",
     headers: {
