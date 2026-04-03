@@ -13,6 +13,7 @@ import HomePage from "./pages/HomePage.jsx";
 import MessagePage from "./pages/MessagePage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
 import ProductivityPlannerPage from "./pages/ProductivityPlannerPage.jsx";
+import ProductivityDetectorPage from "./pages/ProductivityDetectorPage.jsx";
 import QuizPage from "./pages/QuizPage.jsx";
 import RealityEnginePage from "./pages/RealityEnginePage.jsx";
 import TaskManagementPage from "./pages/TaskManagementPage.jsx";
@@ -64,6 +65,8 @@ const App = () => {
         <Route path="/growth" element={<GrowthPage />} />
         <Route path="/app/planner" element={<ProductivityPlannerPage />} />
         <Route path="/planner" element={<ProductivityPlannerPage />} />
+        <Route path="/app/productivity-detector" element={<ProductivityDetectorPage />} />
+        <Route path="/productivity-detector" element={<ProductivityDetectorPage />} />
         <Route path="/app/tasks" element={<TaskManagementPage />} />
         <Route path="/tasks" element={<TaskManagementPage />} />
         <Route path="/app/habits" element={<HabitTrackerPage />} />

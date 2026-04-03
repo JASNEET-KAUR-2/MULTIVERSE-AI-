@@ -19,6 +19,7 @@ Write-Host "Launching full hackanovate workspace..." -ForegroundColor Green
 Write-Host ""
 
 Start-ProjectWindow -Name "Main App Stack" -Command "npm.cmd run dev"
+Start-ProjectWindow -Name "Productivity Detector" -Command "cd services\productivity-detector; python -m uvicorn main:app --host 127.0.0.1 --port 8000 --reload"
 Start-ProjectWindow -Name "Chatbot Backend" -Command "cd chatbot\backend; `$env:PORT='3000'; node server.js"
 Start-ProjectWindow -Name "Task Manager" -Command "cd task-management-system; `$env:PORT='4000'; node server.js"
 
@@ -27,6 +28,7 @@ Write-Host "All services launched in separate PowerShell windows." -ForegroundCo
 Write-Host ""
 Write-Host "Expected URLs:" -ForegroundColor Yellow
 Write-Host "Main app:          http://localhost:5173"
+Write-Host "Productivity API:  http://localhost:8000"
 Write-Host "Chatbot backend:   http://localhost:3000"
 Write-Host "Task manager:      http://localhost:4000"
 Write-Host ""

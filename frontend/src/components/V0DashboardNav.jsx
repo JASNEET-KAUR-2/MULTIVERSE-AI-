@@ -6,6 +6,7 @@ import BrandLogo from "./BrandLogo.jsx";
 import ProfilePanel from "./ProfilePanel.jsx";
 import UserAvatar from "./UserAvatar.jsx";
 import {
+  BrainIcon,
   BotIcon,
   BranchIcon,
   ChevronDownIcon,
@@ -235,6 +236,15 @@ const V0DashboardNav = () => {
         </div>
 
         <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => navigate("/productivity-detector")}
+            className="dashboard-mobile-button !h-11 !w-11"
+            aria-label="Open productivity detector"
+            title="Open productivity detector"
+          >
+            <BrainIcon className="h-4 w-4" />
+          </button>
           <button
             type="button"
             onClick={() => navigate("/message")}
