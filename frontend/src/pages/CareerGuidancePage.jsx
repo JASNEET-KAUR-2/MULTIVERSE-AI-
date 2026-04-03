@@ -2,6 +2,9 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRightIcon, BrainIcon, BriefcaseIcon, SparklesIcon, TargetIcon, TrophyIcon, TrendUpIcon } from "../components/V0Icons.jsx";
 
+const standaloneCareerLabUrl = import.meta.env.VITE_CAREER_LAB_URL || "http://localhost:3000";
+const standaloneCareerApiUrl = import.meta.env.VITE_CAREER_LAB_API_URL || "http://localhost:5000";
+
 const buisesSteps = [
   {
     letter: "B",
@@ -189,7 +192,55 @@ const CareerGuidancePage = () => (
       </motion.section>
     </div>
 
-    <motion.section custom={3} variants={fadeUp} className="grid gap-6 md:grid-cols-3">
+    <motion.section custom={3} variants={fadeUp} className="dynamic-panel rounded-[1.8rem] p-6">
+      <div className="grid gap-6 lg:grid-cols-[1fr_0.9fr]">
+        <div>
+          <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Standalone Launch</p>
+          <h2 className="mt-2 text-2xl font-semibold text-slate-900">Open the full BUISES app</h2>
+          <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-700">
+            The complete career-guidance workspace runs as its own frontend and Flask backend. Use this launch panel to jump straight into the full assessment, recommendations, evaluation, roadmap, and backend-synced gamification flow.
+          </p>
+          <div className="mt-5 flex flex-wrap gap-3">
+            <a
+              href={standaloneCareerLabUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="gradient-brand inline-flex items-center rounded-full px-5 py-3 text-sm font-semibold text-slate-950"
+            >
+              Launch Career Lab
+              <ArrowRightIcon className="ml-2 h-4 w-4" />
+            </a>
+            <a
+              href={`${standaloneCareerApiUrl}/api/health`}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center rounded-full border border-cyan-200 bg-white/70 px-5 py-3 text-sm font-semibold text-slate-800 transition hover:-translate-y-0.5"
+            >
+              Check API health
+            </a>
+          </div>
+        </div>
+
+        <div className="grid gap-3 sm:grid-cols-2">
+          <div className="rounded-[1.3rem] border border-cyan-100 bg-white/70 p-4">
+            <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Frontend URL</p>
+            <p className="mt-2 break-all text-sm font-semibold text-slate-900">{standaloneCareerLabUrl}</p>
+          </div>
+          <div className="rounded-[1.3rem] border border-cyan-100 bg-white/70 p-4">
+            <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Backend URL</p>
+            <p className="mt-2 break-all text-sm font-semibold text-slate-900">{standaloneCareerApiUrl}</p>
+          </div>
+          <div className="rounded-[1.3rem] border border-cyan-100 bg-white/70 p-4 sm:col-span-2">
+            <p className="text-xs uppercase tracking-[0.18em] text-slate-500">Local run checklist</p>
+            <p className="mt-2 text-sm leading-7 text-slate-700">
+              Start `career-guidance-system/backend/app.py`, then run the Vite frontend in `career-guidance-system/frontend`. The launch button opens the standalone app in a new tab so the main workspace stays intact.
+            </p>
+          </div>
+        </div>
+      </div>
+    </motion.section>
+
+    <motion.section custom={4} variants={fadeUp} className="grid gap-6 md:grid-cols-3">
       {launchCards.map((card) => {
         const Icon = card.icon;
         return (
