@@ -1,114 +1,277 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useTheme } from "../context/ThemeContext.jsx";
-import { BranchIcon, BriefcaseIcon, DashboardIcon, MessageIcon, MoonIcon, SparklesIcon, SunIcon, TargetIcon, TrophyIcon, UserIcon } from "./V0Icons.jsx";
+import BrandLogo from "./BrandLogo.jsx";
+import ProfilePanel from "./ProfilePanel.jsx";
 import UserAvatar from "./UserAvatar.jsx";
+import {
+  BotIcon,
+  BranchIcon,
+  ChevronDownIcon,
+  DashboardIcon,
+  MenuIcon,
+  MessageIcon,
+  MoonIcon,
+  SunIcon,
+  TargetIcon,
+  XCircleIcon
+} from "./V0Icons.jsx";
 
-const links = [
-  { label: "Dashboard", to: "/dashboard", icon: DashboardIcon, aliases: ["/app"] },
-  { label: "Scanner", to: "/scanner", icon: SparklesIcon, aliases: [] },
-  { label: "Future Paths", to: "/futures", icon: BranchIcon, aliases: ["/app/future"] },
-  { label: "Growth", to: "/growth", icon: TrophyIcon, aliases: ["/app/growth"] },
-  { label: "Career Lab", to: "/career", icon: BriefcaseIcon, aliases: ["/app/career"] },
-  { label: "Planner", to: "/planner", icon: TargetIcon, aliases: ["/app/planner"] },
-  { label: "Message", to: "/message", icon: MessageIcon, aliases: ["/app/message"] },
-  { label: "Guilds", to: "/app/guilds", icon: SparklesIcon, aliases: ["/guilds"] },
-  { label: "Profile", to: "/profile", icon: UserIcon, aliases: ["/app/profile"] },
-  { label: "Feedback", to: "/feedback", icon: MessageIcon, aliases: ["/app/feedback"] }
+const primaryLinks = [
+  { label: "Dashboard", to: "/dashboard", icon: DashboardIcon, aliases: ["/app", "/dashboard"] },
+  { label: "Future Paths", to: "/futures", icon: BranchIcon, aliases: ["/app/future", "/futures"] },
+  { label: "Reality Engine", to: "/reality-engine", icon: TargetIcon, aliases: ["/app/reality-engine", "/reality-engine"] },
+  {
+    key: "growth-planner",
+    label: "Growth Planner",
+    icon: TargetIcon,
+    children: [
+      { key: "growth-overview", label: "Growth Overview", to: "/growth", aliases: ["/app/growth", "/growth"] },
+      { key: "planner-board", label: "Planner Board", to: "/planner", aliases: ["/app/planner", "/planner"] },
+      { key: "habit-rhythm", label: "Habit Rhythm", to: "/habits", aliases: ["/app/habits", "/habits"] }
+    ]
+  }
 ];
 
+const feedbackLink = { label: "Feedback", to: "/feedback", icon: MessageIcon, aliases: ["/app/feedback", "/feedback"] };
+
+const SidebarItem = ({
+  icon: Icon,
+  label,
+  active,
+  onClick,
+  to,
+  accent = false,
+  children = [],
+  isOpen = false,
+  onToggle,
+  onChildClick
+}) => {
+  const hasChildren = children.length > 0;
+  const className = `sidebar-item ${active ? "sidebar-item-active" : ""} ${accent ? "sidebar-item-accent" : ""}`.trim();
+
+  if (hasChildren) {
+    return (
+      <div>
+        <button type="button" onClick={onToggle} className={className}>
+          <span className="flex items-center gap-3">
+            <span className="sidebar-icon-wrap">
+              <Icon className="h-4 w-4" />
+            </span>
+            <span>{label}</span>
+          </span>
+
+          <ChevronDownIcon className={`h-4 w-4 text-slate-400 transition-transform duration-300 ease-in-out ${isOpen ? "rotate-180" : ""}`} />
+        </button>
+
+        <div className={`overflow-hidden pl-5 transition-all duration-300 ease-in-out ${isOpen ? "max-h-40 pt-2 opacity-100" : "max-h-0 opacity-0"}`}>
+          <div className="space-y-1.5 border-l border-white/10 pl-4">
+            {children.map((child) => (
+              <button
+                key={child.key}
+                type="button"
+                onClick={() => onChildClick?.(child)}
+                className={`flex w-full items-center rounded-lg px-3 py-2 text-left text-sm transition-all duration-300 ease-in-out ${
+                  child.active
+                    ? "bg-white/10 text-white shadow-[0_10px_24px_rgba(15,23,42,0.12)]"
+                    : "text-slate-400 hover:bg-white/8 hover:text-sky-200"
+                }`}
+              >
+                {child.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (to) {
+    return (
+      <NavLink to={to} className={className} onClick={onClick}>
+        <span className="sidebar-icon-wrap">
+          <Icon className="h-4 w-4" />
+        </span>
+        <span>{label}</span>
+      </NavLink>
+    );
+  }
+
+  return (
+    <button type="button" onClick={onClick} className={className}>
+      <span className="sidebar-icon-wrap">
+        <Icon className="h-4 w-4" />
+      </span>
+      <span>{label}</span>
+    </button>
+  );
+};
+
 const V0DashboardNav = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const { logout, user } = useAuth();
   const { theme, toggleTheme } = useTheme();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const [openMenu, setOpenMenu] = useState(null);
+
+  const isActive = (link) =>
+    link.aliases?.includes(location.pathname) ||
+    link.children?.some((child) => child.aliases?.includes(location.pathname) || child.to === location.pathname);
+
+  const handleToggle = (menu) => {
+    setOpenMenu(openMenu === menu ? null : menu);
+  };
+
+  useEffect(() => {
+    const activeMenu = primaryLinks.find((link) =>
+      link.children?.some((child) => child.aliases?.includes(location.pathname) || child.to === location.pathname)
+    );
+
+    if (activeMenu) {
+      setOpenMenu(activeMenu.key);
+    }
+  }, [location.pathname]);
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
+  const linksWithState = useMemo(
+    () =>
+      primaryLinks.map((link) => ({
+        ...link,
+        children: (link.children || []).map((child) => ({
+          ...child,
+          active: child.aliases?.includes(location.pathname) || child.to === location.pathname
+        }))
+      })),
+    [location.pathname]
+  );
+
+  const sidebarBody = (
+    <div className="sidebar-shell flex h-full flex-col">
+      <div className="sidebar-brand">
+        <BrandLogo showText markClassName="h-12 w-12" titleClassName="text-sm text-white" subtitleClassName="text-[11px] tracking-[0.28em] text-slate-400" />
+      </div>
+
+      <div className="mt-8 space-y-2">
+        {linksWithState.map((link) => (
+          <SidebarItem
+            key={link.key || link.to}
+            icon={link.icon}
+            label={link.label}
+            to={link.to}
+            active={isActive(link)}
+            children={link.children}
+            isOpen={openMenu === link.key}
+            onToggle={() => handleToggle(link.key)}
+            onChildClick={(child) => {
+              if (child?.to) {
+                navigate(child.to);
+                setSidebarOpen(false);
+              }
+            }}
+            onClick={() => setSidebarOpen(false)}
+          />
+        ))}
+      </div>
+
+      <button
+        type="button"
+        className="mt-8 rounded-[1.4rem] border border-white/10 bg-white/6 p-4 text-left transition hover:border-white/18 hover:bg-white/10"
+        onClick={() => {
+          setSidebarOpen(false);
+          setProfileOpen(true);
+        }}
+      >
+        <div className="flex items-center gap-3">
+          <UserAvatar name={user?.name} className="h-11 w-11 text-sm" />
+          <div className="min-w-0">
+            <p className="truncate text-sm font-medium text-white">{user?.name || "Explorer"}</p>
+            <p className="truncate text-xs uppercase tracking-[0.18em] text-slate-400">Personal workspace</p>
+          </div>
+        </div>
+      </button>
+
+      <div className="mt-auto space-y-2 pt-8">
+        <SidebarItem
+          icon={XCircleIcon}
+          label="Logout"
+          onClick={() => {
+            setSidebarOpen(false);
+            handleLogout();
+          }}
+        />
+        <SidebarItem
+          icon={feedbackLink.icon}
+          label={feedbackLink.label}
+          to={feedbackLink.to}
+          active={isActive(feedbackLink)}
+          accent
+          onClick={() => setSidebarOpen(false)}
+        />
+      </div>
+    </div>
+  );
 
   return (
-    <header className="fixed left-0 right-0 top-0 z-50 px-4 pt-4 text-slate-900">
-      <nav className="container mx-auto">
-        <div className="report-nav flex items-center justify-between rounded-full px-4 py-3 md:px-6">
-          <NavLink to="/" className="flex items-center gap-3">
-            <div className="report-brand-mark flex h-10 w-10 items-center justify-center rounded-full">
-              <SparklesIcon className="h-[18px] w-[18px] text-white" />
-            </div>
-            <div className="hidden sm:block">
-              <p className="text-[11px] uppercase tracking-[0.28em] text-white/65">multiverse ai</p>
-              <p className="text-sm font-medium text-white">Studio Workspace</p>
-            </div>
-          </NavLink>
+    <>
+      <div className="dashboard-mobile-top">
+        <button
+          type="button"
+          onClick={() => setSidebarOpen(true)}
+          className="dashboard-mobile-button"
+          aria-label="Open sidebar"
+        >
+          <MenuIcon className="h-5 w-5" />
+        </button>
 
-          <div className="hidden items-center gap-1 md:flex">
-            {links.map((link) => {
-              const Icon = link.icon;
-              return (
-                <NavLink
-                  key={link.to}
-                  to={link.to}
-                  className={({ isActive }) =>
-                    `flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-colors ${
-                      isActive
-                        ? "bg-white/16 text-white backdrop-blur-xl"
-                        : "text-white/72 hover:bg-white/10 hover:text-white"
-                    }`
-                  }
-                >
-                  <Icon className="h-4 w-4" />
-                  {link.label}
-                </NavLink>
-              );
-            })}
-          </div>
-
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={toggleTheme}
-              className="report-icon-button"
-              aria-label="Toggle theme"
-            >
-              {theme === "light" ? <MoonIcon className="h-4 w-4" /> : <SunIcon className="h-4 w-4" />}
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                logout();
-                navigate("/");
-              }}
-              className="report-secondary-button"
-            >
-              Logout
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate("/profile")}
-              className="report-icon-button"
-              aria-label="Open profile"
-            >
-              <UserAvatar name={user?.name} className="h-8 w-8 text-[10px]" />
-            </button>
-          </div>
+        <div className="flex items-center gap-3">
+          <BrandLogo showText markClassName="h-11 w-11" titleClassName="text-sm text-slate-900" subtitleClassName="text-[10px] tracking-[0.26em] text-slate-500" />
         </div>
 
-        <div className="mt-3 flex items-center gap-1 overflow-x-auto pb-1 md:hidden">
-          {links.map((link) => {
-            const Icon = link.icon;
-            return (
-              <NavLink
-                key={link.to}
-                to={link.to}
-                className={({ isActive }) =>
-                  `flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-3 py-2 text-xs font-medium transition-colors ${
-                    isActive ? "bg-white/16 text-white backdrop-blur-xl" : "text-white/72 hover:bg-white/10 hover:text-white"
-                  }`
-                }
-              >
-                <Icon className="h-3.5 w-3.5" />
-                {link.label}
-              </NavLink>
-            );
-          })}
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => navigate("/message")}
+            className="dashboard-mobile-button !h-11 !w-11"
+            aria-label="Open bot"
+            title="Open bot"
+          >
+            <BotIcon className="h-4 w-4" />
+          </button>
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="dashboard-mobile-button !h-11 !w-11"
+            aria-label={theme === "light" ? "Enable dark mode" : "Enable light mode"}
+            title={theme === "light" ? "Dark mode" : "Light mode"}
+          >
+            {theme === "light" ? <MoonIcon className="h-4 w-4" /> : <SunIcon className="h-4 w-4" />}
+          </button>
         </div>
-      </nav>
-    </header>
+      </div>
+
+      {sidebarOpen ? (
+        <div className="fixed inset-0 z-[85]">
+          <button
+            type="button"
+            onClick={() => setSidebarOpen(false)}
+            className="absolute inset-0 bg-slate-950/40 backdrop-blur-[2px]"
+            aria-label="Close sidebar"
+          />
+          <aside className="dashboard-sidebar absolute inset-y-4 left-4 w-[18rem] max-w-[calc(100vw-2rem)]">
+            {sidebarBody}
+          </aside>
+        </div>
+      ) : null}
+
+      <ProfilePanel open={profileOpen} onClose={() => setProfileOpen(false)} />
+    </>
   );
 };
 

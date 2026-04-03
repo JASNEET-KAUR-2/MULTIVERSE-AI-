@@ -2,6 +2,16 @@ const groqApiUrl = process.env.GROQ_API_URL || "https://api.groq.com/openai/v1";
 const primaryGroqModel = process.env.GROQ_MODEL || "openai/gpt-oss-20b";
 const fallbackGroqModel = process.env.GROQ_FALLBACK_MODEL || "llama-3.1-8b-instant";
 
+const shouldFallbackToLocalNarrative = (error) => {
+  const message = String(error?.message || "");
+  const status = Number(error?.status || 0);
+
+  return (
+    /fetch failed|econnrefused|enotfound|timed out|timeout|network|request too large|tokens per minute|rate limit|please reduce your message size|too many requests|unauthorized|authentication|invalid api key/i.test(message) ||
+    [401, 403, 408, 429, 500, 502, 503, 504].includes(status)
+  );
+};
+
 const extractJson = (text) => {
   const start = text.indexOf("{");
   const end = text.lastIndexOf("}");
@@ -339,7 +349,9 @@ ${JSON.stringify({ name, goals, habits, behaviorProfile, prediction, probabiliti
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error?.message || `Groq generation failed for model ${model}.`);
+        const error = new Error(data.error?.message || `Groq generation failed for model ${model}.`);
+        error.status = response.status;
+        throw error;
       }
 
       const content = data.choices?.[0]?.message?.content || "";
@@ -363,11 +375,7 @@ ${JSON.stringify({ name, goals, habits, behaviorProfile, prediction, probabiliti
   }
 
   if (lastError) {
-    const message = String(lastError.message || "");
-    const isQuotaOrTokenIssue =
-      /request too large|tokens per minute|rate limit|please reduce your message size|too many requests/i.test(message);
-
-    if (isQuotaOrTokenIssue) {
+    if (shouldFallbackToLocalNarrative(lastError)) {
       return createSimulationNarrativeFallback({ name, goals, habits, behaviorProfile, prediction, probabilities });
     }
 
@@ -459,7 +467,9 @@ ${JSON.stringify(scannerPromptPayload, null, 2)}`
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error?.message || `Groq future state scan failed for model ${model}.`);
+        const error = new Error(data.error?.message || `Groq future state scan failed for model ${model}.`);
+        error.status = response.status;
+        throw error;
       }
 
       const content = data.choices?.[0]?.message?.content || "";
@@ -474,11 +484,7 @@ ${JSON.stringify(scannerPromptPayload, null, 2)}`
   }
 
   if (lastError) {
-    const message = String(lastError.message || "");
-    const isQuotaOrTokenIssue =
-      /request too large|tokens per minute|rate limit|please reduce your message size|too many requests/i.test(message);
-
-    if (isQuotaOrTokenIssue) {
+    if (shouldFallbackToLocalNarrative(lastError)) {
       return createScannerFallback({ name, currentPrediction, scannerState });
     }
 
@@ -548,7 +554,9 @@ ${JSON.stringify(payload, null, 2)}`
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error?.message || `Groq what-if generation failed for model ${model}.`);
+        const error = new Error(data.error?.message || `Groq what-if generation failed for model ${model}.`);
+        error.status = response.status;
+        throw error;
       }
 
       const content = data.choices?.[0]?.message?.content || "";
@@ -563,11 +571,7 @@ ${JSON.stringify(payload, null, 2)}`
   }
 
   if (lastError) {
-    const message = String(lastError.message || "");
-    const isQuotaOrTokenIssue =
-      /request too large|tokens per minute|rate limit|please reduce your message size|too many requests/i.test(message);
-
-    if (isQuotaOrTokenIssue) {
+    if (shouldFallbackToLocalNarrative(lastError)) {
       return createWhatIfFallback({ name, prediction, behaviorProfile });
     }
 

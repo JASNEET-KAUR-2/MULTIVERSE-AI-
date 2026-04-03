@@ -7,8 +7,14 @@ const AUDIO_SRC = "/assets/audio/multiverse.mp3";
 const DEFAULT_VOLUME = 0.28;
 const FADE_IN_SECONDS = 2.4;
 const FADE_OUT_SECONDS = 1.1;
-const SCROLL_VOLUME_BOOST = 0.08;
-const SCROLL_RATE_BOOST = 0.05;
+const DEFAULT_SCENE = { label: "Atmosphere", intensity: 0.18, rate: 1 };
+const SCENE_SELECTORS = [
+  "[data-ambient-scene]",
+  "main section",
+  "main [class*='hero-shell']",
+  "main article",
+  "main [data-scene]"
+].join(", ");
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 
@@ -28,6 +34,60 @@ const buildImpulseResponse = (context, duration = 2.4, decay = 2.1) => {
   return impulse;
 };
 
+const toSceneLabel = (node) => {
+  const explicitLabel = node.getAttribute("data-ambient-scene");
+  if (explicitLabel) {
+    return explicitLabel;
+  }
+
+  const heading = node.querySelector("h1, h2, h3");
+  if (heading?.textContent?.trim()) {
+    return heading.textContent.trim();
+  }
+
+  const ariaLabel = node.getAttribute("aria-label");
+  if (ariaLabel) {
+    return ariaLabel;
+  }
+
+  return node.tagName === "SECTION" ? "Section" : "Atmosphere";
+};
+
+const inferSceneProfile = (label = "") => {
+  const normalized = label.toLowerCase();
+
+  if (/hero|home|future|portal|multiverse/.test(normalized)) {
+    return { label, intensity: 0.34, rate: 1.03 };
+  }
+
+  if (/analysis|signal/.test(normalized)) {
+    return { label, intensity: 0.3, rate: 1.025 };
+  }
+
+  if (/dashboard|control|planner|task|focus|productivity/.test(normalized)) {
+    return { label, intensity: 0.24, rate: 1.015 };
+  }
+
+  if (/journal|habit|profile|message/.test(normalized)) {
+    return { label, intensity: 0.2, rate: 1.005 };
+  }
+
+  return { label, intensity: DEFAULT_SCENE.intensity, rate: DEFAULT_SCENE.rate };
+};
+
+const getSceneFromNode = (node) => {
+  const explicitIntensity = Number(node.getAttribute("data-ambient-intensity"));
+  const explicitRate = Number(node.getAttribute("data-ambient-rate"));
+  const label = toSceneLabel(node);
+  const inferred = inferSceneProfile(label);
+
+  return {
+    label: inferred.label || DEFAULT_SCENE.label,
+    intensity: Number.isFinite(explicitIntensity) ? clamp(explicitIntensity, 0, 0.45) : inferred.intensity,
+    rate: Number.isFinite(explicitRate) ? clamp(explicitRate, 0.9, 1.08) : inferred.rate
+  };
+};
+
 const BackgroundAudioController = () => {
   const [enabled, setEnabled] = useState(() => {
     const saved = localStorage.getItem(ENABLED_KEY);
@@ -45,20 +105,20 @@ const BackgroundAudioController = () => {
   const [ready, setReady] = useState(false);
   const [interactionNeeded, setInteractionNeeded] = useState(false);
   const [message, setMessage] = useState("Ambient ready");
-  const [scrollDepth, setScrollDepth] = useState(0);
+  const [scene, setScene] = useState(DEFAULT_SCENE);
 
   const audioRef = useRef(null);
   const contextRef = useRef(null);
-  const sourceRef = useRef(null);
   const gainRef = useRef(null);
-  const convolverRef = useRef(null);
   const wetGainRef = useRef(null);
   const setupPromiseRef = useRef(null);
+  const observerRef = useRef(null);
+  const sceneNodesRef = useRef([]);
 
   const volumePercent = useMemo(() => Math.round(volume * 100), [volume]);
   const effectiveVolume = useMemo(
-    () => clamp(volume + (scrollDepth * SCROLL_VOLUME_BOOST), 0.02, 0.45),
-    [scrollDepth, volume]
+    () => clamp(volume + scene.intensity, 0.02, 0.45),
+    [scene.intensity, volume]
   );
 
   const ensureAudioEngine = async () => {
@@ -95,9 +155,7 @@ const BackgroundAudioController = () => {
       wetGain.connect(context.destination);
 
       contextRef.current = context;
-      sourceRef.current = source;
       gainRef.current = gainNode;
-      convolverRef.current = convolver;
       wetGainRef.current = wetGain;
 
       return context;
@@ -148,13 +206,13 @@ const BackgroundAudioController = () => {
       await context.resume();
       audio.loop = true;
       audio.preload = "auto";
-      audio.playbackRate = 1 + (scrollDepth * SCROLL_RATE_BOOST);
+      audio.playbackRate = scene.rate;
       await audio.play();
       fadeMasterGain(effectiveVolume, FADE_IN_SECONDS);
       syncReverb();
       setReady(true);
       setInteractionNeeded(false);
-      setMessage(`Ambient on ${Math.round(effectiveVolume * 100)}%`);
+      setMessage(`${scene.label} ambience ${Math.round(effectiveVolume * 100)}%`);
     } catch {
       setInteractionNeeded(true);
       setReady(false);
@@ -192,9 +250,9 @@ const BackgroundAudioController = () => {
     localStorage.setItem(VOLUME_KEY, String(volume));
     if (ready) {
       fadeMasterGain(effectiveVolume, 0.4);
-      setMessage(`Ambient on ${Math.round(effectiveVolume * 100)}%`);
+      setMessage(`${scene.label} ambience ${Math.round(effectiveVolume * 100)}%`);
     }
-  }, [effectiveVolume, ready, volume]);
+  }, [effectiveVolume, ready, scene.label, volume]);
 
   useEffect(() => {
     localStorage.setItem(REVERB_KEY, String(reverbEnabled));
@@ -207,11 +265,12 @@ const BackgroundAudioController = () => {
       return;
     }
 
-    audio.playbackRate = 1 + (scrollDepth * SCROLL_RATE_BOOST);
+    audio.playbackRate = scene.rate;
     if (ready) {
       fadeMasterGain(effectiveVolume, 0.45);
+      setMessage(`${scene.label} ambience ${Math.round(effectiveVolume * 100)}%`);
     }
-  }, [effectiveVolume, ready, scrollDepth]);
+  }, [effectiveVolume, ready, scene]);
 
   useEffect(() => {
     const boot = async () => {
@@ -257,21 +316,74 @@ const BackgroundAudioController = () => {
   }, [enabled]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-      const depth = scrollable > 0 ? clamp(window.scrollY / scrollable, 0, 1) : 0;
-      setScrollDepth(depth);
+    const activateDefaultScene = () => {
+      const firstNode = document.querySelector(SCENE_SELECTORS);
+      if (firstNode) {
+        setScene(getSceneFromNode(firstNode));
+        return;
+      }
+
+      setScene(DEFAULT_SCENE);
     };
 
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    const bindSceneObserver = () => {
+      observerRef.current?.disconnect();
+
+      const nodes = Array.from(document.querySelectorAll(SCENE_SELECTORS));
+      sceneNodesRef.current = nodes;
+
+      if (!nodes.length) {
+        activateDefaultScene();
+        return;
+      }
+
+      activateDefaultScene();
+
+      observerRef.current = new IntersectionObserver(
+        (entries) => {
+          const visibleEntries = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+          if (!visibleEntries.length) {
+            return;
+          }
+
+          const nextScene = getSceneFromNode(visibleEntries[0].target);
+          setScene((current) =>
+            current.label === nextScene.label &&
+            current.intensity === nextScene.intensity &&
+            current.rate === nextScene.rate
+              ? current
+              : nextScene
+          );
+        },
+        {
+          threshold: [0.2, 0.35, 0.5, 0.7],
+          rootMargin: "-10% 0px -30% 0px"
+        }
+      );
+
+      nodes.forEach((node) => observerRef.current?.observe(node));
+    };
+
+    bindSceneObserver();
+
+    const mutationObserver = new MutationObserver(() => {
+      bindSceneObserver();
+    });
+
+    mutationObserver.observe(document.body, { childList: true, subtree: true });
+
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      observerRef.current?.disconnect();
+      mutationObserver.disconnect();
     };
   }, []);
 
   useEffect(
     () => () => {
+      observerRef.current?.disconnect();
       const audio = audioRef.current;
       if (audio) {
         audio.pause();
@@ -350,11 +462,11 @@ const BackgroundAudioController = () => {
 
                 <div className="rounded-2xl border border-cyan-200/40 bg-white/50 px-4 py-3 text-sm text-slate-600">
                   <div className="flex items-center justify-between gap-3">
-                    <span>Scroll intensity sync</span>
-                    <span className="font-medium text-cyan-700">{Math.round(scrollDepth * 100)}%</span>
+                    <span>Active scene</span>
+                    <span className="font-medium text-cyan-700">{scene.label}</span>
                   </div>
                   <p className="mt-2 text-xs leading-6 text-slate-500">
-                    As users move deeper into the experience, the ambient layer subtly grows in presence and playback energy.
+                    The ambient layer now follows the most visible section on screen instead of general scroll depth.
                   </p>
                 </div>
               </div>
@@ -387,7 +499,7 @@ const BackgroundAudioController = () => {
             title={enabled ? "Mute ambient audio" : "Unmute ambient audio"}
           >
             <span className={`h-2.5 w-2.5 rounded-full ${enabled && ready ? "bg-emerald-500" : "bg-slate-400"}`} />
-            <span aria-hidden="true">{enabled ? "🔊" : "🔇"}</span>
+            <span aria-hidden="true">{enabled ? "\u{1F50A}" : "\u{1F507}"}</span>
             <span>{enabled ? (interactionNeeded ? "Tap to enable audio" : message) : "Ambient off"}</span>
           </button>
         </div>

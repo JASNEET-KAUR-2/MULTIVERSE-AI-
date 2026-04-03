@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 import connectDatabase from "../src/config/db.js";
-import Guild from "../src/models/Guild.js";
 import Quest from "../src/models/Quest.js";
 import User from "../src/models/User.js";
 
@@ -114,19 +113,6 @@ const run = async () => {
     );
     createdUsers.push(user);
   }
-
-  const guild = await Guild.findOneAndUpdate(
-    { name: "Future Builders" },
-    {
-      name: "Future Builders",
-      focus: "Consistency + Creation",
-      description: "A demo guild for people building stronger futures through craft, focus, and accountability.",
-      members: createdUsers.map((user) => user._id)
-    },
-    { new: true, upsert: true, setDefaultsOnInsert: true }
-  );
-
-  await User.updateMany({ _id: { $in: createdUsers.map((user) => user._id) } }, { $addToSet: { guilds: guild._id } });
 
   for (const user of createdUsers) {
     await Quest.deleteMany({ user: user._id });

@@ -257,7 +257,7 @@ const notificationSchema = new mongoose.Schema(
   {
     type: {
       type: String,
-      enum: ["deadline", "reminder", "achievement", "system"],
+      enum: ["deadline", "reminder", "achievement", "system", "emotion"],
       default: "system"
     },
     title: String,
@@ -330,13 +330,8 @@ const userSchema = new mongoose.Schema(
     longTermGoals: [longTermGoalSchema],
     journalEntries: [journalEntrySchema],
     notificationCenter: [notificationSchema],
-    plannerSettings: plannerSettingsSchema,
-    guilds: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Guild"
-      }
-    ]
+    notifications: [notificationSchema],
+    plannerSettings: plannerSettingsSchema
   },
   { timestamps: true }
 );

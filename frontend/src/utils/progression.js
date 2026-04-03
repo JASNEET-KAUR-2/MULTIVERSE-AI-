@@ -8,7 +8,12 @@ export const getXpToNextLevel = (xp = 0) => XP_PER_LEVEL - getXpIntoLevel(xp);
 
 export const getLevelProgress = (xp = 0) => Math.round((getXpIntoLevel(xp) / XP_PER_LEVEL) * 100);
 
-export const getAchievementList = ({ xp = 0, streak = 0, prediction, quests = [], guildCount = 0 }) => [
+export const getAchievementList = ({
+  xp = 0,
+  streak = 0,
+  prediction,
+  quests = []
+}) => [
   {
     id: "first-scan",
     label: "Soul Scan Complete",
@@ -32,11 +37,5 @@ export const getAchievementList = ({ xp = 0, streak = 0, prediction, quests = []
     label: "Quest Crusher",
     unlocked: quests.some((quest) => quest.completed),
     tone: "pink"
-  },
-  {
-    id: "guilds",
-    label: "Guild Connected",
-    unlocked: guildCount > 0,
-    tone: "amber"
   }
 ];

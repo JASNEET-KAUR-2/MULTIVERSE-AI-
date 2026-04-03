@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { api } from "../api/client";
+import ChatbotPanel from "../components/ChatbotPanel.jsx";
 import UserAvatar from "../components/UserAvatar.jsx";
 import FutureSnapshotShare from "../components/FutureSnapshotShare.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
@@ -37,8 +38,7 @@ const MessagePage = () => {
     xp: dashboard.stats?.xp || 0,
     streak: dashboard.stats?.streak || 0,
     prediction: dashboard.stats?.prediction,
-    quests: dashboard.quests || [],
-    guildCount: dashboard.user?.guilds?.length || 0
+    quests: dashboard.quests || []
   });
 
   return (
@@ -93,6 +93,10 @@ const MessagePage = () => {
           level={`Level ${level}`}
           message={dashboard.simulation?.futureMessage || "My future self says to stay consistent."}
         />
+      </div>
+
+      <div className="mt-6">
+        <ChatbotPanel token={token} userName={dashboard.user?.name || "Explorer"} />
       </div>
 
       <div className="mt-6 rounded-[1.6rem] border border-white/10 bg-white/5 p-5 text-center">

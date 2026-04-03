@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import AppFooter from "../components/AppFooter.jsx";
+import BrandLogo from "../components/BrandLogo.jsx";
 import { useTheme } from "../context/ThemeContext.jsx";
 import {
   ArrowRightIcon,
@@ -30,11 +31,6 @@ const focusCards = [
     title: "Clear Progress",
     description: "Track what is improving without drowning in extra details.",
     icon: TrendUpIcon
-  },
-  {
-    title: "Career Lab",
-    description: "Use the BUISES career guidance flow with roadmap and gamified rewards.",
-    icon: TargetIcon
   }
 ];
 
@@ -76,27 +72,18 @@ const HomePage = () => {
         <nav className="container mx-auto px-4 py-4">
           <div className="report-nav flex items-center justify-between rounded-full px-4 py-3 md:px-6">
             <Link to="/" className="flex items-center gap-3">
-              <div className="report-brand-mark flex h-11 w-11 items-center justify-center rounded-full">
-                <SparklesIcon className="h-5 w-5 text-white" />
-              </div>
-              <div>
-                <p className="text-xs uppercase tracking-[0.32em] text-white/70">multiverse ai</p>
-                <p className="text-sm text-white">Premium Workspace</p>
-              </div>
+              <BrandLogo showText markClassName="h-11 w-11" titleClassName="text-sm" subtitleClassName="text-xs tracking-[0.22em]" />
             </Link>
 
             <div className="hidden items-center gap-8 md:flex">
-              <a className="text-sm text-white/78 transition hover:text-white" href="#experience">
+              <a className="text-sm text-slate-500 transition hover:text-slate-800" href="#experience">
                 Experience
               </a>
-              <a className="text-sm text-white/78 transition hover:text-white" href="#focus">
+              <a className="text-sm text-slate-500 transition hover:text-slate-800" href="#focus">
                 Focus
               </a>
-              <Link className="text-sm text-white/78 transition hover:text-white" to="/feedback">
+              <Link className="text-sm text-slate-500 transition hover:text-slate-800" to="/feedback">
                 Feedback
-              </Link>
-              <Link className="text-sm text-white/78 transition hover:text-white" to="/career">
-                Career Lab
               </Link>
             </div>
 
@@ -124,22 +111,19 @@ const HomePage = () => {
 
           {mobileMenuOpen ? (
             <div className="report-mobile-menu mt-3 rounded-3xl p-4 md:hidden">
-              <a className="block px-3 py-2 text-white/85" href="#experience" onClick={() => setMobileMenuOpen(false)}>
+              <a className="block px-3 py-2 text-slate-700" href="#experience" onClick={() => setMobileMenuOpen(false)}>
                 Experience
               </a>
-              <a className="block px-3 py-2 text-white/85" href="#focus" onClick={() => setMobileMenuOpen(false)}>
+              <a className="block px-3 py-2 text-slate-700" href="#focus" onClick={() => setMobileMenuOpen(false)}>
                 Focus
               </a>
-              <Link className="block px-3 py-2 text-white/85" to="/feedback" onClick={() => setMobileMenuOpen(false)}>
+              <Link className="block px-3 py-2 text-slate-700" to="/feedback" onClick={() => setMobileMenuOpen(false)}>
                 Feedback
               </Link>
-              <Link className="block px-3 py-2 text-white/85" to="/career" onClick={() => setMobileMenuOpen(false)}>
-                Career Lab
-              </Link>
-              <Link className="block px-3 py-2 text-white/85" to="/login" onClick={() => setMobileMenuOpen(false)}>
+              <Link className="block px-3 py-2 text-slate-700" to="/login" onClick={() => setMobileMenuOpen(false)}>
                 Login
               </Link>
-              <button type="button" className="mt-2 w-full rounded-2xl border border-white/15 px-4 py-3 text-sm text-white" onClick={toggleTheme}>
+              <button type="button" className="mt-2 w-full rounded-2xl border border-[rgba(223,207,188,0.92)] px-4 py-3 text-sm text-slate-700" onClick={toggleTheme}>
                 {theme === "light" ? "Dark mode" : "Light mode"}
               </button>
               <Link className="report-primary-button mt-3 flex w-full items-center justify-center" to="/quiz" onClick={() => setMobileMenuOpen(false)}>
@@ -159,12 +143,12 @@ const HomePage = () => {
 
             <div className="relative z-10 grid gap-10 lg:grid-cols-[0.95fr_0.72fr] lg:items-end">
               <motion.div initial="hidden" animate="visible" className="max-w-4xl">
-                <motion.div custom={0.05} variants={fadeUp} className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs uppercase tracking-[0.3em] text-white/78 backdrop-blur-xl">
-                  <span className="h-2 w-2 rounded-full bg-white/80" />
+                <motion.div custom={0.05} variants={fadeUp} className="inline-flex items-center gap-2 rounded-full border border-[rgba(223,207,188,0.92)] bg-white/70 px-4 py-2 text-xs uppercase tracking-[0.3em] text-slate-600 backdrop-blur-xl">
+                  <span className="h-2 w-2 rounded-full bg-slate-400" />
                   Studio Report Experience
                 </motion.div>
 
-                <motion.p custom={0.12} variants={fadeUp} className="mt-10 text-center text-sm uppercase tracking-[0.42em] text-white/72 lg:text-left">
+                <motion.p custom={0.12} variants={fadeUp} className="mt-10 text-center text-sm uppercase tracking-[0.42em] text-slate-500 lg:text-left">
                   multiverse ai
                 </motion.p>
 
@@ -178,7 +162,7 @@ const HomePage = () => {
                   you are growing into
                 </motion.h1>
 
-                <motion.p custom={0.3} variants={fadeUp} className="mx-auto mt-6 max-w-2xl text-center text-base leading-8 text-white/78 md:text-lg lg:mx-0 lg:text-left">
+                <motion.p custom={0.3} variants={fadeUp} className="mx-auto mt-6 max-w-2xl text-center text-base leading-8 text-slate-600 md:text-lg lg:mx-0 lg:text-left">
                   A calmer, more cinematic way to read your direction, track your rhythm, and move forward without all the extra noise.
                 </motion.p>
 
@@ -186,9 +170,6 @@ const HomePage = () => {
                   <Link to="/quiz" className="report-cta-primary inline-flex items-center justify-center">
                     Start Future Scan
                     <ArrowRightIcon className="ml-2 h-5 w-5" />
-                  </Link>
-                  <Link to="/career" className="report-cta-secondary inline-flex items-center justify-center">
-                    Career Lab
                   </Link>
                   <Link to="/dashboard" className="report-cta-secondary inline-flex items-center justify-center">
                     <PlayIcon className="mr-2 h-5 w-5" />

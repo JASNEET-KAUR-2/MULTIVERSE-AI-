@@ -1,0 +1,7 @@
+deepface==0.0.93
+fastapi==0.115.0
+numpy==2.1.1
+opencv-python-headless==4.10.0.84
+pillow==10.4.0
+python-multipart==0.0.9
+uvicorn==0.30.6

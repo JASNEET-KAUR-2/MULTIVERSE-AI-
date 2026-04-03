@@ -1,5 +1,17 @@
 import User from "../models/User.js";
 
+const getNotificationsBucket = (user) => {
+  if (!user.notificationCenter) {
+    user.notificationCenter = user.notifications || [];
+  }
+
+  if (!user.notifications) {
+    user.notifications = user.notificationCenter;
+  }
+
+  return user.notificationCenter;
+};
+
 /**
  * Create a notification
  */
@@ -29,10 +41,8 @@ export const createNotification = async (req, res, next) => {
       createdAt: new Date()
     };
 
-    if (!user.notifications) {
-      user.notifications = [];
-    }
-    user.notifications.push(notification);
+    const notifications = getNotificationsBucket(user);
+    notifications.push(notification);
     await user.save();
 
     res.status(201).json({
@@ -58,7 +68,7 @@ export const getNotifications = async (req, res, next) => {
       throw error;
     }
 
-    let notifications = user.notifications || [];
+    let notifications = [...getNotificationsBucket(user)];
 
     if (unreadOnly === "true") {
       notifications = notifications.filter((n) => !n.read);
@@ -72,7 +82,7 @@ export const getNotifications = async (req, res, next) => {
     res.json({
       notifications,
       total: notifications.length,
-      unread: (user.notifications || []).filter((n) => !n.read).length
+      unread: getNotificationsBucket(user).filter((n) => !n.read).length
     });
   } catch (error) {
     next(error);
@@ -93,7 +103,7 @@ export const markNotificationAsRead = async (req, res, next) => {
       throw error;
     }
 
-    const notification = user.notifications?.id(notificationId);
+    const notification = getNotificationsBucket(user)?.id(notificationId);
     if (!notification) {
       const error = new Error("Notification not found.");
       error.status = 404;
@@ -124,8 +134,9 @@ export const markAllNotificationsAsRead = async (req, res, next) => {
       throw error;
     }
 
-    if (user.notifications) {
-      user.notifications.forEach((n) => {
+    const notifications = getNotificationsBucket(user);
+    if (notifications) {
+      notifications.forEach((n) => {
         n.read = true;
       });
     }
@@ -153,9 +164,10 @@ export const deleteNotification = async (req, res, next) => {
       throw error;
     }
 
-    user.notifications = (user.notifications || []).filter(
+    user.notificationCenter = getNotificationsBucket(user).filter(
       (n) => n._id.toString() !== notificationId
     );
+    user.notifications = user.notificationCenter;
     await user.save();
 
     res.json({
@@ -178,6 +190,7 @@ export const clearAllNotifications = async (req, res, next) => {
       throw error;
     }
 
+    user.notificationCenter = [];
     user.notifications = [];
     await user.save();
 
@@ -212,8 +225,8 @@ export const checkAndNotifyDeadlines = async (req, res, next) => {
 
         // Alert 24 hours before and 1 hour before
         if (hoursUntilDeadline <= 24 && hoursUntilDeadline > 23 && !alertedTasks.has(task._id.toString())) {
-          if (!user.notifications) user.notifications = [];
-          user.notifications.push({
+          const notifications = getNotificationsBucket(user);
+          notifications.push({
             type: "deadline",
             title: "Task Deadline Approaching",
             message: `"${task.title}" is due in 24 hours!`,
@@ -224,8 +237,8 @@ export const checkAndNotifyDeadlines = async (req, res, next) => {
           alertedTasks.add(task._id.toString());
           newNotifications++;
         } else if (hoursUntilDeadline <= 1 && hoursUntilDeadline > 0 && !alertedTasks.has(task._id.toString())) {
-          if (!user.notifications) user.notifications = [];
-          user.notifications.push({
+          const notifications = getNotificationsBucket(user);
+          notifications.push({
             type: "deadline",
             title: "Task Due Soon!",
             message: `"${task.title}" is due in less than 1 hour!`,

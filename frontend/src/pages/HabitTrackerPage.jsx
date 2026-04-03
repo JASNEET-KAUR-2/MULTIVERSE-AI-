@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useAuth } from "../context/AuthContext";
 import { api } from "../api/client";
@@ -14,7 +14,7 @@ const habitEmojis = {
   Coding: "💻",
   Art: "🎨",
   Music: "🎵",
-  Cooking: "👨‍🍳",
+  Cooking: "🍳",
   Journaling: "📝"
 };
 
@@ -28,9 +28,9 @@ export default function HabitTrackerPage() {
     target: "10"
   });
 
-  // Load habits
   const loadHabits = async () => {
     if (!token) return;
+
     try {
       setLoading(true);
       const response = await api.getHabits(token);
@@ -46,18 +46,19 @@ export default function HabitTrackerPage() {
     loadHabits();
   }, [token]);
 
-  const handleCreateHabit = async (e) => {
-    e.preventDefault();
+  const handleCreateHabit = async (event) => {
+    event.preventDefault();
     if (!formData.name.trim() || !formData.target) return;
 
     try {
       const response = await api.createHabit(token, {
         name: formData.name,
-        target: parseInt(formData.target)
+        target: parseInt(formData.target, 10)
       });
-      setHabits([...habits, response.habit]);
+      setHabits((current) => [...current, response.habit]);
       setFormData({ name: "", target: "10" });
       setShowCreateModal(false);
+      loadHabits();
     } catch (error) {
       console.error("Failed to create habit:", error);
     }
@@ -66,20 +67,18 @@ export default function HabitTrackerPage() {
   const handleIncrementHabit = async (habitId) => {
     try {
       const response = await api.incrementHabitProgress(token, habitId, { amount: 1 });
-      setHabits(
-        habits.map((h) => (h._id === habitId ? response.habit : h))
-      );
+      setHabits((current) => current.map((habit) => (habit._id === habitId ? response.habit : habit)));
+      loadHabits();
     } catch (error) {
       console.error("Failed to increment habit:", error);
     }
   };
 
-  const handleCompleteHabbit = async (habitId) => {
+  const handleCompleteHabit = async (habitId) => {
     try {
       const response = await api.completeHabitToday(token, habitId);
-      setHabits(
-        habits.map((h) => (h._id === habitId ? response.habit : h))
-      );
+      setHabits((current) => current.map((habit) => (habit._id === habitId ? response.habit : habit)));
+      loadHabits();
     } catch (error) {
       console.error("Failed to complete habit:", error);
     }
@@ -88,84 +87,68 @@ export default function HabitTrackerPage() {
   const handleDeleteHabit = async (habitId) => {
     try {
       await api.deleteHabit(token, habitId);
-      setHabits(habits.filter((h) => h._id !== habitId));
+      setHabits((current) => current.filter((habit) => habit._id !== habitId));
+      loadHabits();
     } catch (error) {
       console.error("Failed to delete habit:", error);
     }
   };
 
-  const activeHabits = habits.filter((h) => h.streak > 0).length;
-  const completedToday = habits.filter((h) => h.completedToday).length;
+  const activeHabits = habits.filter((habit) => habit.streak > 0).length;
+  const completedToday = habits.filter((habit) => habit.completedToday).length;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 p-6">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-slate-900 dark:text-white mb-2">
-            📅 Habit Tracker
-          </h1>
-          <p className="text-slate-600 dark:text-slate-400">
-            Build consistency and track your daily habits.
-          </p>
+    <div className="muse-page mx-auto max-w-6xl p-6">
+        <div className="muse-card muse-card-peach p-8" data-ambient-scene="Habit Studio" data-ambient-intensity="0.18">
+          <h1 className="mb-2 text-4xl font-bold text-slate-900">Habit Tracker</h1>
+          <p className="text-slate-600">Build consistency and understand how your mood influences follow-through.</p>
         </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
-            <p className="text-sm text-slate-600 dark:text-slate-400">Total Habits</p>
-            <p className="text-3xl font-bold text-slate-900 dark:text-white mt-2">{habits.length}</p>
+        <div className="muse-grid-three xl:grid-cols-4">
+          <div className="muse-card p-6">
+            <p className="text-sm text-slate-600">Total Habits</p>
+            <p className="mt-2 text-3xl font-bold text-slate-900">{habits.length}</p>
           </div>
-          <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
-            <p className="text-sm text-slate-600 dark:text-slate-400">Active Streaks</p>
-            <p className="text-3xl font-bold text-indigo-600 dark:text-indigo-400 mt-2">{activeHabits}</p>
+          <div className="muse-card muse-card-blue p-6">
+            <p className="text-sm text-slate-600">Active Streaks</p>
+            <p className="mt-2 text-3xl font-bold text-indigo-600">{activeHabits}</p>
           </div>
-          <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
-            <p className="text-sm text-slate-600 dark:text-slate-400">Completed Today</p>
-            <p className="text-3xl font-bold text-emerald-600 dark:text-emerald-400 mt-2">{completedToday}</p>
+          <div className="muse-card muse-card-mint p-6">
+            <p className="text-sm text-slate-600">Completed Today</p>
+            <p className="mt-2 text-3xl font-bold text-emerald-600">{completedToday}</p>
           </div>
-          <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
-            <p className="text-sm text-slate-600 dark:text-slate-400">Best Streak</p>
-            <p className="text-3xl font-bold text-amber-600 dark:text-amber-400 mt-2">
-              {habits.length > 0
-                ? Math.max(...habits.map((h) => h.streak || 0))
-                : 0}{" "}
-              days
+          <div className="muse-card p-6">
+            <p className="text-sm text-slate-600">Best Streak</p>
+            <p className="mt-2 text-3xl font-bold text-amber-600">
+              {habits.length ? Math.max(...habits.map((habit) => habit.streak || 0)) : 0} days
             </p>
           </div>
         </div>
 
-        {/* Create Button */}
-        <div className="mb-8 flex justify-between items-center">
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Your Habits</h2>
+        <div className="mb-8 flex items-center justify-between">
+          <h2 className="text-2xl font-bold text-slate-900">Your Habits</h2>
           <motion.button
             onClick={() => setShowCreateModal(true)}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-6 py-3 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition-colors"
+            className="rounded-xl bg-indigo-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-indigo-700"
           >
             + New Habit
           </motion.button>
         </div>
 
-        {/* Habits List */}
         {loading ? (
-          <div className="text-center py-12">Loading habits...</div>
+          <div className="py-12 text-center">Loading habits...</div>
         ) : habits.length === 0 ? (
-          <div className="text-center py-12 bg-white dark:bg-slate-800 rounded-2xl">
-            <div className="text-5xl mb-4">🌱</div>
-            <p className="text-slate-600 dark:text-slate-400">No habits yet</p>
-            <p className="text-sm text-slate-500 dark:text-slate-500 mt-2">
-              Create your first habit to start building consistency!
-            </p>
+          <div className="muse-card muse-card-mint py-12 text-center">
+            <div className="mb-4 text-5xl">🌱</div>
+            <p className="text-slate-600">No habits yet</p>
+            <p className="mt-2 text-sm text-slate-500">Create your first habit to start building consistency.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {habits.map((habit) => {
-              const progressPercent = Math.min(
-                100,
-                Math.round((habit.current / habit.target) * 100)
-              );
+              const progressPercent = Math.min(100, Math.round((habit.current / habit.target) * 100));
               const emoji = habitEmojis[habit.name] || "✨";
 
               return (
@@ -173,92 +156,73 @@ export default function HabitTrackerPage() {
                   key={habit._id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border-2 border-slate-200 dark:border-slate-700 hover:border-indigo-200 dark:hover:border-indigo-700 transition-all"
+                  className="muse-card p-6"
                 >
-                  {/* Header */}
-                  <div className="flex items-center justify-between mb-4">
+                  <div className="mb-4 flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <span className="text-3xl">{emoji}</span>
                       <div>
-                        <h3 className="font-semibold text-lg text-slate-900 dark:text-white">
-                          {habit.name}
-                        </h3>
-                        <p className="text-sm text-slate-600 dark:text-slate-400">
-                          Target: {habit.target}
-                        </p>
+                        <h3 className="text-lg font-semibold text-slate-900">{habit.name}</h3>
+                        <p className="text-sm text-slate-600">Target: {habit.target}</p>
                       </div>
                     </div>
-                    {habit.completedToday && (
-                      <span className="text-2xl">✅</span>
-                    )}
+                    {habit.completedToday ? <span className="text-2xl">✅</span> : null}
                   </div>
 
-                  {/* Progress Bar */}
                   <div className="mb-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">
-                        Progress
-                      </span>
-                      <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400">
+                    <div className="mb-2 flex items-center justify-between">
+                      <span className="text-sm font-semibold text-slate-700">Progress</span>
+                      <span className="text-sm font-bold text-indigo-600">
                         {habit.current} / {habit.target}
                       </span>
                     </div>
-                    <div className="h-3 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                    <div className="h-3 overflow-hidden rounded-full bg-slate-200">
                       <motion.div
                         initial={{ width: 0 }}
                         animate={{ width: `${progressPercent}%` }}
                         transition={{ duration: 0.5, ease: "easeOut" }}
-                        className="h-full bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-full"
+                        className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-indigo-600"
                       />
                     </div>
                   </div>
 
-                  {/* Streak */}
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="flex-1">
-                      <p className="text-sm text-slate-600 dark:text-slate-400">Current Streak</p>
-                      <div className="flex items-center gap-2 mt-1">
-                        <span className="text-2xl">🔥</span>
-                        <span className="text-xl font-bold text-orange-600 dark:text-orange-400">
-                          {habit.streak}
-                        </span>
-                        <span className="text-sm text-slate-500 dark:text-slate-400">days</span>
-                      </div>
-                    </div>
+                  <div className="mb-6 flex items-center gap-2">
+                    <span className="text-2xl">🔥</span>
+                    <span className="text-xl font-bold text-orange-600">{habit.streak}</span>
+                    <span className="text-sm text-slate-500">days</span>
                   </div>
 
-                  {/* Actions */}
                   <div className="flex gap-2">
                     {!habit.completedToday ? (
                       <>
                         <motion.button
                           whileTap={{ scale: 0.95 }}
                           onClick={() => handleIncrementHabit(habit._id)}
-                          className="flex-1 px-3 py-2 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 rounded-lg font-semibold hover:bg-indigo-100 dark:hover:bg-indigo-900/50 transition-colors text-sm"
+                          className="flex-1 rounded-lg bg-indigo-50 px-3 py-2 text-sm font-semibold text-indigo-700 transition-colors hover:bg-indigo-100"
                         >
                           +1 Unit
                         </motion.button>
-                        {habit.current < habit.target && (
+                        {habit.current < habit.target ? (
                           <motion.button
                             whileTap={{ scale: 0.95 }}
-                            onClick={() => handleCompleteHabbit(habit._id)}
-                            className="flex-1 px-3 py-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 rounded-lg font-semibold hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors text-sm"
+                            onClick={() => handleCompleteHabit(habit._id)}
+                            className="flex-1 rounded-lg bg-emerald-50 px-3 py-2 text-sm font-semibold text-emerald-700 transition-colors hover:bg-emerald-100"
                           >
-                            ✓ Complete
+                            Complete
                           </motion.button>
-                        )}
+                        ) : null}
                       </>
                     ) : (
-                      <div className="flex-1 px-3 py-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 rounded-lg font-semibold text-center text-sm">
-                        ✓ Completed Today
+                      <div className="flex-1 rounded-lg bg-emerald-50 px-3 py-2 text-center text-sm font-semibold text-emerald-700">
+                        Completed Today
                       </div>
                     )}
                     <motion.button
                       whileTap={{ scale: 0.95 }}
                       onClick={() => handleDeleteHabit(habit._id)}
-                      className="px-3 py-2 bg-rose-50 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400 rounded-lg font-semibold hover:bg-rose-100 dark:hover:bg-rose-900/50 transition-colors text-sm"
+                      className="rounded-lg bg-rose-50 px-3 py-2 text-sm font-semibold text-rose-700 transition-colors hover:bg-rose-100"
                     >
-                      🗑️
+                      Delete
                     </motion.button>
                   </div>
                 </motion.div>
@@ -267,68 +231,50 @@ export default function HabitTrackerPage() {
           </div>
         )}
 
-        {/* Create Modal */}
-        {showCreateModal && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 backdrop-blur-sm">
+        {showCreateModal ? (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
             <motion.div
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="bg-white dark:bg-slate-800 rounded-2xl p-8 max-w-md w-full"
+              className="w-full max-w-md muse-card muse-card-peach p-8"
             >
-              <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">
-                Create New Habit
-              </h2>
+              <h2 className="mb-6 text-2xl font-bold text-slate-900">Create New Habit</h2>
 
               <form onSubmit={handleCreateHabit} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
-                    Habit Name
-                  </label>
+                  <label className="mb-2 block text-sm font-semibold text-slate-900">Habit Name</label>
                   <input
                     type="text"
                     placeholder="e.g., Morning Meditation"
                     value={formData.name}
-                    onChange={(e) =>
-                      setFormData({ ...formData, name: e.target.value })
-                    }
-                    className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-700 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    onChange={(event) => setFormData((current) => ({ ...current, name: event.target.value }))}
+                    className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     required
                   />
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                    Choose from: {Object.keys(habitEmojis).slice(0, 6).join(", ")}...
-                  </p>
+                  <p className="mt-1 text-xs text-slate-500">Try names like Exercise, Meditation, Reading, Study, or Journaling.</p>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
-                    Daily Target
-                  </label>
+                  <label className="mb-2 block text-sm font-semibold text-slate-900">Daily Target</label>
                   <input
                     type="number"
                     min="1"
                     value={formData.target}
-                    onChange={(e) =>
-                      setFormData({ ...formData, target: e.target.value })
-                    }
-                    className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-700 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    onChange={(event) => setFormData((current) => ({ ...current, target: event.target.value }))}
+                    className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     required
                   />
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                    e.g., 10 units, 30 minutes, 8 glasses, etc.
-                  </p>
+                  <p className="mt-1 text-xs text-slate-500">Examples: 10 units, 30 minutes, 8 glasses, or 1 session.</p>
                 </div>
 
                 <div className="flex gap-4 pt-4">
-                  <button
-                    type="submit"
-                    className="flex-1 px-4 py-3 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition-colors"
-                  >
+                  <button type="submit" className="flex-1 rounded-xl bg-indigo-600 px-4 py-3 font-semibold text-white transition-colors hover:bg-indigo-700">
                     Create Habit
                   </button>
                   <button
                     type="button"
                     onClick={() => setShowCreateModal(false)}
-                    className="px-4 py-3 bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white rounded-xl font-semibold hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors"
+                    className="rounded-xl bg-slate-200 px-4 py-3 font-semibold text-slate-900 transition-colors hover:bg-slate-300"
                   >
                     Cancel
                   </button>
@@ -336,8 +282,7 @@ export default function HabitTrackerPage() {
               </form>
             </motion.div>
           </div>
-        )}
-      </div>
+        ) : null}
     </div>
   );
 }

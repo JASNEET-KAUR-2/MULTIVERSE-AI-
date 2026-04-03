@@ -5,7 +5,38 @@ const OTP_EXPIRY_SECONDS = 300;
 const OTP_COOLDOWN_MS = 2 * 60 * 1000;
 const OTP_MAX_ATTEMPTS = 3;
 
-export const isEmailOtpConfigured = () => Boolean(process.env.EMAIL_USER && process.env.EMAIL_PASS);
+const parseBoolean = (value, fallback = false) => {
+  if (typeof value !== "string") {
+    return fallback;
+  }
+
+  return value.trim().toLowerCase() === "true";
+};
+
+const getEmailConfig = () => {
+  const smtpHost = process.env.SMTP_HOST?.trim();
+  const smtpPort = Number(process.env.SMTP_PORT || 587);
+  const smtpUser = process.env.SMTP_USER?.trim() || process.env.EMAIL_USER?.trim();
+  const smtpPass = process.env.SMTP_PASS?.trim() || process.env.EMAIL_PASS?.trim();
+  const smtpSecure = parseBoolean(process.env.SMTP_SECURE, smtpPort === 465);
+  const smtpService = process.env.SMTP_SERVICE?.trim() || "gmail";
+  const emailFrom = process.env.EMAIL_FROM?.trim() || smtpUser;
+
+  return {
+    smtpHost,
+    smtpPort,
+    smtpUser,
+    smtpPass,
+    smtpSecure,
+    smtpService,
+    emailFrom
+  };
+};
+
+export const isEmailOtpConfigured = () => {
+  const { smtpUser, smtpPass } = getEmailConfig();
+  return Boolean(smtpUser && smtpPass);
+};
 
 let transporter = null;
 
@@ -15,13 +46,25 @@ const getTransporter = () => {
   }
 
   if (!transporter) {
-    transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
-    });
+    const { smtpHost, smtpPort, smtpUser, smtpPass, smtpSecure, smtpService } = getEmailConfig();
+
+    transporter = smtpHost
+      ? nodemailer.createTransport({
+          host: smtpHost,
+          port: smtpPort,
+          secure: smtpSecure,
+          auth: {
+            user: smtpUser,
+            pass: smtpPass
+          }
+        })
+      : nodemailer.createTransport({
+          service: smtpService,
+          auth: {
+            user: smtpUser,
+            pass: smtpPass
+          }
+        });
   }
 
   return transporter;
@@ -46,15 +89,16 @@ const buildOtpEmailTemplate = (title, description, otp) => `
 
 export const sendLoginOtpEmail = async (email, otp) => {
   const mailer = getTransporter();
+  const { emailFrom } = getEmailConfig();
 
   if (!mailer) {
-    const error = new Error("Secure email OTP is not configured on the server.");
+    const error = new Error("Secure email OTP is not configured on the server. Add SMTP_USER/SMTP_PASS or EMAIL_USER/EMAIL_PASS.");
     error.status = 503;
     throw error;
   }
 
   await mailer.sendMail({
-    from: process.env.EMAIL_USER,
+    from: emailFrom,
     to: email,
     subject: "Your multiverse ai login OTP",
     html: buildOtpEmailTemplate(
@@ -69,20 +113,45 @@ export const sendLoginOtpEmail = async (email, otp) => {
 
 export const sendSignupOtpEmail = async (email, otp) => {
   const mailer = getTransporter();
+  const { emailFrom } = getEmailConfig();
 
   if (!mailer) {
-    const error = new Error("Secure email OTP is not configured on the server.");
+    const error = new Error("Secure email OTP is not configured on the server. Add SMTP_USER/SMTP_PASS or EMAIL_USER/EMAIL_PASS.");
     error.status = 503;
     throw error;
   }
 
   await mailer.sendMail({
-    from: process.env.EMAIL_USER,
+    from: emailFrom,
     to: email,
     subject: "Verify your multiverse ai email",
     html: buildOtpEmailTemplate(
       "multiverse ai email verification",
       "Use this one-time password to verify your email and complete account creation.",
+      otp
+    )
+  });
+
+  return { delivered: true };
+};
+
+export const sendPasswordResetOtpEmail = async (email, otp) => {
+  const mailer = getTransporter();
+  const { emailFrom } = getEmailConfig();
+
+  if (!mailer) {
+    const error = new Error("Secure email OTP is not configured on the server. Add SMTP_USER/SMTP_PASS or EMAIL_USER/EMAIL_PASS.");
+    error.status = 503;
+    throw error;
+  }
+
+  await mailer.sendMail({
+    from: emailFrom,
+    to: email,
+    subject: "Reset your multiverse ai password",
+    html: buildOtpEmailTemplate(
+      "multiverse ai password reset",
+      "Use this one-time password to create a new password for your workspace.",
       otp
     )
   });

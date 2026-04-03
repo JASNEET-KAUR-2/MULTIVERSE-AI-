@@ -238,15 +238,6 @@
 | PATCH | `/quests/:id` | Update quest | ✅ |
 | DELETE | `/quests/:id` | Delete quest | ✅ |
 
-### Guilds (Existing)
-| Method | Endpoint | Purpose | Auth |
-|--------|----------|---------|------|
-| GET | `/guilds` | Get all guilds | ✅ |
-| POST | `/guilds` | Create guild | ✅ |
-| PATCH | `/guilds/:id` | Update guild | ✅ |
-| DELETE | `/guilds/:id` | Delete guild | ✅ |
-
----
 
 ## 📊 Complete User Model Structure
 
@@ -315,7 +306,6 @@ User {
   
   // Existing Features
   quests: [...]
-  guilds: [...]
   
   createdAt: Date
   updatedAt: Date

@@ -7,17 +7,18 @@ const DashboardLayout = () => (
     <div className="report-ambient pointer-events-none fixed inset-0">
       <div className="report-ambient-orb report-ambient-orb-left" />
       <div className="report-ambient-orb report-ambient-orb-right" />
-      <div className="report-stars" />
     </div>
 
     <V0DashboardNav />
 
-    <main className="relative pt-28">
-      <div className="container mx-auto px-4 py-8">
+    <main className="relative px-4 pt-24 md:px-8 md:pt-8" data-ambient-scene="Workspace Overview" data-ambient-intensity="0.24" data-ambient-rate="1.01">
+      <div className="mx-auto max-w-[1380px] py-6 md:py-8">
         <Outlet />
       </div>
     </main>
-    <AppFooter />
+    <div className="px-4 pb-6 md:px-8">
+      <AppFooter />
+    </div>
   </div>
 );
 

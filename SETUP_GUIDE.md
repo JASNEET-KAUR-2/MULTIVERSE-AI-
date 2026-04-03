@@ -119,7 +119,6 @@ A full-stack, production-ready modern web application focused on productivity, l
 │   │   ├── models/
 │   │   │   ├── User.js            # User schema with all features
 │   │   │   ├── Quest.js
-│   │   │   ├── Guild.js
 │   │   │   └── ...
 │   │   ├── routes/
 │   │   │   ├── taskRoutes.js
@@ -392,7 +391,6 @@ npm run test:smoke
 - [ ] Real-time WebSocket notifications
 - [ ] Browser push notifications with Service Workers
 - [ ] Email notification integration
-- [ ] Multi-user leaderboards & guilds
 - [ ] Mobile app (React Native)
 - [ ] Advanced analytics dashboard
 - [ ] Integration with calendar APIs

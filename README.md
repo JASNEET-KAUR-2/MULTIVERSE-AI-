@@ -24,7 +24,6 @@ Parallel You is a full-stack AI + ML web app built for fast hackathon delivery. 
 - Game-style dashboard with XP, streaks, and quests
 - Daily quests with difficulty-based XP multipliers
 - Simple probability visualization chart
-- Optional guild system
 
 ## Project Structure
 

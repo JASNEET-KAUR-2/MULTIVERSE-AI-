@@ -91,13 +91,13 @@ const ProfilePage = () => {
   const snapshotCards = [
     { label: "Prediction", value: dashboard.prediction?.label || "Pending", icon: SparklesIcon },
     { label: "Momentum", value: `${analysis.momentumScore || 0}/100`, icon: TrendUpIcon },
-    { label: "Scanner Streak", value: dashboard.stats?.scannerStreak || 0, icon: BranchIcon },
+    { label: "Streak", value: `${dashboard.stats?.streak || 0} days`, icon: BranchIcon },
     { label: "XP", value: dashboard.stats?.xp || 0, icon: TrophyIcon }
   ];
 
   return (
-    <div className="mx-auto max-w-6xl space-y-6">
-      <section className="hero-shell rounded-[2rem] border border-white/10 px-6 py-8 md:px-8">
+    <div className="muse-page mx-auto max-w-6xl">
+      <section className="hero-shell muse-card muse-card-peach px-6 py-8 md:px-8" data-ambient-scene="Profile Studio" data-ambient-intensity="0.2">
         <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-4">
             <UserAvatar name={user?.name || dashboard.user?.name} className="h-[4.5rem] w-[4.5rem] text-xl" />
@@ -113,9 +113,9 @@ const ProfilePage = () => {
         </div>
       </section>
 
-      <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
+      <div className="muse-grid-two">
         <div className="space-y-6">
-          <div className="dynamic-panel rounded-[1.8rem] p-6">
+          <div className="muse-card p-6">
             <div className="mb-5 flex items-center gap-3">
               <UserIcon className="h-5 w-5 text-cyan-200" />
               <h2 className="text-2xl font-semibold">Current profile</h2>
@@ -124,7 +124,7 @@ const ProfilePage = () => {
               {snapshotCards.map((item) => {
                 const Icon = item.icon;
                 return (
-                  <div key={item.label} className="rounded-[1.3rem] border border-white/10 bg-white/5 p-4">
+                  <div key={item.label} className="muse-mini-card p-4">
                     <div className="mb-2 flex items-center gap-2">
                       <Icon className="h-4 w-4 text-cyan-200" />
                       <span className="text-sm text-slate-400">{item.label}</span>
@@ -138,7 +138,7 @@ const ProfilePage = () => {
 
           <BehaviorSnapshot behaviorProfile={behavior} />
 
-          <div className="dynamic-panel rounded-[1.8rem] p-6">
+          <div className="muse-card muse-card-blue p-6">
             <div className="mb-5 flex items-center gap-3">
               <BranchIcon className="h-5 w-5 text-emerald-200" />
               <h2 className="text-2xl font-semibold">7-day streak map</h2>
@@ -153,7 +153,7 @@ const ProfilePage = () => {
             </div>
           </div>
 
-          <div className="dynamic-panel rounded-[1.8rem] p-6">
+          <div className="muse-card muse-card-mint p-6">
             <div className="mb-5 flex items-center gap-3">
               <MessageIcon className="h-5 w-5 text-fuchsia-200" />
               <h2 className="text-2xl font-semibold">Focus anchors</h2>
@@ -172,7 +172,7 @@ const ProfilePage = () => {
             </div>
             <div className="space-y-3">
               {(dashboard.simulationHistory || []).slice(0, 4).map((entry) => (
-                <div key={entry._id || entry.createdAt} className="rounded-[1.2rem] border border-white/10 bg-white/5 p-4">
+              <div key={entry._id || entry.createdAt} className="muse-mini-card p-4">
                   <div className="flex items-center justify-between gap-3">
                     <p className="font-medium text-white">{entry.presetMode || "Custom Simulation"}</p>
                     <span className="text-sm text-cyan-200">{entry.prediction}</span>
@@ -188,7 +188,7 @@ const ProfilePage = () => {
                 </div>
               ))}
               {!(dashboard.simulationHistory || []).length ? (
-                <div className="rounded-[1.2rem] border border-white/10 bg-white/5 p-4 text-sm text-slate-300">
+                <div className="muse-mini-card p-4 text-sm text-slate-600">
                   No simulations saved yet. Run a What If scenario from the dashboard to start comparing alternate futures.
                 </div>
               ) : null}
@@ -196,7 +196,7 @@ const ProfilePage = () => {
           </div>
         </div>
 
-        <div className="dynamic-panel rounded-[1.8rem] p-6">
+        <div className="muse-card muse-card-blue p-6">
           <div className="mb-5 flex items-center gap-3">
             <SparklesIcon className="h-5 w-5 text-cyan-200" />
             <h2 className="text-2xl font-semibold">Activity history</h2>
@@ -205,7 +205,7 @@ const ProfilePage = () => {
           <div className="space-y-4">
             {timelineItems.length ? (
               timelineItems.map((item) => (
-                <div key={item.id} className="rounded-[1.4rem] border border-white/10 bg-white/5 p-4">
+                <div key={item.id} className="muse-mini-card p-4">
                   <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                     <div>
                       <p className="text-xs uppercase tracking-[0.2em] text-slate-500">{item.kind}</p>
@@ -213,14 +213,14 @@ const ProfilePage = () => {
                       <p className="mt-2 text-sm leading-7 text-slate-300">{item.detail || "No details captured."}</p>
                     </div>
                     <div className="flex flex-col items-start gap-2 sm:items-end">
-                      <span className="rounded-full border border-white/10 bg-black/15 px-3 py-1 text-xs text-slate-300">{item.badge}</span>
+                      <span className="rounded-full border border-[rgba(223,207,188,0.92)] bg-white/70 px-3 py-1 text-xs text-slate-600">{item.badge}</span>
                       <span className="text-xs uppercase tracking-[0.18em] text-slate-500">{formatDate(item.timestamp)}</span>
                     </div>
                   </div>
                 </div>
               ))
             ) : (
-              <div className="rounded-[1.4rem] border border-white/10 bg-white/5 p-4 text-sm text-slate-300">
+              <div className="muse-mini-card p-4 text-sm text-slate-600">
                 No history yet. Finish a scan or complete a quest and this page will start filling up.
               </div>
             )}

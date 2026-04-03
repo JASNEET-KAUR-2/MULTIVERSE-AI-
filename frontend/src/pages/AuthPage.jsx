@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { api } from "../api/client";
-import UserAvatar from "../components/UserAvatar.jsx";
 import { ArrowRightIcon, SparklesIcon, TargetIcon, TrendUpIcon, UserIcon, ZapIcon } from "../components/V0Icons.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 
@@ -9,6 +8,7 @@ const initialForm = {
   name: "",
   email: "",
   password: "",
+  confirmPassword: "",
   age: "",
   goals: "",
   habits: ""
@@ -65,6 +65,7 @@ const AuthPage = () => {
   const [otpDevPreview, setOtpDevPreview] = useState("");
   const [otpEmail, setOtpEmail] = useState("");
   const [error, setError] = useState("");
+  const [notice, setNotice] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [previewPulse, setPreviewPulse] = useState(false);
 
@@ -89,12 +90,22 @@ const AuthPage = () => {
     setOtpCode("");
     setOtpDevPreview("");
     setOtpEmail("");
+    setError("");
   }, [mode]);
+
+  const resetOtpState = () => {
+    setOtpStep(false);
+    setOtpPurpose("");
+    setOtpCode("");
+    setOtpDevPreview("");
+    setOtpEmail("");
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setSubmitting(true);
     setError("");
+    setNotice("");
 
     try {
       let response;
@@ -116,6 +127,7 @@ const AuthPage = () => {
           setOtpDevPreview(response.devOtpPreview || "");
           setOtpCode("");
           setPreviewPulse(true);
+          setNotice(response.message || "Verification OTP sent.");
           setSubmitting(false);
           return;
         }
@@ -141,11 +153,12 @@ const AuthPage = () => {
 
         if (response.otpRequired) {
           setOtpStep(true);
-          setOtpPurpose("login");
+          setOtpPurpose(response.purpose || "login");
           setOtpEmail(response.email || form.email.trim().toLowerCase());
           setOtpDevPreview(response.devOtpPreview || "");
           setOtpCode("");
           setPreviewPulse(true);
+          setNotice(response.message || "OTP sent successfully.");
           setSubmitting(false);
           return;
         }
@@ -166,11 +179,63 @@ const AuthPage = () => {
         return;
       }
 
+      if (mode === "forgot" && !otpStep) {
+        response = await api.forgotPassword({ email: form.email });
+
+        if (response.otpRequired) {
+          setOtpStep(true);
+          setOtpPurpose("reset-password");
+          setOtpEmail(response.email || form.email.trim().toLowerCase());
+          setOtpDevPreview(response.devOtpPreview || "");
+          setOtpCode("");
+          setPreviewPulse(true);
+          setNotice(response.message || "Password reset OTP sent.");
+          setSubmitting(false);
+          return;
+        }
+      }
+
+      if (mode === "forgot" && otpStep) {
+        if (form.password !== form.confirmPassword) {
+          throw new Error("New password and confirm password must match.");
+        }
+
+        response = await api.resetPassword({
+          email: otpEmail || form.email,
+          otp: otpCode,
+          newPassword: form.password
+        });
+
+        setMode("login");
+        setNotice(response.message || "Password updated successfully. You can now sign in.");
+        setForm((current) => ({
+          ...current,
+          password: "",
+          confirmPassword: ""
+        }));
+        resetOtpState();
+        return;
+      }
+
       throw new Error("Invalid auth state.");
     } catch (submitError) {
       setError(submitError.message);
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  const handleEmailChange = (value) => {
+    setForm({ ...form, email: value });
+    if (otpStep) {
+      resetOtpState();
+    }
+  };
+
+  const handlePasswordChange = (value) => {
+    setForm({ ...form, password: value });
+    if (mode !== "forgot" && otpStep) {
+      resetOtpState();
     }
   };
 
@@ -200,7 +265,17 @@ const AuthPage = () => {
                 </div>
                 <div className="auth-account-badge">
                   <SparklesIcon className="h-4 w-4 text-sky-600" />
-                  <span>{mode === "signup" ? "new account" : otpStep ? "otp verification" : "returning access"}</span>
+                  <span>
+                    {mode === "signup"
+                      ? "new account"
+                      : mode === "forgot"
+                        ? otpStep
+                          ? "password reset"
+                          : "recovery mode"
+                        : otpStep
+                          ? "otp verification"
+                          : "returning access"}
+                  </span>
                 </div>
               </div>
 
@@ -216,7 +291,9 @@ const AuthPage = () => {
                       <UserIcon className="h-6 w-6 text-sky-700" />
                     </div>
                     <div className="min-w-0">
-                      <div className="text-base font-semibold text-slate-900">{mode === "signup" ? "Future Self Timeline" : "Workspace Access"}</div>
+                      <div className="text-base font-semibold text-slate-900">
+                        {mode === "signup" ? "Future Self Timeline" : mode === "forgot" ? "Password Recovery" : "Workspace Access"}
+                      </div>
                       <div className="auth-email-highlight">{previewEmail}</div>
                     </div>
                   </div>
@@ -269,7 +346,9 @@ const AuthPage = () => {
                     </>
                   ) : (
                     <div className="mt-5 rounded-[1.2rem] border border-sky-100 bg-white/70 p-4 text-sm leading-7 text-slate-600">
-                      Sign in to continue with your saved scan history, habits, goals, and future guidance.
+                      {mode === "forgot"
+                        ? "Reset access with a secure OTP so your saved scans, habits, goals, and guidance stay protected."
+                        : "Sign in to continue with your saved scan history, habits, goals, and future guidance."}
                     </div>
                   )}
                 </div>
@@ -278,12 +357,16 @@ const AuthPage = () => {
                   <SparklesIcon className="mt-0.5 h-5 w-5 text-sky-600" />
                   <span>
                     {mode === "signup"
-                      ? (otpStep
-                          ? "An OTP has been sent to your email. Verify to activate your new account."
-                          : guidance)
-                      : otpStep
-                        ? "Your password is confirmed. Enter the OTP to finish signing in."
-                        : "Your workspace is ready. Login to continue where you left off."}
+                      ? otpStep
+                        ? "An OTP has been sent to your email. Verify to activate your new account."
+                        : guidance
+                      : mode === "forgot"
+                        ? otpStep
+                          ? "Enter the reset OTP and choose a new password to reopen your workspace."
+                          : "Forgot your password? We will send a secure OTP so you can set a new one."
+                        : otpStep
+                          ? "Your password is confirmed. Enter the OTP to finish signing in."
+                          : "Your workspace is ready. Login to continue where you left off."}
                   </span>
                 </div>
               </div>
@@ -293,7 +376,9 @@ const AuthPage = () => {
               <div className="flex flex-wrap items-center justify-between gap-4">
                 <div>
                   <p className="text-xs uppercase tracking-[0.35em] text-slate-500">Enter The Calendar</p>
-                  <h2 className="mt-2 text-3xl font-semibold text-slate-900">{mode === "signup" ? "Enter multiverse ai" : "Return to multiverse ai"}</h2>
+                  <h2 className="mt-2 text-3xl font-semibold text-slate-900">
+                    {mode === "signup" ? "Enter multiverse ai" : mode === "forgot" ? "Recover your workspace" : "Return to multiverse ai"}
+                  </h2>
                 </div>
                 <button
                   type="button"
@@ -314,7 +399,7 @@ const AuthPage = () => {
                           className="input-field"
                           placeholder="Your name"
                           value={form.name}
-                          onChange={(e) => setForm({ ...form, name: e.target.value })}
+                          onChange={(event) => setForm({ ...form, name: event.target.value })}
                           required
                         />
                       </label>
@@ -325,7 +410,7 @@ const AuthPage = () => {
                           placeholder="Your age"
                           type="number"
                           value={form.age}
-                          onChange={(e) => setForm({ ...form, age: e.target.value })}
+                          onChange={(event) => setForm({ ...form, age: event.target.value })}
                         />
                       </label>
                     </>
@@ -338,51 +423,55 @@ const AuthPage = () => {
                       placeholder="your@email.com"
                       type="email"
                       value={form.email}
-                      onChange={(e) => {
-                        setForm({ ...form, email: e.target.value });
-                        if (otpStep) {
-                          setOtpStep(false);
-                          setOtpPurpose("");
-                          setOtpCode("");
-                          setOtpDevPreview("");
-                          setOtpEmail("");
-                        }
-                      }}
+                      onChange={(event) => handleEmailChange(event.target.value)}
                       required
                     />
                   </label>
 
-                  <label className="auth-input-group sm:col-span-2">
-                    <span>Password</span>
-                    <input
-                      className="input-field"
-                      placeholder="Password"
-                      type="password"
-                      value={form.password}
-                      onChange={(e) => {
-                        setForm({ ...form, password: e.target.value });
-                        if (otpStep) {
-                          setOtpStep(false);
-                          setOtpPurpose("");
-                          setOtpCode("");
-                          setOtpDevPreview("");
-                          setOtpEmail("");
-                        }
-                      }}
-                      required
-                    />
-                  </label>
+                  {mode !== "forgot" || otpStep ? (
+                    <label className="auth-input-group sm:col-span-2">
+                      <span>{mode === "forgot" ? "New password" : "Password"}</span>
+                      <input
+                        className="input-field"
+                        placeholder={mode === "forgot" ? "Create a new password" : "Password"}
+                        type="password"
+                        value={form.password}
+                        onChange={(event) => handlePasswordChange(event.target.value)}
+                        required
+                      />
+                    </label>
+                  ) : null}
+
+                  {mode === "forgot" && otpStep ? (
+                    <label className="auth-input-group sm:col-span-2">
+                      <span>Confirm new password</span>
+                      <input
+                        className="input-field"
+                        placeholder="Confirm your new password"
+                        type="password"
+                        value={form.confirmPassword}
+                        onChange={(event) => setForm({ ...form, confirmPassword: event.target.value })}
+                        required
+                      />
+                    </label>
+                  ) : null}
 
                   {otpStep ? (
                     <label className="auth-input-group sm:col-span-2">
-                      <span>{otpPurpose === "signup" ? "Email verification OTP" : "Login OTP"}</span>
+                      <span>
+                        {otpPurpose === "signup"
+                          ? "Email verification OTP"
+                          : otpPurpose === "reset-password"
+                            ? "Password reset OTP"
+                            : "Login OTP"}
+                      </span>
                       <input
                         className="input-field"
                         placeholder="Enter 6-digit OTP"
                         inputMode="numeric"
                         maxLength={6}
                         value={otpCode}
-                        onChange={(e) => setOtpCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
+                        onChange={(event) => setOtpCode(event.target.value.replace(/\D/g, "").slice(0, 6))}
                         required
                       />
                     </label>
@@ -396,7 +485,7 @@ const AuthPage = () => {
                           className="input-field min-h-28"
                           placeholder="Launch AI tool, Run marathon, Build portfolio"
                           value={form.goals}
-                          onChange={(e) => setForm({ ...form, goals: e.target.value })}
+                          onChange={(event) => setForm({ ...form, goals: event.target.value })}
                         />
                       </label>
                       <label className="auth-input-group sm:col-span-2">
@@ -405,7 +494,7 @@ const AuthPage = () => {
                           className="input-field min-h-28"
                           placeholder="Morning planning, Daily journal, Code 2 hours"
                           value={form.habits}
-                          onChange={(e) => setForm({ ...form, habits: e.target.value })}
+                          onChange={(event) => setForm({ ...form, habits: event.target.value })}
                         />
                       </label>
                     </>
@@ -417,10 +506,7 @@ const AuthPage = () => {
                     type="button"
                     onClick={() => {
                       if (otpStep) {
-                        setOtpCode("");
-                        setOtpDevPreview("");
-                        setOtpStep(false);
-                        setOtpPurpose("");
+                        resetOtpState();
                         setPreviewPulse(true);
                         return;
                       }
@@ -429,7 +515,7 @@ const AuthPage = () => {
                     className="soft-button-secondary inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-medium"
                   >
                     <SparklesIcon className="mr-2 h-4 w-4" />
-                    {mode === "login" && otpStep ? "Edit login details" : "Update timeline"}
+                    {mode === "forgot" ? (otpStep ? "Edit reset details" : "Recovery preview") : mode === "login" && otpStep ? "Edit login details" : "Update timeline"}
                   </button>
 
                   <button
@@ -437,10 +523,62 @@ const AuthPage = () => {
                     disabled={submitting}
                     className="soft-button inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold disabled:cursor-not-allowed disabled:opacity-50"
                   >
-                    {submitting ? "Syncing..." : otpStep ? "Verify OTP" : mode === "signup" ? "Enter multiverse ai" : "Send OTP"}
+                    {submitting
+                      ? "Syncing..."
+                      : mode === "forgot"
+                        ? otpStep
+                          ? "Reset password"
+                          : "Send reset OTP"
+                        : otpStep
+                          ? "Verify OTP"
+                          : mode === "signup"
+                            ? "Enter multiverse ai"
+                            : "Send OTP"}
                     {!submitting ? <ArrowRightIcon className="ml-2 h-5 w-5" /> : null}
                   </button>
                 </div>
+
+                {mode === "login" && !otpStep ? (
+                  <div className="mt-4 flex justify-end">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setMode("forgot");
+                        setError("");
+                        setNotice("");
+                        resetOtpState();
+                        setForm((current) => ({
+                          ...current,
+                          password: "",
+                          confirmPassword: ""
+                        }));
+                      }}
+                      className="text-sm font-medium text-sky-700 transition hover:text-sky-900"
+                    >
+                      Forgot password?
+                    </button>
+                  </div>
+                ) : null}
+
+                {mode === "forgot" ? (
+                  <div className="mt-4 flex justify-end">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setMode("login");
+                        setForm((current) => ({
+                          ...current,
+                          password: "",
+                          confirmPassword: ""
+                        }));
+                        resetOtpState();
+                      }}
+                      className="text-sm font-medium text-slate-600 transition hover:text-slate-900"
+                    >
+                      Back to login
+                    </button>
+                  </div>
+                ) : null}
 
                 <div className="auth-timeline-preview">
                   <div className="auth-sync-line">
@@ -454,13 +592,21 @@ const AuthPage = () => {
                         : parsedGoals.length
                           ? `Your direction is taking shape around ${parsedGoals.slice(0, 2).join(", ")}.`
                           : "Set your intentions to unlock clearer future guidance."
-                      : otpStep
-                        ? `Enter the OTP sent to ${otpEmail || previewEmail} to complete login.`
-                        : "Login to receive a one-time passcode and reopen your saved workspace."}
+                      : mode === "forgot"
+                        ? otpStep
+                          ? `Enter the OTP sent to ${otpEmail || previewEmail} and set your new password.`
+                          : "Enter your email to receive a one-time reset code."
+                        : otpStep
+                          ? `Enter the OTP sent to ${otpEmail || previewEmail} to complete login.`
+                          : "Login to receive a one-time passcode and reopen your saved workspace."}
                   </div>
                   {mode === "login" && otpStep && otpDevPreview ? (
                     <div className="mt-3 rounded-[1rem] border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-700">
                       Dev OTP preview: <strong>{otpDevPreview}</strong>
+                    </div>
+                  ) : mode === "forgot" && otpStep && otpDevPreview ? (
+                    <div className="mt-3 rounded-[1rem] border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-700">
+                      Dev reset OTP preview: <strong>{otpDevPreview}</strong>
                     </div>
                   ) : mode === "signup" && otpStep && otpDevPreview ? (
                     <div className="mt-3 rounded-[1rem] border border-sky-200 bg-sky-50 px-4 py-3 text-sm text-sky-700">
@@ -469,6 +615,7 @@ const AuthPage = () => {
                   ) : null}
                 </div>
 
+                {notice ? <p className="mt-4 text-sm text-emerald-600">{notice}</p> : null}
                 {error ? <p className="mt-4 text-sm text-rose-500">{error}</p> : null}
               </form>
             </section>

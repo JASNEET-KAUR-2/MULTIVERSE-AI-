@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 
 const XPBar = ({ xp = 0, level = 0, progress = 0, xpToNextLevel = 0 }) => (
-  <div className="glass rounded-[1.8rem] border border-white/10 p-6">
+  <div className="muse-card muse-card-peach p-6">
     <div className="mb-5 flex items-start justify-between gap-4">
       <div>
         <p className="text-xs uppercase tracking-[0.2em] text-slate-500">XP System</p>

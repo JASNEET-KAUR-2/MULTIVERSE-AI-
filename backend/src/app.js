@@ -5,7 +5,6 @@ import { ensureDatabaseConnection } from "./config/db.js";
 import analysisRoutes from "./routes/analysisRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import dashboardRoutes from "./routes/dashboardRoutes.js";
-import guildRoutes from "./routes/guildRoutes.js";
 import plannerRoutes from "./routes/plannerRoutes.js";
 import questRoutes from "./routes/questRoutes.js";
 import taskRoutes from "./routes/taskRoutes.js";
@@ -13,6 +12,8 @@ import notificationRoutes from "./routes/notificationRoutes.js";
 import habitRoutes from "./routes/habitRoutes.js";
 import goalRoutes from "./routes/goalRoutes.js";
 import journalRoutes from "./routes/journalRoutes.js";
+import emotionRoutes from "./routes/emotionRoutes.js";
+import chatbotRoutes from "./routes/chatbotRoutes.js";
 
 const app = express();
 const allowedOrigins = new Set(
@@ -42,6 +43,8 @@ app.get("/api/health", (_req, res) => {
   res.json({ status: "ok" });
 });
 
+app.use("/api/chatbot", chatbotRoutes);
+
 app.use("/api", async (req, res, next) => {
   if (req.path === "/health") {
     next();
@@ -60,13 +63,13 @@ app.use("/api/auth", authRoutes);
 app.use("/api/analysis", analysisRoutes);
 app.use("/api/quests", questRoutes);
 app.use("/api/dashboard", dashboardRoutes);
-app.use("/api/guilds", guildRoutes);
 app.use("/api/planner", plannerRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/habits", habitRoutes);
 app.use("/api/goals", goalRoutes);
 app.use("/api/journal", journalRoutes);
+app.use("/api/emotions", emotionRoutes);
 app.use("/api", (_req, res) => {
   res.status(404).json({
     message: "API route not found."

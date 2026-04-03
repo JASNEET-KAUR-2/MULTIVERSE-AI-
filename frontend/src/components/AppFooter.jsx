@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { GithubIcon, LinkedinIcon, SparklesIcon } from "./V0Icons.jsx";
+import BrandLogo from "./BrandLogo.jsx";
+import { GithubIcon, LinkedinIcon } from "./V0Icons.jsx";
 
 const footerLinks = [
   { label: "Dashboard", to: "/dashboard" },
@@ -14,16 +15,8 @@ const AppFooter = () => (
       <div className="pastel-shell rounded-[2rem] px-6 py-8 md:px-8">
         <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <div className="max-w-xl">
-            <div className="flex items-center gap-3">
-              <div className="soft-button flex h-11 w-11 items-center justify-center rounded-full">
-                <SparklesIcon className="h-5 w-5 text-slate-950 dark:text-white" />
-              </div>
-              <div>
-                <p className="text-sm uppercase tracking-[0.28em] text-slate-500 dark:text-slate-400">multiverse ai</p>
-                <p className="text-lg font-semibold text-slate-900 dark:text-white">A cleaner future-focused workspace</p>
-              </div>
-            </div>
-            <p className="mt-4 text-sm leading-7 text-slate-600 dark:text-slate-400">
+            <BrandLogo showText markClassName="h-11 w-11" titleClassName="text-base" subtitleClassName="text-xs tracking-[0.2em]" />
+            <p className="mt-4 text-sm leading-7 text-slate-600">
               Plan better, stay consistent, and keep the experience simple enough to use every day.
             </p>
           </div>
@@ -34,19 +27,19 @@ const AppFooter = () => (
                 <Link
                   key={link.to}
                   to={link.to}
-                  className="rounded-full border border-slate-200/80 bg-white/70 px-4 py-2 text-sm text-slate-600 transition hover:text-slate-900 dark:border-slate-700 dark:bg-slate-800/70 dark:text-slate-400 dark:hover:text-white"
+                  className="rounded-full border border-[rgba(223,207,188,0.92)] bg-white/80 px-4 py-2 text-sm text-slate-600 transition hover:-translate-y-0.5 hover:text-slate-900"
                 >
                   {link.label}
                 </Link>
               ))}
             </div>
 
-            <div className="flex items-center gap-3 text-slate-500 dark:text-slate-400">
+            <div className="flex items-center gap-3 text-slate-500">
               <a
                 href="https://github.com"
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-full border border-slate-200/80 bg-white/70 p-2.5 transition hover:text-slate-900 dark:border-slate-700 dark:bg-slate-800/70 dark:hover:text-white"
+                className="rounded-full border border-[rgba(223,207,188,0.92)] bg-white/80 p-2.5 transition hover:-translate-y-0.5 hover:text-slate-900"
                 aria-label="GitHub"
               >
                 <GithubIcon className="h-4 w-4" />
@@ -55,7 +48,7 @@ const AppFooter = () => (
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-full border border-slate-200/80 bg-white/70 p-2.5 transition hover:text-slate-900 dark:border-slate-700 dark:bg-slate-800/70 dark:hover:text-white"
+                className="rounded-full border border-[rgba(223,207,188,0.92)] bg-white/80 p-2.5 transition hover:-translate-y-0.5 hover:text-slate-900"
                 aria-label="LinkedIn"
               >
                 <LinkedinIcon className="h-4 w-4" />
@@ -64,7 +57,7 @@ const AppFooter = () => (
           </div>
         </div>
 
-        <div className="mt-8 border-t border-slate-200/80 pt-5 text-xs text-slate-500 dark:border-slate-700 dark:text-slate-400">
+        <div className="mt-8 border-t border-slate-200/80 pt-5 text-xs text-slate-500">
           © 2026 multiverse ai. Designed for clarity.
         </div>
       </div>

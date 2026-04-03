@@ -131,13 +131,34 @@ export const buildPersonalizedRecommendations = ({
   prediction,
   probabilities = {},
   goals = [],
-  habits = []
+  habits = [],
+  latestEmotion = "neutral"
 }) => {
   const drivers = buildDriverScores(behaviorProfile);
   const strongestDrivers = [...drivers].sort((a, b) => b.strengthScore - a.strengthScore).slice(0, 3);
   const weakestDrivers = [...drivers].sort((a, b) => b.riskScore - a.riskScore).slice(0, 3);
   const focusAreas = weakestDrivers.map((item) => item.label);
-  const recommendations = weakestDrivers.map((item) => item.recommendation);
+  const moodAwareRecommendation =
+    latestEmotion === "sad"
+      ? "Take a break or do a light task before returning to harder work."
+      : latestEmotion === "stressed" || latestEmotion === "angry"
+        ? "Reduce pressure, protect recovery, and switch to low-friction wins first."
+        : latestEmotion === "focused"
+          ? "Continue deep work while your concentration is high."
+          : latestEmotion === "happy"
+            ? "Use your positive energy on a meaningful focus task."
+            : "Match your next task to your current energy and keep it sustainable.";
+  const moodTaskHint =
+    latestEmotion === "sad"
+      ? "Keep it short, gentle, and easy to complete."
+      : latestEmotion === "stressed" || latestEmotion === "angry"
+        ? "Lower the pressure and prefer low-friction actions."
+        : latestEmotion === "focused"
+          ? "Protect attention and make this a distraction-free deep work block."
+          : latestEmotion === "happy"
+            ? "Use the extra energy on something meaningful with visible progress."
+            : "Keep the task structured and sustainable.";
+  const recommendations = [moodAwareRecommendation, ...weakestDrivers.map((item) => item.recommendation)];
   const confidence = roundPercent(
     Math.max(probabilities.High || 0, probabilities.Average || 0, probabilities.Negative || 0)
   );
@@ -167,7 +188,7 @@ export const buildPersonalizedRecommendations = ({
 
   const summary = `Your strongest signals right now are ${strongestDrivers
     .map((item) => item.label.toLowerCase())
-    .join(", ")}, while ${focusAreas.map((item) => item.toLowerCase()).join(", ")} are holding back a stronger ${String(prediction || "future").toLowerCase()} trajectory.`;
+    .join(", ")}, while ${focusAreas.map((item) => item.toLowerCase()).join(", ")} are holding back a stronger ${String(prediction || "future").toLowerCase()} trajectory. Your current mood suggests ${moodAwareRecommendation.toLowerCase()}`;
 
   const personalizedTasks = weakestDrivers.map((item, index) => {
     const difficulty = index === 0 ? "Hard" : index === 1 ? "Medium" : "Easy";
@@ -189,7 +210,7 @@ export const buildPersonalizedRecommendations = ({
                   : item.key === "exercise"
                     ? "Energy Activation"
                     : "Focused Work Block",
-      description: `${item.recommendation} Tie it directly to ${anchorGoal} and use ${anchorHabit} as the trigger.`,
+      description: `${item.recommendation} ${moodTaskHint} Tie it directly to ${anchorGoal} and use ${anchorHabit} as the trigger.`,
       difficulty
     };
   });

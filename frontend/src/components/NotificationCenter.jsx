@@ -9,6 +9,7 @@ const notificationStyles = {
   achievement: "bg-emerald-50 border-emerald-200 dark:bg-emerald-900/20 dark:border-emerald-800",
   task: "bg-indigo-50 border-indigo-200 dark:bg-indigo-900/20 dark:border-indigo-800",
   habit: "bg-purple-50 border-purple-200 dark:bg-purple-900/20 dark:border-purple-800",
+  emotion: "bg-rose-50 border-rose-200 dark:bg-rose-900/20 dark:border-rose-800",
   system: "bg-white/80 border-cyan-100 dark:bg-slate-800/80 dark:border-cyan-900"
 };
 

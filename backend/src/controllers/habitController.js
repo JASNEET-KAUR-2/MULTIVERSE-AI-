@@ -1,5 +1,7 @@
 import User from "../models/User.js";
+import Emotion from "../models/Emotion.js";
 import { appendActivityLog, getGamificationSnapshot } from "../services/gamificationService.js";
+import { buildHabitEmotionInsight } from "../services/emotionService.js";
 
 /**
  * Create a new habit
@@ -66,10 +68,13 @@ export const getHabits = async (req, res, next) => {
 
     const habits = user.habitTracker || [];
 
+    const recentEmotions = await Emotion.find({ userId: req.user._id }).sort({ timestamp: -1 }).limit(20).lean();
+
     res.json({
       habits,
       total: habits.length,
-      activeHabits: habits.filter((h) => h.streak > 0).length
+      activeHabits: habits.filter((h) => h.streak > 0).length,
+      moodInsight: buildHabitEmotionInsight(recentEmotions, habits)
     });
   } catch (error) {
     next(error);

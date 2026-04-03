@@ -170,8 +170,8 @@ const FuturePage = () => {
   }
 
   return (
-    <div>
-      <div className="mb-8 text-center">
+    <div className="muse-page">
+      <div className="muse-card muse-card-peach p-8 text-center" data-ambient-scene="Future Paths" data-ambient-intensity="0.27">
         <h1 className="mb-2 text-3xl font-bold">
           Your <span className="gradient-brand-text">Future Paths</span>
         </h1>
@@ -181,7 +181,7 @@ const FuturePage = () => {
       </div>
 
       <div className="flex items-center justify-center">
-        <div className="glass inline-flex items-center gap-1 rounded-xl border border-white/10 p-1">
+        <div className="muse-card inline-flex items-center gap-1 rounded-[1.4rem] p-1">
           {timelines.map((timeline) => (
             <button
               key={timeline}
@@ -197,8 +197,8 @@ const FuturePage = () => {
         </div>
       </div>
 
-      <div className="mt-8 grid gap-6 lg:grid-cols-2">
-        <div className="glass relative overflow-hidden rounded-2xl border border-emerald-300/30">
+      <div className="muse-grid-two">
+        <div className="muse-card muse-card-mint relative overflow-hidden">
           <div className="gradient-success h-2" />
           <div className="absolute right-0 top-0 h-64 w-64 rounded-full bg-emerald-300/10 blur-3xl" />
           <div className="relative p-6">
@@ -305,7 +305,7 @@ const FuturePage = () => {
           </div>
         </div>
 
-        <div className="glass relative overflow-hidden rounded-2xl border border-pink-300/30">
+        <div className="muse-card muse-card-blue relative overflow-hidden">
           <div className="gradient-danger h-2" />
           <div className="absolute right-0 top-0 h-64 w-64 rounded-full bg-pink-300/10 blur-3xl" />
           <div className="relative p-6">

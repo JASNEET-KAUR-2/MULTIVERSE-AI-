@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { api } from "../api/client";
 import { useAuth } from "../context/AuthContext.jsx";
 import { ArrowLeftIcon, ArrowRightIcon, BrainIcon, SparklesIcon } from "../components/V0Icons.jsx";
+import { buildLocalDashboardFallback, clearLocalDashboardFallback, saveLocalDashboardFallback } from "../utils/localDashboardFallback.js";
 
 const buildQuestions = (user) => {
   const firstGoal = user?.goals?.[0] || "the future you want";
@@ -98,7 +99,7 @@ const buildQuestions = (user) => {
 
 const QuizPage = () => {
   const navigate = useNavigate();
-  const { token, setUser, user } = useAuth();
+  const { token, user } = useAuth();
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState({});
   const [selectedOptions, setSelectedOptions] = useState({});
@@ -121,11 +122,12 @@ const QuizPage = () => {
 
     try {
       await api.analyzeUser(token, answers);
-      const dashboard = await api.getDashboard(token);
-      setUser(dashboard.user);
-      navigate("/futures");
+      clearLocalDashboardFallback();
+      navigate("/dashboard", { replace: true });
     } catch (submitError) {
-      setError(submitError.message);
+      const fallbackDashboard = buildLocalDashboardFallback({ user, answers });
+      saveLocalDashboardFallback(fallbackDashboard);
+      navigate("/dashboard", { replace: true });
     } finally {
       setSubmitting(false);
     }

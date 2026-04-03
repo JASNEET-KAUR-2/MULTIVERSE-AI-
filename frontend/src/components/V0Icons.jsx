@@ -27,6 +27,7 @@ export const SparklesIcon = createIcon([
 ]);
 
 export const MenuIcon = createIcon([{ d: "M4 5h16" }, { d: "M4 12h16" }, { d: "M4 19h16" }]);
+export const ChevronDownIcon = createIcon([{ d: "m6 9 6 6 6-6" }]);
 export const ArrowRightIcon = createIcon([{ d: "M5 12h14" }, { d: "m12 5 7 7-7 7" }]);
 export const ArrowLeftIcon = createIcon([{ d: "m12 19-7-7 7-7" }, { d: "M19 12H5" }]);
 export const PlayIcon = createIcon([{ d: "M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z" }]);
@@ -58,6 +59,18 @@ export const TrophyIcon = createIcon([
   { d: "M6 9H4.5a1 1 0 0 1 0-5H6" }
 ]);
 export const MessageIcon = createIcon([{ d: "M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z" }]);
+export const BotIcon = createIcon([
+  { rect: { x: "7", y: "8", width: "10", height: "9", rx: "2" } },
+  { d: "M12 4v4" },
+  { d: "M9 3h6" },
+  { circle: { cx: "10", cy: "12", r: "1" } },
+  { circle: { cx: "14", cy: "12", r: "1" } },
+  { d: "M10 15h4" },
+  { d: "M7 11H5" },
+  { d: "M19 11h-2" },
+  { d: "M9 17v2" },
+  { d: "M15 17v2" }
+]);
 export const UserIcon = createIcon([{ d: "M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" }, { circle: { cx: "12", cy: "7", r: "4" } }]);
 export const SwordIcon = createIcon([{ d: "m11 19-6-6" }, { d: "m5 21-2-2" }, { d: "m8 16-4 4" }, { d: "M9.5 17.5 21 6V3h-3L6.5 14.5" }]);
 export const TrendUpIcon = createIcon([{ d: "M16 7h6v6" }, { d: "m22 7-8.5 8.5-5-5L2 17" }]);

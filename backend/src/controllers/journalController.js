@@ -1,4 +1,6 @@
 import User from "../models/User.js";
+import Emotion from "../models/Emotion.js";
+import { buildJournalContext, getJournalMoodFromEmotion } from "../services/emotionService.js";
 
 /**
  * Create a new journal entry
@@ -26,10 +28,13 @@ export const createJournalEntry = async (req, res, next) => {
       throw error;
     }
 
+    const latestEmotion = await Emotion.findOne({ userId: req.user._id }).sort({ timestamp: -1 }).lean();
+    const resolvedMood = mood || getJournalMoodFromEmotion(latestEmotion?.emotion);
+
     const newEntry = {
       title: title.trim(),
       body: body.trim(),
-      mood: mood || "Reflective",
+      mood: resolvedMood || "Reflective",
       createdAt: new Date()
     };
 
@@ -206,10 +211,13 @@ export const getMoodStats = async (req, res, next) => {
       }
     });
 
+    const latestEmotion = await Emotion.findOne({ userId: req.user._id }).sort({ timestamp: -1 }).lean();
+
     res.json({
       totalEntries: entries.length,
       moodStats,
-      mostCommonMood: Object.entries(moodStats).reduce((a, b) => (a[1] > b[1] ? a : b))[0]
+      mostCommonMood: Object.entries(moodStats).reduce((a, b) => (a[1] > b[1] ? a : b))[0],
+      journalContext: buildJournalContext(latestEmotion)
     });
   } catch (error) {
     next(error);

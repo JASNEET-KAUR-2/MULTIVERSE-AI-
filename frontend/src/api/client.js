@@ -61,9 +61,12 @@ export const api = {
   // Authentication
   signup: (payload) => request("/auth/signup", { method: "POST", body: payload }),
   login: (payload) => request("/auth/login", { method: "POST", body: payload }),
+  forgotPassword: (payload) => request("/auth/forgot-password", { method: "POST", body: payload }),
+  resetPassword: (payload) => request("/auth/reset-password", { method: "POST", body: payload }),
   verifySignupOtp: (payload) => request("/auth/verify-signup-otp", { method: "POST", body: payload }),
   verifyLoginOtp: (payload) => request("/auth/verify-login-otp", { method: "POST", body: payload }),
   me: (token) => request("/auth/me", { token }),
+  chatbot: (token, payload) => request("/chatbot", { method: "POST", token, body: payload }),
 
   // Analysis & Insights
   analyzeUser: (token, payload) => request("/analysis/analyze-user", { method: "POST", token, body: payload }),
@@ -72,6 +75,15 @@ export const api = {
 
   // Dashboard
   getDashboard: (token) => request("/dashboard", { token }),
+
+  // Emotions
+  analyzeEmotion: (token, payload) => request("/emotions/analyze", { method: "POST", token, body: payload }),
+  getEmotionSummary: (token, filters = {}) => {
+    const params = new URLSearchParams(filters);
+    return request(`/emotions/summary?${params}`, { token });
+  },
+  getEmotionJournalContext: (token) => request("/emotions/journal-context", { token }),
+  getEmotionHabitInsights: (token) => request("/emotions/habit-insights", { token }),
 
   // Legacy Planner (keep for backward compatibility)
   getPlanner: (token) => request("/planner", { token }),
@@ -131,10 +143,5 @@ export const api = {
 
   // Quests
   generateQuests: (token) => request("/quests/generate", { method: "POST", token }),
-  completeQuest: (token, questId) => request(`/quests/${questId}/complete`, { method: "PATCH", token }),
-
-  // Guilds
-  getGuilds: (token) => request("/guilds", { token }),
-  createGuild: (token, payload) => request("/guilds", { method: "POST", token, body: payload }),
-  joinGuild: (token, guildId) => request(`/guilds/${guildId}/join`, { method: "POST", token })
+  completeQuest: (token, questId) => request(`/quests/${questId}/complete`, { method: "PATCH", token })
 };

@@ -1,5 +1,6 @@
 import Quest from "../models/Quest.js";
 import User from "../models/User.js";
+import Emotion from "../models/Emotion.js";
 import { appendActivityLog } from "../services/gamificationService.js";
 import { generateFutureStateScan, generateSimulationNarrative, generateWhatIfStory } from "../services/groqService.js";
 import { predictFutureOutcome } from "../services/mlService.js";
@@ -129,12 +130,14 @@ export const analyzeUser = async (req, res, next) => {
       prediction: mlResponse.prediction,
       probabilities: mlResponse.probabilities
     });
+    const latestEmotion = await Emotion.findOne({ userId: req.user._id }).sort({ timestamp: -1 }).lean();
     const personalized = buildPersonalizedRecommendations({
       behaviorProfile,
       prediction: mlResponse.prediction,
       probabilities: mlResponse.probabilities,
       goals: user.goals,
-      habits: user.habits
+      habits: user.habits,
+      latestEmotion: latestEmotion?.emotion || "neutral"
     });
 
     user.behaviorProfile = behaviorProfile;
