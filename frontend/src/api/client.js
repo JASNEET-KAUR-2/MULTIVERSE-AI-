@@ -1,4 +1,29 @@
-const API_URL = import.meta.env.VITE_API_URL;
+const RAW_API_URL = import.meta.env.VITE_API_URL;
+
+const stripKnownApiSuffixes = (pathname = "") =>
+  pathname
+    .replace(/\/+$/, "")
+    .replace(/\/api\/(?:auth|aut)$/i, "")
+    .replace(/\/(?:auth|aut)$/i, "")
+    .replace(/\/api$/i, "");
+
+const resolveApiUrl = (value) => {
+  if (!value) {
+    return "";
+  }
+
+  try {
+    const url = new URL(value);
+    const basePath = stripKnownApiSuffixes(url.pathname);
+    const normalizedPath = `${basePath}/api`.replace(/\/{2,}/g, "/");
+    return `${url.origin}${normalizedPath === "/api" ? "/api" : normalizedPath.replace(/\/$/, "")}`;
+  } catch {
+    const cleaned = stripKnownApiSuffixes(String(value).trim());
+    return `${cleaned}/api`.replace(/\/{2,}/g, "/").replace(/\/$/, "");
+  }
+};
+
+const API_URL = resolveApiUrl(RAW_API_URL);
 const apiOrigin = (() => {
   try {
     const url = new URL(API_URL);
@@ -8,15 +33,18 @@ const apiOrigin = (() => {
   }
 })();
 
+const normalizePath = (path) => String(path || "").replace(/^\/aut\b/i, "/auth");
+
 const request = async (path, { method = "GET", token, body } = {}) => {
   if (!API_URL) {
     throw new Error("VITE_API_URL is missing. Set it in the frontend environment before starting the app.");
   }
 
+  const normalizedPath = normalizePath(path);
   let response;
 
   try {
-    response = await fetch(`${API_URL}${path}`, {
+    response = await fetch(`${API_URL}${normalizedPath}`, {
       method,
       headers: {
         "Content-Type": "application/json",
@@ -44,7 +72,7 @@ const request = async (path, { method = "GET", token, body } = {}) => {
     } else if (!response.ok) {
       const compactText = rawBody.replace(/\s+/g, " ").trim();
       const details = compactText ? ` Received: ${compactText.slice(0, 120)}.` : "";
-      throw new Error(`The API returned a non-JSON error response.${details}`);
+      throw new Error(`The API returned a non-JSON error response.${details} Check VITE_API_URL and make sure it points to the backend base URL, not /auth or /aut.`);
     } else {
       throw new Error("The backend returned an unexpected response format. Restart the backend and try again.");
     }
