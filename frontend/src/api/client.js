@@ -3,8 +3,8 @@ const RAW_API_URL = import.meta.env.VITE_API_URL;
 const stripKnownApiSuffixes = (pathname = "") =>
   pathname
     .replace(/\/+$/, "")
-    .replace(/\/api\/auth$/i, "")
-    .replace(/\/auth$/i, "")
+    .replace(/\/api\/(?:auth|aut)$/i, "")
+    .replace(/\/(?:auth|aut)$/i, "")
     .replace(/\/api$/i, "");
 
 const resolveApiUrl = (value) => {
@@ -34,7 +34,12 @@ const apiOrigin = (() => {
   }
 })();
 
-const normalizePath = (path) => String(path || "");
+const normalizePath = (path = "") =>
+  String(path || "")
+    .replace(/^\/aut\b/i, "/auth")
+    .replace(/\/aut(?=\/|$)/gi, "/auth");
+
+const isWrongAuthRouteResponse = (text = "") => /Cannot POST \/(?:auth|aut)\b/i.test(text);
 
 const getUrlCandidates = (path) => {
   const normalizedPath = normalizePath(path);
@@ -127,7 +132,7 @@ const request = async (path, { method = "GET", token, body } = {}) => {
 
     const compactText = result.rawBody.replace(/\s+/g, " ").trim();
     const isAuthPath = normalizedPath.startsWith("/auth/");
-    const looksLikeWrongAuthRoute = /Cannot POST \/auth\b/i.test(compactText);
+    const looksLikeWrongAuthRoute = isWrongAuthRouteResponse(compactText);
 
     if (isAuthPath && looksLikeWrongAuthRoute) {
       continue;
@@ -135,8 +140,12 @@ const request = async (path, { method = "GET", token, body } = {}) => {
 
     if (result.rawBody) {
       if (!result.isJsonResponse) {
+        if (isAuthPath && looksLikeWrongAuthRoute) {
+          continue;
+        }
+
         const details = compactText ? ` Received: ${compactText.slice(0, 120)}.` : "";
-        throw new Error(`The API returned a non-JSON error response.${details} Check VITE_API_URL and make sure it points to the backend base URL, not /auth.`);
+        throw new Error(`The API returned a non-JSON error response.${details} Check VITE_API_URL and make sure it points to the backend base URL, not /auth or /aut.`);
       }
     }
 
@@ -150,7 +159,7 @@ const request = async (path, { method = "GET", token, body } = {}) => {
   if (lastResult?.rawBody) {
     const compactText = lastResult.rawBody.replace(/\s+/g, " ").trim();
     const details = compactText ? ` Received: ${compactText.slice(0, 120)}.` : "";
-    throw new Error(`The API returned a non-JSON error response.${details} Check VITE_API_URL and make sure it points to the backend base URL, not /auth.`);
+    throw new Error(`The API returned a non-JSON error response.${details} Check VITE_API_URL and make sure it points to the backend base URL, not /auth or /aut.`);
   }
 
   throw new Error("Request failed.");
