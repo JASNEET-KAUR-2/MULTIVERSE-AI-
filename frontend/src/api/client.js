@@ -3,8 +3,8 @@ const RAW_API_URL = import.meta.env.VITE_API_URL;
 const stripKnownApiSuffixes = (pathname = "") =>
   pathname
     .replace(/\/+$/, "")
-    .replace(/\/api\/(?:auth|aut)$/i, "")
-    .replace(/\/(?:auth|aut)$/i, "")
+    .replace(/\/api\/auth$/i, "")
+    .replace(/\/auth$/i, "")
     .replace(/\/api$/i, "");
 
 const resolveApiUrl = (value) => {
@@ -34,7 +34,7 @@ const apiOrigin = (() => {
   }
 })();
 
-const normalizePath = (path) => String(path || "").replace(/^\/aut\b/i, "/auth");
+const normalizePath = (path) => String(path || "");
 
 const getUrlCandidates = (path) => {
   const normalizedPath = normalizePath(path);
@@ -53,12 +53,9 @@ const getUrlCandidates = (path) => {
   try {
     const baseUrl = new URL(API_URL);
     const root = `${baseUrl.origin}${stripKnownApiSuffixes(baseUrl.pathname)}`.replace(/\/$/, "");
-    const authTypoPath = normalizedPath.replace(/^\/auth\b/i, "/aut");
 
     pushCandidate(`${root}/api${normalizedPath}`.replace(/\/{2,}/g, "/").replace(":/", "://"));
     pushCandidate(`${root}${normalizedPath}`.replace(/\/{2,}/g, "/").replace(":/", "://"));
-    pushCandidate(`${root}/api${authTypoPath}`.replace(/\/{2,}/g, "/").replace(":/", "://"));
-    pushCandidate(`${root}${authTypoPath}`.replace(/\/{2,}/g, "/").replace(":/", "://"));
   } catch {
     // ignore candidate expansion when API_URL is not parseable as absolute URL
   }
@@ -130,7 +127,7 @@ const request = async (path, { method = "GET", token, body } = {}) => {
 
     const compactText = result.rawBody.replace(/\s+/g, " ").trim();
     const isAuthPath = normalizedPath.startsWith("/auth/");
-    const looksLikeWrongAuthRoute = /Cannot POST \/aut\b|Cannot POST \/auth\b/i.test(compactText);
+    const looksLikeWrongAuthRoute = /Cannot POST \/auth\b/i.test(compactText);
 
     if (isAuthPath && looksLikeWrongAuthRoute) {
       continue;
@@ -139,7 +136,7 @@ const request = async (path, { method = "GET", token, body } = {}) => {
     if (result.rawBody) {
       if (!result.isJsonResponse) {
         const details = compactText ? ` Received: ${compactText.slice(0, 120)}.` : "";
-        throw new Error(`The API returned a non-JSON error response.${details} Check VITE_API_URL and make sure it points to the backend base URL, not /auth or /aut.`);
+        throw new Error(`The API returned a non-JSON error response.${details} Check VITE_API_URL and make sure it points to the backend base URL, not /auth.`);
       }
     }
 
@@ -153,7 +150,7 @@ const request = async (path, { method = "GET", token, body } = {}) => {
   if (lastResult?.rawBody) {
     const compactText = lastResult.rawBody.replace(/\s+/g, " ").trim();
     const details = compactText ? ` Received: ${compactText.slice(0, 120)}.` : "";
-    throw new Error(`The API returned a non-JSON error response.${details} Check VITE_API_URL and make sure it points to the backend base URL, not /auth or /aut.`);
+    throw new Error(`The API returned a non-JSON error response.${details} Check VITE_API_URL and make sure it points to the backend base URL, not /auth.`);
   }
 
   throw new Error("Request failed.");

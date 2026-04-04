@@ -64,9 +64,7 @@ app.use("/api", async (req, res, next) => {
 });
 
 app.use("/api/auth", authRoutes);
-app.use("/api/aut", authRoutes);
 app.use("/auth", authRoutes);
-app.use("/aut", authRoutes);
 app.use("/api/analysis", analysisRoutes);
 app.use("/api/quests", questRoutes);
 app.use("/api/dashboard", dashboardRoutes);
